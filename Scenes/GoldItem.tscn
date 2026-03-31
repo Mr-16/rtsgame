@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dx14j3slb5pdv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slq60"]
+albedo_color = Color(1, 0.68235296, 0, 1)
+metallic = 1.0
+roughness = 0.27
+
+[sub_resource type="SphereMesh" id="SphereMesh_3kac0"]
+material = SubResource("StandardMaterial3D_slq60")
+
+[node name="GoldItem" type="Node3D" unique_id=592264203]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1566557002]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_3kac0")

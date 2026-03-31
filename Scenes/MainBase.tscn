@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://fjhnxwpxmc0o"]
+
+[ext_resource type="Script" uid="uid://qqlv3tvsxhja" path="res://Scripts/MainBase.cs" id="2_wsoqs"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t5t5a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lrlth"]
+size = Vector3(4.0856934, 1.3574219, 3.8574219)
+
+[node name="Base" type="Node3D" unique_id=1513774683]
+script = ExtResource("2_wsoqs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2080772235]
+transform = Transform3D(3.4385839, 0, 0, 0, 1, 0, 0, 0, 3.2896006, 0, 0, 0)
+mesh = SubResource("BoxMesh_t5t5a")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=801012032]
+radius = 3.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=89633241]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=203112493]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07458496, 0.17871094, 0.103515625)
+shape = SubResource("BoxShape3D_lrlth")

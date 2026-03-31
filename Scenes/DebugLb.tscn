@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dpod0au3tdaou"]
+
+[ext_resource type="Script" uid="uid://bal2j1gm2tlur" path="res://Scripts/DebugLb.cs" id="1_043o1"]
+
+[node name="DebugLb" type="Label" unique_id=1192042872]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_043o1")

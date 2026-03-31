@@ -1,0 +1,236 @@
+[gd_scene format=3 uid="uid://djl5yfo88mr5k"]
+
+[ext_resource type="Script" uid="uid://diqaro5vbxiwc" path="res://Scripts/Worker.cs" id="1_r72bl"]
+[ext_resource type="PackedScene" uid="uid://dx14j3slb5pdv" path="res://Scenes/GoldItem.tscn" id="2_vwm8u"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vwm8u"]
+radius = 0.8383789
+height = 2.6275635
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s0wpu"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_77nw7"]
+material = SubResource("StandardMaterial3D_s0wpu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lymsv"]
+albedo_color = Color(0, 0.9882353, 0.5058824, 1)
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_2jbub"]
+material = SubResource("StandardMaterial3D_lymsv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qk68r"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fomyb"]
+material = SubResource("StandardMaterial3D_qk68r")
+
+[sub_resource type="Animation" id="Animation_77nw7"]
+resource_name = "Capture"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyMesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.8684734, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodyMesh:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.33, 0.55, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.27576202, 0, 0), Vector3(-0.7382743, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BodyMesh:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_s0wpu"]
+resource_name = "Idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.43333334, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.34906584), Vector3(0, 0, 0), Vector3(0, 0, 0.34906584), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodyMesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.8684734, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BodyMesh:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_r72bl"]
+resource_name = "Move"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyMesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.295, 1.295, 1.295), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodyMesh:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BodyMesh:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.8684734, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vwm8u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyMesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodyMesh:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BodyMesh:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.8684734, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s0wpu"]
+_data = {
+&"Capture": SubResource("Animation_77nw7"),
+&"Idle": SubResource("Animation_s0wpu"),
+&"Move": SubResource("Animation_r72bl"),
+&"RESET": SubResource("Animation_vwm8u")
+}
+
+[node name="Worker" type="Node3D" unique_id=955277270 node_paths=PackedStringArray("_headNode", "_selctedMark", "NaviAgent", "AnimPlayer")]
+script = ExtResource("1_r72bl")
+_headNode = NodePath("Head")
+_resItemPackedScene = ExtResource("2_vwm8u")
+MoveSpeed = 6.0
+_selctedMark = NodePath("SelectMark")
+NaviAgent = NodePath("NavigationAgent3D")
+AnimPlayer = NodePath("AnimationPlayer")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=779009958]
+collision_layer = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=564838698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71410537, 0)
+shape = SubResource("CapsuleShape3D_vwm8u")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="." unique_id=1486884685]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8684734, 0)
+mesh = SubResource("CapsuleMesh_77nw7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BodyMesh" unique_id=119409251]
+transform = Transform3D(0.6008471, 0, 0, 0, 0.2372769, 0, 0, 0, 0.22574049, 0, 0.2942351, -0.45521957)
+mesh = SubResource("BoxMesh_2jbub")
+
+[node name="SelectMark" type="MeshInstance3D" parent="." unique_id=7936842]
+transform = Transform3D(1.5542532, 0, 0, 0, -0.0019151423, 0, 0, 0, 1.6583068, 0, -0.09382671, 0)
+mesh = SubResource("CylinderMesh_fomyb")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1835962098]
+avoidance_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=547243062]
+libraries/ = SubResource("AnimationLibrary_s0wpu")
+
+[node name="Head" type="Node3D" parent="." unique_id=456224187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.019265532, 0.8019217, -1.0181938)

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bmihtf4pola16"]
+
+[ext_resource type="Script" uid="uid://18oov4dxwrmq" path="res://Scripts/GoldMine.cs" id="1_8p0xm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66ej7"]
+albedo_color = Color(1, 0.8509804, 0.22352941, 1)
+metallic = 1.0
+roughness = 0.26
+
+[sub_resource type="PrismMesh" id="PrismMesh_5j7j5"]
+material = SubResource("StandardMaterial3D_66ej7")
+size = Vector3(3, 1, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8p0xm"]
+size = Vector3(3.1742554, 1, 2.471466)
+
+[node name="GoldMine" type="Node3D" unique_id=741631677]
+script = ExtResource("1_8p0xm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1603336118]
+mesh = SubResource("PrismMesh_5j7j5")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1994864729]
+radius = 1.71
+
+[node name="Area3D" type="Area3D" parent="." unique_id=876093210]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=89557605]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014251709, 0, 0.010421753)
+shape = SubResource("BoxShape3D_8p0xm")

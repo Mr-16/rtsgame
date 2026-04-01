@@ -23,11 +23,8 @@ public partial class UnitBase : Node3D
         
     }
 
-    
-
-    public virtual void SetTargetPos(Vector3 targetWorldPos)
+    public virtual void SetTarget(TargetType type, Vector3 pos)
     {
-        //if (NaviAgent != null) NaviAgent.TargetPosition = targetWorldPos;
     }
 
     public void SetSelected(bool isSelected)

@@ -119,14 +119,15 @@ public partial class Player : Node3D
                             {
                                 if (_curSelectedUnitList[i] is Worker worker)
                                 {
-                                    worker.SetTargetRes(targetRes);
+                                    worker.SetTarget(TargetType.Resource, targetRes.GlobalPosition);
+                                    worker.SetResource(targetRes);
                                 }
-                                _curSelectedUnitList[i].SetTargetPos(targetResPos);// 指派目标
+                                _curSelectedUnitList[i].SetTarget(TargetType.Resource, targetRes.GlobalPosition);
                             }
                         }
-                        else if (area.Owner is BuildingBase targetBuilding)
+                        else if (area.Owner is MainBase targetBuilding)
                         {
-                            GD.Print("右键了一个建筑物");
+                            GD.Print("右键了一个基地");
                             Vector3 targetBuildingPos = (Vector3)result["position"];
                             int unitCount = _curSelectedUnitList.Count;
                             if (unitCount == 0) return;
@@ -134,9 +135,9 @@ public partial class Player : Node3D
                             {
                                 if(_curSelectedUnitList[i] is Worker worker && targetBuilding is MainBase targetBase)
                                 {
-                                    worker.SetTargetBase(targetBase);
+                                    worker.SetTarget(TargetType.Normal, targetBuilding.GlobalPosition);
                                 }
-                                _curSelectedUnitList[i].SetTargetPos(targetBuildingPos);// 指派目标
+                                _curSelectedUnitList[i].SetTarget(TargetType.MainBase, targetBuilding.GlobalPosition);
                             }
                         }
                         else if (area.Owner is UnitBase targetUnit)
@@ -154,7 +155,7 @@ public partial class Player : Node3D
                                 float xOffset = (col - (columns - 1) / 2.0f) * spacing;// 计算偏移量（以点击点为中心排列）
                                 float zOffset = (row - (Mathf.CeilToInt((float)unitCount / columns) - 1) / 2.0f) * spacing;
                                 Vector3 formationPos = new Vector3(targetUnitPos.X + xOffset, targetUnitPos.Y, targetUnitPos.Z + zOffset);
-                                _curSelectedUnitList[i].SetTargetPos(formationPos);// 指派目标
+                                _curSelectedUnitList[i].SetTarget(TargetType.Normal, formationPos);
                             }
                         }
                         else
@@ -177,7 +178,7 @@ public partial class Player : Node3D
                             float xOffset = (col - (columns - 1) / 2.0f) * spacing;// 计算偏移量（以点击点为中心排列）
                             float zOffset = (row - (Mathf.CeilToInt((float)unitCount / columns) - 1) / 2.0f) * spacing;
                             Vector3 formationPos = new Vector3(targetGroundPos.X + xOffset, targetGroundPos.Y,  targetGroundPos.Z + zOffset);
-                            _curSelectedUnitList[i].SetTargetPos(formationPos);// 指派目标
+                            _curSelectedUnitList[i].SetTarget(TargetType.Normal, formationPos);
                         }
                     }
                 }

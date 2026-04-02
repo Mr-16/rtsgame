@@ -15,6 +15,7 @@ namespace RtsGame.Scripts
         public List<MainBase> MainBaseList = new List<MainBase>();
         public uint TERRAIN_MASK = 1 << 0;     // Layer 1
         public uint INTERACTABLE_MASK = 1 << 1; // Layer 2
+        public Player Player;
 
         public override void _Ready()
         {

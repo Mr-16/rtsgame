@@ -4,10 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://durodufoiprgo" path="res://Scenes/SelectRect.tscn" id="2_kyqiw"]
 [ext_resource type="PackedScene" uid="uid://dpod0au3tdaou" path="res://Scenes/DebugLb.tscn" id="3_gntrk"]
 
-[node name="Player" type="Node3D" unique_id=1729164241 node_paths=PackedStringArray("_camera", "_selectRect")]
+[node name="Player" type="Node3D" unique_id=1729164241 node_paths=PackedStringArray("_camera", "_selectRect", "GoldCountLb")]
 script = ExtResource("1_rpqav")
 _camera = NodePath("Camera3D")
 _selectRect = NodePath("SelectRect")
+GoldCountLb = NodePath("GoldLb")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=676799997]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0)
@@ -16,3 +17,14 @@ transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70
 
 [node name="DebugLb" parent="." unique_id=1192042872 instance=ExtResource("3_gntrk")]
 script = null
+
+[node name="GoldLb" type="Label" parent="." unique_id=1938394992]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 18
+theme_override_font_sizes/font_size = 40
+text = "Gold"

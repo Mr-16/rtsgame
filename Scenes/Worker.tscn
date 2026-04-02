@@ -200,7 +200,6 @@ _data = {
 script = ExtResource("1_r72bl")
 _headNode = NodePath("Head")
 _resItemPackedScene = ExtResource("2_vwm8u")
-MoveSpeed = 6.0
 _selctedMark = NodePath("SelectMark")
 NaviAgent = NodePath("NavigationAgent3D")
 AnimPlayer = NodePath("AnimationPlayer")

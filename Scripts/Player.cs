@@ -18,11 +18,15 @@ public partial class Player : Node3D
     const float DragThreshold = 5f; // 拖拽阈值, 超过这个值才算拖拽, 不然算单击
     private bool isDragging;
 
+    [Export] public Label GoldCountLb;
+    private int _goldCount = 0;
     private List<UnitBase> _curSelectedUnitList = new List<UnitBase>();
 
     public override void _Ready()
     {
+        GameManager.Instance.Player = this;
         _zoomTarget = _camera.Position.Y;
+        GoldCountLb.Text = $"Gold : {_goldCount}";
     }
 
     public override void _Process(double delta)
@@ -288,5 +292,11 @@ public partial class Player : Node3D
             return (Vector3)result["position"];
         }
         return GlobalPosition; // 没点到地面就返回当前位置
+    }
+
+    public void SetGoldCount(int count)
+    {
+        _goldCount += count;
+        GoldCountLb.Text = $"Gold : {_goldCount}";
     }
 }

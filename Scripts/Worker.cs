@@ -34,7 +34,7 @@ public partial class Worker : UnitBase
     private float _captureRangeSq;
     [Export] Node3D _headNode;
     [Export] private PackedScene _resItemPackedScene;
-    private Node3D _curResItem;
+    private ResItemBase _curResItem;
 
     private float _returnResRange = 5;
     private float _returnResRangeSq;
@@ -48,6 +48,7 @@ public partial class Worker : UnitBase
         NaviAgent.VelocityComputed += OnVelocityComputed;
         _captureRangeSq = _captureRange * _captureRange;
         _returnResRangeSq = _returnResRange * _returnResRange;
+        OwnerPlayer = GameManager.Instance.Player;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -215,7 +216,12 @@ public partial class Worker : UnitBase
     }
     private void UpdateToRes(float delta)
     {
-        if(_curTarget.Type == TargetType.Normal)
+        if (IsInstanceValid(_curRes) == false)
+        {
+            ChangeState(WorkerState.Idle);
+            return;
+        }
+        if (_curTarget.Type == TargetType.Normal)
         {
             ChangeState(WorkerState.Move);
             return;
@@ -254,15 +260,46 @@ public partial class Worker : UnitBase
     }
     private void UpdateCapture(float delta)
     {
+        if(IsInstanceValid(_curRes) == false)
+        {
+            ChangeState(WorkerState.Idle);
+            return;
+        }
         if(_curResItem != null)
         {
+            float minDistanceSq = float.MaxValue;
+            MainBase nearestBase = null;
+            foreach (MainBase mainBase in GameManager.Instance.MainBaseList)
+            {
+                float distSq = GlobalPosition.DistanceSquaredTo(mainBase.GlobalPosition);
+                if (distSq < minDistanceSq)
+                {
+                    minDistanceSq = distSq;
+                    nearestBase = mainBase;
+                }
+            }
+            SetTarget(TargetType.MainBase, nearestBase.GlobalPosition);
             ChangeState(WorkerState.ReturnRes);
             return;
         }
         if (CaptureTimer > CaptureDuration)
         {
-            _curResItem = _resItemPackedScene.Instantiate<Node3D>();
+            //todo switch case resType
+            _curResItem = _resItemPackedScene.Instantiate<ResItemBase>();
+            _curResItem.CurCount = _curRes.GetRes();
             _headNode.AddChild(_curResItem);
+            float minDistanceSq = float.MaxValue;
+            MainBase nearestBase = null;
+            foreach (MainBase mainBase in GameManager.Instance.MainBaseList)
+            {
+                float distSq = GlobalPosition.DistanceSquaredTo(mainBase.GlobalPosition);
+                if (distSq < minDistanceSq)
+                {
+                    minDistanceSq = distSq;
+                    nearestBase = mainBase;
+                }
+            }
+            SetTarget(TargetType.MainBase, nearestBase.GlobalPosition);
             ChangeState(WorkerState.ReturnRes);
             return;
         }
@@ -271,19 +308,7 @@ public partial class Worker : UnitBase
     private void ExitCapture()
     {
         CaptureTimer = 0;
-
-        float minDistanceSq = float.MaxValue;
-        MainBase nearestBase = null;
-        foreach (MainBase mainBase in GameManager.Instance.MainBaseList)
-        {
-            float distSq = GlobalPosition.DistanceSquaredTo(mainBase.GlobalPosition);
-            if (distSq < minDistanceSq)
-            {
-                minDistanceSq = distSq;
-                nearestBase = mainBase;
-            }
-        }
-        SetTarget(TargetType.MainBase, nearestBase.GlobalPosition);
+        
     }
 
     //ReturnRes
@@ -293,6 +318,7 @@ public partial class Worker : UnitBase
     }
     private void UpdateReturnRes(float delta)
     {
+
         if (_curTarget.Type == TargetType.Normal)
         {
             ChangeState(WorkerState.Move);
@@ -305,13 +331,23 @@ public partial class Worker : UnitBase
         }
         if (_curTarget.Position.DistanceSquaredTo(GlobalPosition) <= _returnResRangeSq)
         {
-            if(_curResItem != null)
+            
+            if (_curResItem != null)
             {
+                OwnerPlayer.SetGoldCount(_curResItem.CurCount);
                 _curResItem.QueueFree();
                 _curResItem = null;
-                SetTarget(TargetType.Resource, _curRes.GlobalPosition);
-                ChangeState(WorkerState.ToRes);
-                return;
+                if (IsInstanceValid(_curRes))
+                {
+                    SetTarget(TargetType.Resource, _curRes.GlobalPosition);
+                    ChangeState(WorkerState.ToRes);
+                    return;
+                }
+                else
+                {
+                    ChangeState(WorkerState.Idle);
+                    return;
+                }
             }
         }
         Vector3 nextPathPos = NaviAgent.GetNextPathPosition();

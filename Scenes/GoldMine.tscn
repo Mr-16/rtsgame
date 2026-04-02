@@ -14,14 +14,16 @@ size = Vector3(3, 1, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8p0xm"]
 size = Vector3(3.1742554, 1, 2.471466)
 
-[node name="GoldMine" type="Node3D" unique_id=741631677]
+[node name="GoldMine" type="Node3D" unique_id=741631677 node_paths=PackedStringArray("CurCountLb")]
 script = ExtResource("1_8p0xm")
+MaxCaptureCount = 5000
+CurCountLb = NodePath("CountLb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1603336118]
 mesh = SubResource("PrismMesh_5j7j5")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1994864729]
-radius = 1.71
+radius = 1.0
 
 [node name="Area3D" type="Area3D" parent="." unique_id=876093210]
 collision_layer = 2
@@ -32,3 +34,10 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=89557605]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014251709, 0, 0.010421753)
 shape = SubResource("BoxShape3D_8p0xm")
+
+[node name="CountLb" type="Label3D" parent="." unique_id=1951306803]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5520296, 0)
+billboard = 1
+text = "12323124"
+font_size = 200
+outline_size = 105

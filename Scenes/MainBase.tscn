@@ -15,7 +15,7 @@ transform = Transform3D(3.4385839, 0, 0, 0, 1, 0, 0, 0, 3.2896006, 0, 0, 0)
 mesh = SubResource("BoxMesh_t5t5a")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=801012032]
-radius = 3.0
+radius = 2.2
 
 [node name="Area3D" type="Area3D" parent="." unique_id=89633241]
 collision_layer = 2

@@ -17,7 +17,7 @@ namespace RtsGame.Scripts
         {
             CurCount = MaxCount;
             CurCountLb.Text = $"{CurCount}";
-            GD.Print(CurCount);
+            //GD.Print(CurCount);
         }
 
         public int GetRes()

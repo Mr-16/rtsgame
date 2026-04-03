@@ -3,6 +3,12 @@ using RtsGame.Scripts;
 using System;
 using System.Collections.Generic;
 
+public enum PlayerInputState
+{
+    Normal,//一般状态
+    Building,//建筑状态
+}
+
 public partial class Player : Node3D
 {
     [Export] public float MoveSpeed = 20.0f;
@@ -23,7 +29,7 @@ public partial class Player : Node3D
     private int _goldCount = 0;
     private List<UnitBase> _curSelectedUnitList = new List<UnitBase>();
 
-   
+    public PlayerInputState CurInputState = PlayerInputState.Normal;
 
     public override void _Ready()
     {
@@ -38,7 +44,7 @@ public partial class Player : Node3D
         HandleZoom((float)delta);
         if(_curSelectedUnitList.Count == 1 && _curSelectedUnitList[0] is Worker worker && Input.IsActionJustPressed("Build"))
         {
-            worker.SwitchBuildingNode();
+            worker.OpenBuildingNode(true);
         }
     }
 
@@ -75,6 +81,25 @@ public partial class Player : Node3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
+        switch(CurInputState)
+        {
+            case PlayerInputState.Normal:
+            {
+                HandleNormalInput(@event);
+                break;
+            }
+            case PlayerInputState.Building:
+            {
+                HandleBuildingInput(@event);
+                break;
+            }
+        }
+
+        
+    }
+
+    private void HandleNormalInput(InputEvent @event)
+    {
         if (@event is InputEventMouseButton mb)
         {
             switch (mb.ButtonIndex)
@@ -95,7 +120,8 @@ public partial class Player : Node3D
                             Node3D hitObject = (Node3D)result["collider"];
                             if (hitObject is Area3D area && area.GetParent() is BuildingItem buildingItem)
                             {
-                                GD.Print("左键了一个建筑item");
+                                CurInputState = PlayerInputState.Building;
+                                GD.Print("左键了一个建筑item, 进入建筑输入模式");
                                 return;
                             }
                         }
@@ -241,7 +267,7 @@ public partial class Player : Node3D
             }
         }
 
-        // 4. 处理鼠标移动
+        // 处理鼠标移动
         if (@event is InputEventMouseMotion motion)
         {
             if (isLeftBtnDown == false)
@@ -259,6 +285,11 @@ public partial class Player : Node3D
                 _selectRect.EndPos = dragEnd;
             }
         }
+    }
+
+    private void HandleBuildingInput(InputEvent @event)
+    {
+
     }
 
     private void UpdateSelectRect()
@@ -325,6 +356,10 @@ public partial class Player : Node3D
     {
         foreach (var unit in _curSelectedUnitList)
         {
+            if(unit is Worker worker)
+            {
+                worker.OpenBuildingNode(false);
+            }
             unit.SetSelected(false);
         }
         _curSelectedUnitList.Clear();

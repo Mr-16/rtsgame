@@ -33,7 +33,9 @@ public partial class Worker : UnitBase
     private float _captureRange = 2;
     private float _captureRangeSq;
     [Export] Node3D _headNode;
+    [Export] Node3D BuildingNode;
     [Export] private PackedScene _resItemPackedScene;
+    [Export] public Node3D ModelRootNode;
     private ResItemBase _curResItem;
 
     private float _returnResRange = 5;
@@ -54,7 +56,7 @@ public partial class Worker : UnitBase
     public override void _PhysicsProcess(double delta)
     {
         UpdateState((float)delta);
-        GD.Print("_curState : " + _curState);
+        //GD.Print("_curState : " + _curState);
     }
 
     private WorkerState? _curState = null;
@@ -256,7 +258,7 @@ public partial class Worker : UnitBase
         NaviAgent.Velocity = Vector3.Zero;
         Vector3 lookDirection = (_curTarget.Position - GlobalPosition);
         lookDirection.Y = 0; // 保持水平，防止弯腰或仰头
-        LookAt(GlobalPosition + lookDirection.Normalized(), Vector3.Up);
+        ModelRootNode.LookAt(GlobalPosition + lookDirection.Normalized(), Vector3.Up);
     }
     private void UpdateCapture(float delta)
     {
@@ -379,9 +381,10 @@ public partial class Worker : UnitBase
     {
         Basis targetBasis = Basis.LookingAt(forwardDirection, Vector3.Up);
         Quaternion targetRotation = targetBasis.GetRotationQuaternion();
-        Quaternion currentRotation = GlobalBasis.GetRotationQuaternion();
+        Quaternion currentRotation = ModelRootNode.GlobalBasis.GetRotationQuaternion();
         Quaternion nextRotation = currentRotation.Slerp(targetRotation, delta * RotationSpeed);
-        GlobalBasis = new Basis(nextRotation);
+        ModelRootNode.GlobalBasis = new Basis(nextRotation);
+        GD.Print(forwardDirection);
     }
     public override void SetTarget(TargetType type, Vector3 pos)
     {
@@ -392,5 +395,10 @@ public partial class Worker : UnitBase
     public void SetResource(ResourceBase res)
     {
         _curRes = res;
+    }
+
+    public void SwitchBuildingNode()
+    {
+        BuildingNode.Visible = !BuildingNode.Visible;
     }
 }

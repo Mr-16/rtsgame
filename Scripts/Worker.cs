@@ -31,18 +31,12 @@ public partial class Worker : UnitBase
 {
     private ResourceBase _curRes;
     private WorkerTarget _curTarget = new WorkerTarget();
-    private float _captureRange = 2;
+    private float _captureRange = 4;
     private float _captureRangeSq;
 
     [Export] Node3D _headNode;
     private ResItemBase _curResItem;
     [Export] private PackedScene _resItemPackedScene;
-
-    [Export] Node3D BuildingNode;
-    private BuildingItem _buildingItem_1;
-    private BuildingItem _buildingItem_2;
-    private BuildingItem _buildingItem_3;
-    [Export] private PackedScene _buildingPackedScene;
 
     [Export] public Node3D ModelRootNode;
 
@@ -404,56 +398,4 @@ public partial class Worker : UnitBase
         _curRes = res;
     }
 
-    public void OpenBuildingNode(bool isOpen)
-    {
-        if(isOpen)
-        {
-            GD.Print("打开建筑面板");
-            if (_buildingItem_1 == null)
-            {
-                _buildingItem_1 = _buildingPackedScene.Instantiate<BuildingItem>();
-                _buildingItem_1.Position += new Vector3(-2, 0, 0);  // 再设置位置
-                BuildingNode.AddChild(_buildingItem_1);                    // 先 AddChild
-            }
-
-            if (_buildingItem_2 == null)
-            {
-                _buildingItem_2 = _buildingPackedScene.Instantiate<BuildingItem>();
-                _buildingItem_2.Position += new Vector3(0, 0, 0);
-                BuildingNode.AddChild(_buildingItem_2);
-            }
-
-            if (_buildingItem_3 == null)
-            {
-                _buildingItem_3 = _buildingPackedScene.Instantiate<BuildingItem>();
-                _buildingItem_3.Position += new Vector3(2, 0, 0);
-                BuildingNode.AddChild(_buildingItem_3);
-            }
-
-            // 调试打印
-            GD.Print("建筑1 已添加，位置: ", _buildingItem_1?.Position);
-            GD.Print("建筑2 已添加，位置: ", _buildingItem_2?.Position);
-            GD.Print("建筑3 已添加，位置: ", _buildingItem_3?.Position);
-            GD.Print("BuildingNode 子节点数量: ", BuildingNode.GetChildCount());
-        }
-        else
-        {
-            GD.Print("关闭建筑面板");
-            if(_buildingItem_1 != null)
-            {
-                _buildingItem_1.QueueFree();
-                _buildingItem_1 = null;
-            }
-            if (_buildingItem_2 != null)
-            {
-                _buildingItem_2.QueueFree();
-                _buildingItem_2 = null;
-            }
-            if (_buildingItem_3 != null)
-            {
-                _buildingItem_3.QueueFree();
-                _buildingItem_3 = null;
-            }
-        }
-    }
 }

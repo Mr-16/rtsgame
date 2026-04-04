@@ -1,12 +1,14 @@
 using Godot;
 using RtsGame.Scripts;
+using RtsGame.Scripts.Global;
 using System;
 using System.Collections.Generic;
 
-public enum PlayerInputState
+public enum PlayerState
 {
     Normal,//一般状态
-    Building,//建筑状态
+    BuildingPanel,//打开面板状态
+    PreviewBuilding,//预览状态
 }
 
 public partial class Player : Node3D
@@ -29,74 +31,102 @@ public partial class Player : Node3D
     private int _goldCount = 0;
     private List<UnitBase> _curSelectedUnitList = new List<UnitBase>();
 
-    public PlayerInputState CurInputState = PlayerInputState.Normal;
+    public PlayerState CurState = PlayerState.Normal;
+
+    private BuildingType _curBuildingType;
+    [Export] public Node3D BuildingPanelNode;
+
+    [Export] public PackedScene MainBasePreviewPs;
+    [Export] public PackedScene MainBasePs;
+    private Node3D curBuildingPreview;
 
     public override void _Ready()
     {
         GameManager.Instance.Player = this;
         _zoomTarget = _camera.Position.Y;
         GoldCountLb.Text = $"Gold : {_goldCount}";
+        BuildingPanelNode.Visible = false;
+        BuildingPanelNode.ProcessMode = ProcessModeEnum.Disabled;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
-        HandleMovement((float)delta);
-        HandleZoom((float)delta);
+        switch (CurState)
+        {
+            case PlayerState.Normal:
+                {
+                    HandleMovement((float)delta);
+                    HandleZoom((float)delta);
+                    if (_curSelectedUnitList.Count == 1 && _curSelectedUnitList[0] is Worker && Input.IsActionJustPressed("Build"))
+                    {
+                        BuildingPanelNode.Visible = true;
+                        BuildingPanelNode.ProcessMode = ProcessModeEnum.Inherit;
+                        CurState = PlayerState.BuildingPanel;
+                    }
+                    break;
+                }
+            case PlayerState.BuildingPanel:
+                {
+                    if (Input.IsActionJustPressed("Exit"))
+                    {
+                        BuildingPanelNode.Visible = false;
+                        BuildingPanelNode.ProcessMode = ProcessModeEnum.Disabled;
+                        CurState = PlayerState.Normal;
+                    }
+                    break;
+                }
+            case PlayerState.PreviewBuilding:
+                {
+                    HandleMovement((float)delta);
+                    HandleZoom((float)delta);
+                    if (Input.IsActionJustPressed("Exit"))
+                    {
+                        CurState = PlayerState.Normal;
+                    }
+                    Vector2 mousePos = GetViewport().GetMousePosition();
+                    Vector3 rayOrigin = _camera.ProjectRayOrigin(mousePos);
+                    Vector3 rayDir = _camera.ProjectRayNormal(mousePos);
+                    PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayOrigin + rayDir * 1000f);
+                    query.CollisionMask = GameManager.Instance.TERRAIN_MASK;
+                    Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
+                    if (result.Count == 0) return;
+                    Vector3 hitPos = (Vector3)result["position"];
+                    curBuildingPreview.GlobalPosition = hitPos;
+                    break;
+                }
+        }
+        
         if(_curSelectedUnitList.Count == 1 && _curSelectedUnitList[0] is Worker worker && Input.IsActionJustPressed("Build"))
         {
-            worker.OpenBuildingNode(true);
+            //worker.OpenBuildingNode(true);
+            //进入建筑状态
         }
     }
 
-    private void HandleMovement(float delta)
-    {
-        Vector2 inputDir = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
-
-        // 3. 计算并应用移动
-        if (inputDir.Length() > 0)
-        {
-            // 归一化防止斜向移动过快
-            inputDir = inputDir.Normalized();
-
-            // 直接利用 Basis 转换到局部坐标系的方向，这样旋转相机后，按W依然是向“前方”走
-            // Transform.Basis * Vector3 会自动处理 Forward/Right 的组合
-            Vector3 moveDir = (Transform.Basis.Z * inputDir.Y) + (Transform.Basis.X * inputDir.X);
-
-            // 锁定 Y 轴，防止相机因为俯仰角产生高度位移
-            moveDir.Y = 0;
-
-            GlobalPosition += moveDir.Normalized() * MoveSpeed * delta;
-        }
-    }
-
-    private void HandleZoom(float delta)
-    {
-        // 平滑缩放 Camera3D 的高度 (Y) 和偏移 (Z)
-        Vector3 camPos = _camera.Position;
-        float newY = Mathf.Lerp(camPos.Y, _zoomTarget, ZoomSpeed * delta);
-
-        // 可选：如果希望缩放时视角有变化，可以根据 Y 同步调整 Z
-        _camera.Position = new Vector3(camPos.X, newY, camPos.Z);
-    }
-
+    //鼠标相关操作都放在这
     public override void _UnhandledInput(InputEvent @event)
     {
-        switch(CurInputState)
+        switch(CurState)
         {
-            case PlayerInputState.Normal:
-            {
-                HandleNormalInput(@event);
-                break;
-            }
-            case PlayerInputState.Building:
-            {
-                HandleBuildingInput(@event);
-                break;
-            }
+            case PlayerState.Normal:
+                {
+                    HandleNormalInput(@event);
+                    break;
+                }
+            case PlayerState.BuildingPanel:
+                {
+                    HandleBuildingPanelInput(@event);
+                    break;
+                }
+            case PlayerState.PreviewBuilding:
+                {
+                    HandlePreviewBuildingInput(@event);
+                    break;
+                }
         }
-
-        
     }
+
+
 
     private void HandleNormalInput(InputEvent @event)
     {
@@ -108,23 +138,6 @@ public partial class Player : Node3D
                     if (mb.Pressed)
                     {
                         GD.Print("左键按下");
-                        Camera3D camera = GetViewport().GetCamera3D();
-                        if (camera == null) return;
-                        Vector3 from = camera.ProjectRayOrigin(mb.Position);
-                        Vector3 to = from + camera.ProjectRayNormal(mb.Position) * 1000; // 射线长度 1000 米
-                        var query = PhysicsRayQueryParameters3D.Create(from, to, GameManager.Instance.UI3D_MASK);
-                        query.CollideWithAreas = true;
-                        var result = GetWorld3D().DirectSpaceState.IntersectRay(query);
-                        if (result.Count > 0)
-                        {
-                            Node3D hitObject = (Node3D)result["collider"];
-                            if (hitObject is Area3D area && area.GetParent() is BuildingItem buildingItem)
-                            {
-                                CurInputState = PlayerInputState.Building;
-                                GD.Print("左键了一个建筑item, 进入建筑输入模式");
-                                return;
-                            }
-                        }
                         isLeftBtnDown = true;
                         dragStart = mb.Position;
                         isDragging = false;
@@ -287,9 +300,147 @@ public partial class Player : Node3D
         }
     }
 
-    private void HandleBuildingInput(InputEvent @event)
+    private void HandleBuildingPanelInput(InputEvent @event)
     {
+        if(@event is InputEventMouseButton mb)
+        {
+            switch (mb.ButtonIndex)
+        {
+            case MouseButton.Left:
+                if (mb.Pressed)
+                {
+                    GD.Print("左键按下");
+                }
+                else
+                {
+                    GD.Print("左键松开");
+                        Camera3D camera = GetViewport().GetCamera3D();
+                        if (camera == null) return;
+                        Vector3 from = camera.ProjectRayOrigin(mb.Position);
+                        Vector3 to = from + camera.ProjectRayNormal(mb.Position) * 1000; // 射线长度 1000 米
+                        var query = PhysicsRayQueryParameters3D.Create(from, to, GameManager.Instance.UI3D_MASK);
+                        query.CollideWithAreas = true;
+                        var result = GetWorld3D().DirectSpaceState.IntersectRay(query);
+                        if (result.Count > 0)
+                        {
+                            Node3D hitObject = (Node3D)result["collider"];
+                            if (hitObject is Area3D area && area.Owner is BuildingItemBase item)
+                            {
+                                BuildingPanelNode.Visible = false;
+                                BuildingPanelNode.ProcessMode = ProcessModeEnum.Disabled;
+                                CurState = PlayerState.PreviewBuilding;
+                                switch(item.Type)
+                                {
+                                    case BuildingType.MainBase:
+                                        {
+                                            GD.Print("选了主基地");
+                                            _curBuildingType = BuildingType.MainBase;
+                                            curBuildingPreview = MainBasePreviewPs.Instantiate<Node3D>();
+                                            GetTree().CurrentScene.AddChild(curBuildingPreview);
+                                            break;
+                                        }
+                                }
+                                GD.Print("点击了一个建筑item, 进入建筑输入模式");
+                                return;
+                            }
+                        }
+                    }
+                break;
+        }
+        }
+    }
 
+    private void HandlePreviewBuildingInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mb)
+        {
+            switch (mb.ButtonIndex)
+            {
+                case MouseButton.Left:
+                    if (mb.Pressed)
+                    {
+                        GD.Print("左键按下");
+                        //curBuildingPreview = MainBasePreviewPs.Instantiate<Node3D>();
+                        //GetTree().CurrentScene.AddChild(curBuildingPreview);
+                    }
+                    else
+                    {
+                        GD.Print("左键松开");
+                        curBuildingPreview.QueueFree();
+
+                        Vector3 rayOrigin = _camera.ProjectRayOrigin(mb.Position);
+                        Vector3 rayDir = _camera.ProjectRayNormal(mb.Position);
+                        PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayOrigin + rayDir * 1000f);
+                        query.CollisionMask = GameManager.Instance.TERRAIN_MASK;
+                        Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
+                        if (result.Count == 0) return;
+                        Vector3 hitPos = (Vector3)result["position"];
+                        switch (_curBuildingType)
+                        {
+                            case BuildingType.MainBase:
+                                {
+                                    MainBase mainBase = MainBasePs.Instantiate<MainBase>();
+                                    mainBase.Position = hitPos;
+                                    GetTree().CurrentScene.AddChild(mainBase);
+                                    CurState = PlayerState.Normal;
+                                    break;
+                                }
+                        }
+                    }
+                    break;
+                case MouseButton.WheelUp:
+                    if (mb.Pressed)
+                    {
+                        _zoomTarget = Mathf.Clamp(_zoomTarget - 2.0f, MinZoom, MaxZoom);
+                    }
+                    break;
+
+                case MouseButton.WheelDown:
+                    if (mb.Pressed)
+                    {
+                        _zoomTarget = Mathf.Clamp(_zoomTarget + 2.0f, MinZoom, MaxZoom);
+                    }
+                    break;
+            }
+        }
+
+        if (@event is InputEventMouseMotion motion)
+        {
+            
+        }
+    }
+
+
+
+    private void HandleMovement(float delta)
+    {
+        Vector2 inputDir = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
+
+        // 3. 计算并应用移动
+        if (inputDir.Length() > 0)
+        {
+            // 归一化防止斜向移动过快
+            inputDir = inputDir.Normalized();
+
+            // 直接利用 Basis 转换到局部坐标系的方向，这样旋转相机后，按W依然是向“前方”走
+            // Transform.Basis * Vector3 会自动处理 Forward/Right 的组合
+            Vector3 moveDir = (Transform.Basis.Z * inputDir.Y) + (Transform.Basis.X * inputDir.X);
+
+            // 锁定 Y 轴，防止相机因为俯仰角产生高度位移
+            moveDir.Y = 0;
+
+            GlobalPosition += moveDir.Normalized() * MoveSpeed * delta;
+        }
+    }
+
+    private void HandleZoom(float delta)
+    {
+        // 平滑缩放 Camera3D 的高度 (Y) 和偏移 (Z)
+        Vector3 camPos = _camera.Position;
+        float newY = Mathf.Lerp(camPos.Y, _zoomTarget, ZoomSpeed * delta);
+
+        // 可选：如果希望缩放时视角有变化，可以根据 Y 同步调整 Z
+        _camera.Position = new Vector3(camPos.X, newY, camPos.Z);
     }
 
     private void UpdateSelectRect()
@@ -358,7 +509,8 @@ public partial class Player : Node3D
         {
             if(unit is Worker worker)
             {
-                worker.OpenBuildingNode(false);
+                //worker.OpenBuildingNode(false);
+                //退出建筑状态
             }
             unit.SetSelected(false);
         }

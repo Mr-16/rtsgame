@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://11f8aorcvur"]
+
+[ext_resource type="Script" uid="uid://105ee7rc4j02" path="res://Scripts/MainBaseItem.cs" id="1_i7w47"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7w47"]
+albedo_color = Color(0.22745098, 0.33333334, 0.3372549, 1)
+metallic = 0.56
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_i7w47"]
+material = SubResource("StandardMaterial3D_i7w47")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q8svl"]
+albedo_color = Color(0.8, 0.8980392, 0.3372549, 1)
+metallic = 0.56
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_sd06j"]
+material = SubResource("StandardMaterial3D_q8svl")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8i4h4"]
+size = Vector3(4.6436157, 5.07724, 4.8338623)
+
+[node name="MainBaseItem" type="Node3D" unique_id=1560851358 node_paths=PackedStringArray("Area")]
+script = ExtResource("1_i7w47")
+Area = NodePath("Area3D")
+
+[node name="MainBaseModelRoot" type="Node3D" parent="." unique_id=689279044]
+
+[node name="Model" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=2065539434]
+transform = Transform3D(3.604802, 0, 0, 0, 1.5687695, 0, 0, 0, 3.2896006, 0, 0.31173158, 0)
+mesh = SubResource("BoxMesh_i7w47")
+
+[node name="Model2" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=1776033585]
+transform = Transform3D(3.1072369, 0, 0, 0, 0.74192816, 0, 0, 0, 2.6834686, -0.04038024, 1.246875, 0.06749201)
+mesh = SubResource("BoxMesh_i7w47")
+
+[node name="Model5" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=1518813932]
+transform = Transform3D(0.8963708, 0, 0, 0, 0.74192816, 0, 0, 0, 2.1497242, -0.7779449, 1.7299504, 0)
+mesh = SubResource("BoxMesh_i7w47")
+
+[node name="Model3" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=439203411]
+transform = Transform3D(0.14716497, 0, 0, 0, 2.9582493, 0, 0, 0, 0.14089905, 0.21643579, 2.944437, 0)
+mesh = SubResource("BoxMesh_i7w47")
+
+[node name="Model4" type="MeshInstance3D" parent="MainBaseModelRoot/Model3" unique_id=1933659753]
+transform = Transform3D(8.886739, 0, 0, 0, 0.2850819, 0, 0, 0, 0.9999995, 5.011603, 0.34056336, 0)
+mesh = SubResource("BoxMesh_sd06j")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1215843426]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=593539443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05117798, 2.03862, -0.37554932)
+shape = SubResource("BoxShape3D_8i4h4")

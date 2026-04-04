@@ -1,17 +1,35 @@
 [gd_scene format=3 uid="uid://cju1vr25mrm6c"]
 
 [ext_resource type="Script" uid="uid://b6rpsp3rabquw" path="res://Scripts/Player.cs" id="1_rpqav"]
+[ext_resource type="PackedScene" uid="uid://11f8aorcvur" path="res://Scenes/MainBaseItem.tscn" id="2_dewec"]
 [ext_resource type="PackedScene" uid="uid://durodufoiprgo" path="res://Scenes/SelectRect.tscn" id="2_kyqiw"]
+[ext_resource type="PackedScene" uid="uid://45b4xrepa2lj" path="res://Scenes/MainBasePreview.tscn" id="2_nn08x"]
+[ext_resource type="PackedScene" uid="uid://fjhnxwpxmc0o" path="res://Scenes/MainBase.tscn" id="3_52ee3"]
 [ext_resource type="PackedScene" uid="uid://dpod0au3tdaou" path="res://Scenes/DebugLb.tscn" id="3_gntrk"]
 
-[node name="Player" type="Node3D" unique_id=1729164241 node_paths=PackedStringArray("_camera", "_selectRect", "GoldCountLb")]
+[node name="Player" type="Node3D" unique_id=1729164241 node_paths=PackedStringArray("_camera", "_selectRect", "GoldCountLb", "BuildingPanelNode")]
 script = ExtResource("1_rpqav")
 _camera = NodePath("Camera3D")
 _selectRect = NodePath("SelectRect")
 GoldCountLb = NodePath("GoldLb")
+BuildingPanelNode = NodePath("Camera3D/BuildingPanelNode")
+MainBasePreviewPs = ExtResource("2_nn08x")
+MainBasePs = ExtResource("3_52ee3")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=676799997]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
+
+[node name="BuildingPanelNode" type="Node3D" parent="Camera3D" unique_id=1460582463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7683716e-07, -1.5364136, -3.9783401)
+
+[node name="MainBaseItem" parent="Camera3D/BuildingPanelNode" unique_id=1560851358 instance=ExtResource("2_dewec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.7072453)
+
+[node name="MainBaseItem2" parent="Camera3D/BuildingPanelNode" unique_id=913505108 instance=ExtResource("2_dewec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.865472, 0, -5.707245)
+
+[node name="MainBaseItem3" parent="Camera3D/BuildingPanelNode" unique_id=2115768414 instance=ExtResource("2_dewec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8223925, 0, -5.7072453)
 
 [node name="SelectRect" parent="." unique_id=1231996882 instance=ExtResource("2_kyqiw")]
 

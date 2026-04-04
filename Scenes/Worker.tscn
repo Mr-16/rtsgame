@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://diqaro5vbxiwc" path="res://Scripts/Worker.cs" id="1_r72bl"]
 [ext_resource type="PackedScene" uid="uid://dx14j3slb5pdv" path="res://Scenes/GoldItem.tscn" id="2_vwm8u"]
-[ext_resource type="PackedScene" uid="uid://8ki2e1uhcv1v" path="res://Scenes/BuildingItem.tscn" id="3_s0wpu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vwm8u"]
 radius = 0.8383789
@@ -197,12 +196,10 @@ _data = {
 &"RESET": SubResource("Animation_vwm8u")
 }
 
-[node name="Worker" type="Node3D" unique_id=955277270 node_paths=PackedStringArray("_headNode", "BuildingNode", "ModelRootNode", "_selctedMark", "NaviAgent", "AnimPlayer")]
+[node name="Worker" type="Node3D" unique_id=955277270 node_paths=PackedStringArray("_headNode", "ModelRootNode", "_selctedMark", "NaviAgent", "AnimPlayer")]
 script = ExtResource("1_r72bl")
-_headNode = NodePath("ModelRootNode/Model/Head")
+_headNode = NodePath("ModelRootNode/Head")
 _resItemPackedScene = ExtResource("2_vwm8u")
-BuildingNode = NodePath("BuildingNode")
-_buildingPackedScene = ExtResource("3_s0wpu")
 ModelRootNode = NodePath("ModelRootNode")
 _selctedMark = NodePath("SelectMark")
 NaviAgent = NodePath("NavigationAgent3D")
@@ -227,8 +224,8 @@ mesh = SubResource("CapsuleMesh_77nw7")
 transform = Transform3D(0.6008471, 0, 0, 0, 0.2372769, 0, 0, 0, 0.22574049, 0, 0.2942351, -0.45521957)
 mesh = SubResource("BoxMesh_2jbub")
 
-[node name="Head" type="Node3D" parent="ModelRootNode/Model" unique_id=456224187]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.019265532, -0.066551685, -1.0181938)
+[node name="Head" type="Node3D" parent="ModelRootNode" unique_id=456224187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.019265532, 0.8019217, -1.0181938)
 
 [node name="SelectMark" type="MeshInstance3D" parent="." unique_id=7936842]
 transform = Transform3D(1.5542532, 0, 0, 0, -0.0019151423, 0, 0, 0, 1.6583068, 0, -0.09382671, 0)
@@ -239,6 +236,3 @@ avoidance_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=547243062]
 libraries/ = SubResource("AnimationLibrary_s0wpu")
-
-[node name="BuildingNode" type="Node3D" parent="." unique_id=1293789450]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7380993, 0)

@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://45b4xrepa2lj"]
 
+[ext_resource type="Script" uid="uid://16knbuug3at4" path="res://Scripts/MainBasePreview.cs" id="1_u8jht"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8q5g"]
 transparency = 1
 albedo_color = Color(1, 1, 1, 0.4745098)
@@ -14,7 +16,9 @@ albedo_color = Color(1, 1, 1, 0.627451)
 [sub_resource type="BoxMesh" id="BoxMesh_n23c1"]
 material = SubResource("StandardMaterial3D_u8jht")
 
-[node name="MainBasePreview" type="Node3D" unique_id=1809102051]
+[node name="MainBasePreview" type="Node3D" unique_id=1809102051 node_paths=PackedStringArray("meshInstance")]
+script = ExtResource("1_u8jht")
+meshInstance = NodePath("MainBaseModelRoot/Model")
 
 [node name="MainBaseModelRoot" type="Node3D" parent="." unique_id=88810877]
 

@@ -36,7 +36,7 @@ public partial class Player : Node3D
 
     [Export] public PackedScene MainBasePreviewPs;
     [Export] public PackedScene MainBasePs;
-    private Node3D curBuildingPreview;
+    private BuildingPreviewBase curBuildingPreview;
 
     public override void _Ready()
     {
@@ -58,9 +58,9 @@ public partial class Player : Node3D
                 
                 break;
             case PlayerState.PreviewBuilding:
-                HandleMovement((float)delta);
                 if (Input.IsActionJustPressed("Exit"))
                 {
+                    curBuildingPreview.QueueFree();
                     CurState = PlayerState.Normal;
                 }
                 Vector2 mousePos = GetViewport().GetMousePosition();
@@ -71,7 +71,11 @@ public partial class Player : Node3D
                 Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
                 if (result.Count == 0) return;
                 Vector3 hitPos = (Vector3)result["position"];
-                curBuildingPreview.GlobalPosition = hitPos;
+                Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
+                curBuildingPreview.SetCanPlace(GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
+                GD.Print("canplace : " + GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
+                GD.Print(GameManager.Instance.BuildingGridMap.WorldToGrid(snapPos));
+                curBuildingPreview.GlobalPosition = snapPos;
                 break;
         }
     }
@@ -82,7 +86,7 @@ public partial class Player : Node3D
         {
             case PlayerState.Normal:
                 HandleMovement((float)delta);
-                if (_curSelectedUnitList.Count == 1 && _curSelectedUnitList[0] is Worker && Input.IsActionJustPressed("Build"))
+                if(Input.IsActionJustPressed("Build"))
                 {
                     BuildingPanelNode.Visible = true;
                     BuildingPanelNode.ProcessMode = ProcessModeEnum.Inherit;
@@ -280,12 +284,12 @@ public partial class Player : Node3D
                             {
                                 GD.Print("选了主基地");
                                 _curBuildingType = BuildingType.MainBase;
-                                curBuildingPreview = MainBasePreviewPs.Instantiate<Node3D>();
+                                curBuildingPreview = MainBasePreviewPs.Instantiate<BuildingPreviewBase>();
                                 GetTree().CurrentScene.AddChild(curBuildingPreview);
                                 break;
                             }
                     }
-                    GD.Print("点击了一个建筑item, 进入建筑输入模式");
+                    GD.Print("点击了一个建筑item, 进入建筑预览模式");
                     return;
                 }
             }
@@ -296,8 +300,6 @@ public partial class Player : Node3D
     {
         if(Input.IsActionJustPressed("LeftMouseBtn"))
         {
-            curBuildingPreview.QueueFree();
-            
             Vector2 mousePos = GetViewport().GetMousePosition();
             Vector3 rayOrigin = _camera.ProjectRayOrigin(mousePos);
             Vector3 rayDir = _camera.ProjectRayNormal(mousePos);
@@ -306,12 +308,19 @@ public partial class Player : Node3D
             Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
             if (result.Count == 0) return;
             Vector3 hitPos = (Vector3)result["position"];
+            if(GameManager.Instance.BuildingGridMap.CanPlace(hitPos, curBuildingPreview.Width, curBuildingPreview.Height) == false)
+            {
+                return;
+            }
             switch (_curBuildingType)
             {
                 case BuildingType.MainBase:
                     MainBase mainBase = MainBasePs.Instantiate<MainBase>();
-                    mainBase.Position = hitPos;
+                    Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
+                    mainBase.Position = snapPos;
                     GetTree().CurrentScene.AddChild(mainBase);
+                    GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    curBuildingPreview.QueueFree();
                     CurState = PlayerState.Normal;
                     break;
             }

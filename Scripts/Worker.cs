@@ -9,8 +9,6 @@ public enum WorkerState
     ToRes,
     Capture,
     ReturnRes,
-    ToBuild,
-    Build,
 }
 
 public enum TargetType
@@ -42,7 +40,10 @@ public partial class Worker : UnitBase
 
     private float _returnResRange = 5;
     private float _returnResRangeSq;
-    
+
+    private BuildingBase _curBuilding;
+    private float _buildRange = 5;
+    private float _buildRangeSq;
 
     public override void _Ready()
     {
@@ -52,6 +53,7 @@ public partial class Worker : UnitBase
         NaviAgent.VelocityComputed += OnVelocityComputed;
         _captureRangeSq = _captureRange * _captureRange;
         _returnResRangeSq = _returnResRange * _returnResRange;
+        _buildRangeSq = _buildRange * _buildRange;
         OwnerPlayer = GameManager.Instance.Player;
     }
 
@@ -90,10 +92,6 @@ public partial class Worker : UnitBase
             case WorkerState.ReturnRes:
                 EnterReturnRes();
                 break;
-            case WorkerState.ToBuild:
-                break;
-            case WorkerState.Build:
-                break;
             default:
                 break;
         }
@@ -117,10 +115,6 @@ public partial class Worker : UnitBase
             case WorkerState.ReturnRes:
                 UpdateReturnRes(delta);
                 break;
-            case WorkerState.ToBuild:
-                break;
-            case WorkerState.Build:
-                break;
             default:
                 break;
         }
@@ -143,10 +137,6 @@ public partial class Worker : UnitBase
                 break;
             case WorkerState.ReturnRes:
                 ExitReturnRes();
-                break;
-            case WorkerState.ToBuild:
-                break;
-            case WorkerState.Build:
                 break;
             default:
                 break;
@@ -264,7 +254,17 @@ public partial class Worker : UnitBase
     }
     private void UpdateCapture(float delta)
     {
-        if(IsInstanceValid(_curRes) == false)
+        if (_curTarget.Type == TargetType.Normal)
+        {
+            ChangeState(WorkerState.Move);
+            return;
+        }
+        if (_curTarget.Type == TargetType.MainBase)
+        {
+            ChangeState(WorkerState.Move);
+            return;
+        }
+        if (IsInstanceValid(_curRes) == false)
         {
             ChangeState(WorkerState.Idle);
             return;
@@ -322,7 +322,6 @@ public partial class Worker : UnitBase
     }
     private void UpdateReturnRes(float delta)
     {
-
         if (_curTarget.Type == TargetType.Normal)
         {
             ChangeState(WorkerState.Move);
@@ -362,7 +361,6 @@ public partial class Worker : UnitBase
     private void ExitReturnRes()
     {
     }
-
 
     private void OnVelocityComputed(Vector3 safeVelocity)
     {

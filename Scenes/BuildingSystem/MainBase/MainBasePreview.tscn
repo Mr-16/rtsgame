@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://45b4xrepa2lj"]
 
-[ext_resource type="Script" uid="uid://16knbuug3at4" path="res://Scripts/MainBasePreview.cs" id="1_u8jht"]
+[ext_resource type="Script" uid="uid://16knbuug3at4" path="res://Scripts/BuildingSystem/MainBase/MainBasePreview.cs" id="1_u8jht"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8q5g"]
 transparency = 1

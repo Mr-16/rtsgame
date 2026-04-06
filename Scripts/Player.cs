@@ -58,7 +58,7 @@ public partial class Player : Node3D
                 
                 break;
             case PlayerState.PreviewBuilding:
-                if (Input.IsActionJustPressed("Exit"))
+                if (Input.IsActionJustPressed("Exit") || Input.IsActionJustPressed("RightMouseBtn"))
                 {
                     curBuildingPreview.QueueFree();
                     CurState = PlayerState.Normal;
@@ -73,7 +73,7 @@ public partial class Player : Node3D
                 Vector3 hitPos = (Vector3)result["position"];
                 Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
                 curBuildingPreview.SetCanPlace(GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
-                GD.Print("canplace : " + GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
+                //GD.Print("canplace : " + GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
                 GD.Print(GameManager.Instance.BuildingGridMap.WorldToGrid(snapPos));
                 curBuildingPreview.GlobalPosition = snapPos;
                 break;

@@ -2,20 +2,21 @@
 
 [ext_resource type="PackedScene" uid="uid://cju1vr25mrm6c" path="res://Scenes/Player.tscn" id="2_i63mn"]
 [ext_resource type="PackedScene" uid="uid://djl5yfo88mr5k" path="res://Scenes/Worker.tscn" id="2_nw7js"]
-[ext_resource type="PackedScene" uid="uid://fjhnxwpxmc0o" path="res://Scenes/MainBase.tscn" id="3_vnunq"]
-[ext_resource type="PackedScene" uid="uid://bmihtf4pola16" path="res://Scenes/GoldMine.tscn" id="4_nw7js"]
+[ext_resource type="PackedScene" uid="uid://fjhnxwpxmc0o" path="res://Scenes/BuildingSystem/MainBase/MainBase.tscn" id="3_vnunq"]
+[ext_resource type="PackedScene" uid="uid://bmihtf4pola16" path="res://Scenes/ResourceSystem/GoldMine/GoldMine.tscn" id="4_nw7js"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i63mn"]
-sky_top_color = Color(0.437687, 0.20971069, 0.7937186, 1)
-sky_horizon_color = Color(0.7986289, 0.53777915, 0.8766216, 1)
-ground_bottom_color = Color(0.22480422, 0.10093311, 0.3328377, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nw7js"]
+sky_top_color = Color(0.69398445, 0.4102423, 0.9096438, 1)
+sky_horizon_color = Color(1.3113818, 1.1302875, 1.2688514, 1)
+ground_bottom_color = Color(0.9245726, 0.48393774, 0.53879166, 1)
+ground_horizon_color = Color(1.3113818, 1.1302875, 1.2688514, 1)
 
-[sub_resource type="Sky" id="Sky_vnunq"]
-sky_material = SubResource("ProceduralSkyMaterial_i63mn")
+[sub_resource type="Sky" id="Sky_nh7xm"]
+sky_material = SubResource("ProceduralSkyMaterial_nw7js")
 
-[sub_resource type="Environment" id="Environment_nw7js"]
+[sub_resource type="Environment" id="Environment_j0k67"]
 background_mode = 2
-sky = SubResource("Sky_vnunq")
+sky = SubResource("Sky_nh7xm")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -35,15 +36,18 @@ data = PackedVector3Array(-250, 0.5, 250, 250, 0.5, 250, -250, -0.5, 250, 250, 0
 
 [node name="Level1" type="Node3D" unique_id=325649260]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1714244248]
+environment = SubResource("Environment_j0k67")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1771314375]
+transform = Transform3D(-0.90258527, -0.43051112, -1.881824e-08, 0, -4.371139e-08, 1, -0.43051112, 0.90258527, 3.9453255e-08, 0, 0, 0)
+light_color = Color(0.95687574, 0.8738433, 0.95415694, 1)
+light_energy = 1.3
+shadow_enabled = true
+directional_shadow_max_distance = 119.0
+
 [node name="Player" parent="." unique_id=1729164241 instance=ExtResource("2_i63mn")]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 10.095755, 44.590073, -4.342439)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=19240753]
-transform = Transform3D(1, 0, 0, 0, -0.4725508, 0.8813034, 0, -0.8813034, -0.4725508, 0, 0, 0)
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2068645488]
-environment = SubResource("Environment_nw7js")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=719491947]
 navigation_mesh = SubResource("NavigationMesh_i63mn")

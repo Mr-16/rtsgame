@@ -11,7 +11,7 @@ namespace RtsGame.Scripts
     public partial class GameManager : Node
     {
         public static GameManager Instance { get; private set; }
-        public BuildingGridMap BuildingGridMap = new BuildingGridMap(new Vector3(-300, 0, -300), 300, 300, 2);
+        public BuildingGridMap BuildingGridMap = new BuildingGridMap(new Vector3(-250, 0, -250), 500, 500, 2);
         public List<UnitBase> UnitList = new List<UnitBase>();
         public List<MainBase> MainBaseList = new List<MainBase>();
         public uint TERRAIN_MASK = 1 << 0;     // Layer 1

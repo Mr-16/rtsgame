@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djl5yfo88mr5k"]
 
 [ext_resource type="Script" uid="uid://diqaro5vbxiwc" path="res://Scripts/Worker.cs" id="1_r72bl"]
-[ext_resource type="PackedScene" uid="uid://dx14j3slb5pdv" path="res://Scenes/GoldItem.tscn" id="2_vwm8u"]
+[ext_resource type="PackedScene" uid="uid://dx14j3slb5pdv" path="res://Scenes/ResourceSystem/GoldMine/GoldItem.tscn" id="2_vwm8u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vwm8u"]
 radius = 0.8383789

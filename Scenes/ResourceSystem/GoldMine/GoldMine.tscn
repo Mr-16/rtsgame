@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bmihtf4pola16"]
 
-[ext_resource type="Script" uid="uid://18oov4dxwrmq" path="res://Scripts/GoldMine.cs" id="1_8p0xm"]
+[ext_resource type="Script" uid="uid://18oov4dxwrmq" path="res://Scripts/ResourceSystem/GoldMine/GoldMine.cs" id="1_8p0xm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8p0xm"]
 albedo_color = Color(0.99607843, 0.74509805, 0.27450982, 1)

@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cakopr0j6tprj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsner"]
+albedo_color = Color(0.22745098, 0.33333334, 0.3372549, 1)
+metallic = 0.56
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_ybpvn"]
+material = SubResource("StandardMaterial3D_lsner")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cda4k"]
+albedo_color = Color(0.008339254, 2.7193873e-06, 0.27469817, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5j3bw"]
+material = SubResource("StandardMaterial3D_cda4k")
+top_radius = 0.0
+height = 1.0
+
+[node name="MainBaseModel" type="Node3D" unique_id=1711795767]
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=1796849147]
+transform = Transform3D(3.604802, 0, 0, 0, 1.5687695, 0, 0, 0, 3.2896006, 0, 0.31173158, 0)
+mesh = SubResource("BoxMesh_ybpvn")
+
+[node name="Model2" type="MeshInstance3D" parent="." unique_id=647064151]
+transform = Transform3D(3.1072369, 0, 0, 0, 0.74192816, 0, 0, 0, 2.6834686, -0.04038024, 1.246875, 0.06749201)
+mesh = SubResource("BoxMesh_ybpvn")
+
+[node name="Model5" type="MeshInstance3D" parent="." unique_id=510447960]
+transform = Transform3D(0.8963708, 0, 0, 0, 0.74192816, 0, 0, 0, 2.1497242, -0.7779449, 1.7299504, 0)
+mesh = SubResource("BoxMesh_ybpvn")
+
+[node name="Model3" type="MeshInstance3D" parent="." unique_id=102971425]
+transform = Transform3D(0.25176013, 0, 0, 0, 2.9582493, 0, 0, 0, 0.2410408, -0.08308995, 2.1272206, 0)
+mesh = SubResource("BoxMesh_ybpvn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model3" unique_id=164705887]
+transform = Transform3D(6.7950954, 0, 0, 0, 0.33803776, 0, 0, 0, 7.0972815, 0.017653227, 0.46633822, -0.036685243)
+mesh = SubResource("CylinderMesh_5j3bw")
+
+[node name="Model4" type="MeshInstance3D" parent="." unique_id=270634945]
+transform = Transform3D(0.14716497, 0, 0, 0, 2.9582493, 0, 0, 0, 0.14089905, 0.9388077, 1.41295, 0)
+mesh = SubResource("BoxMesh_ybpvn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model4" unique_id=537127415]
+transform = Transform3D(7.5692964, 0, 0, 0, 0.33803776, 0, 0, 0, 7.9059114, 0.071392536, 0.43378496, -0.036685243)
+mesh = SubResource("CylinderMesh_5j3bw")

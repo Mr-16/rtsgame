@@ -9,6 +9,7 @@ namespace RtsGame.Scripts.Global
     public enum BuildingType
     {
         MainBase,
+        Flag,
         DefenseTower,
     }
 }

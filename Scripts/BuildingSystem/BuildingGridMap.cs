@@ -53,9 +53,15 @@ namespace RtsGame.Scripts
         }
 
         // ====================== 核心功能 ======================
-        public bool CanPlace(Vector3 worldPos, int buildWidth, int buildHeight)
+        // --- 修改后的 CanPlace ---
+        public bool CanPlace(Vector3 centerWorldPos, int buildWidth, int buildHeight)
         {
-            Vector2I start = WorldToGrid(worldPos);
+            // 关键：从中心点推导出左下角的起始网格索引
+            // 算法：中心点坐标 - (宽度/2 * CellSize) 得到左下角物理位置
+            float startX = centerWorldPos.X - (buildWidth * CellSize * 0.5f);
+            float startZ = centerWorldPos.Z - (buildHeight * CellSize * 0.5f);
+
+            Vector2I start = WorldToGrid(new Vector3(startX, centerWorldPos.Y, startZ));
 
             for (int x = 0; x < buildWidth; x++)
             {
@@ -63,7 +69,6 @@ namespace RtsGame.Scripts
                 {
                     Vector2I cell = new Vector2I(start.X + x, start.Y + y);
 
-                    // 必须在有效网格范围内（现在不会出现负数下标）
                     if (cell.X < 0 || cell.X >= Width || cell.Y < 0 || cell.Y >= Height)
                         return false;
 
@@ -74,12 +79,17 @@ namespace RtsGame.Scripts
             return true;
         }
 
-        public bool Place(Vector3 worldPos, int buildWidth, int buildHeight)
+        // --- 修改后的 Place ---
+        public bool Place(Vector3 centerWorldPos, int buildWidth, int buildHeight)
         {
-            if (!CanPlace(worldPos, buildWidth, buildHeight))
+            // 同样先找起点
+            float startX = centerWorldPos.X - (buildWidth * CellSize * 0.5f);
+            float startZ = centerWorldPos.Z - (buildHeight * CellSize * 0.5f);
+            Vector2I start = WorldToGrid(new Vector3(startX, centerWorldPos.Y, startZ));
+
+            if (!CanPlace(centerWorldPos, buildWidth, buildHeight))
                 return false;
 
-            Vector2I start = WorldToGrid(worldPos);
             var cells = new HashSet<Vector2I>();
 
             for (int x = 0; x < buildWidth; x++)
@@ -92,6 +102,7 @@ namespace RtsGame.Scripts
                 }
             }
 
+            // 这里存的时候，建议依然存 start 索引，方便后续 Remove
             _occupiedAreas[start] = cells;
             return true;
         }

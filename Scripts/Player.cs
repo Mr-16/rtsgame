@@ -33,10 +33,13 @@ public partial class Player : Node3D
 
     private BuildingType _curBuildingType;
     [Export] public Node3D BuildingPanelNode;
-
-    [Export] public PackedScene MainBasePreviewPs;
-    [Export] public PackedScene MainBasePs;
     private BuildingPreviewBase curBuildingPreview;
+
+    [Export] public PackedScene MainBasePs;
+    [Export] public PackedScene MainBasePreviewPs;
+
+    [Export] public PackedScene FlagPs;
+    [Export] public PackedScene FlagPreviewPs;
 
     public override void _Ready()
     {
@@ -181,6 +184,9 @@ public partial class Player : Node3D
                                 worker.SetResource(targetRes);
                             }
                             _curSelectedUnitList[i].SetTarget(TargetType.Resource, targetRes.GlobalPosition);
+                            _curSelectedUnitList[i].SetSelected(false);
+                            _curSelectedUnitList.RemoveAt(i);
+                            return;
                         }
                     }
                     else if (area.Owner is MainBase targetBuilding)
@@ -281,13 +287,17 @@ public partial class Player : Node3D
                     switch (item.Type)
                     {
                         case BuildingType.MainBase:
-                            {
-                                GD.Print("选了主基地");
-                                _curBuildingType = BuildingType.MainBase;
-                                curBuildingPreview = MainBasePreviewPs.Instantiate<BuildingPreviewBase>();
-                                GetTree().CurrentScene.AddChild(curBuildingPreview);
-                                break;
-                            }
+                            GD.Print("选了主基地");
+                            _curBuildingType = BuildingType.MainBase;
+                            curBuildingPreview = MainBasePreviewPs.Instantiate<BuildingPreviewBase>();
+                            GetTree().CurrentScene.AddChild(curBuildingPreview);
+                            break;
+                        case BuildingType.Flag:
+                            GD.Print("选了旗帜");
+                            _curBuildingType = BuildingType.Flag;
+                            curBuildingPreview = FlagPreviewPs.Instantiate<BuildingPreviewBase>();
+                            GetTree().CurrentScene.AddChild(curBuildingPreview);
+                            break;
                     }
                     GD.Print("点击了一个建筑item, 进入建筑预览模式");
                     return;
@@ -312,13 +322,23 @@ public partial class Player : Node3D
             {
                 return;
             }
+            
+            Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
             switch (_curBuildingType)
             {
                 case BuildingType.MainBase:
                     MainBase mainBase = MainBasePs.Instantiate<MainBase>();
-                    Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
+                    
                     mainBase.Position = snapPos;
                     GetTree().CurrentScene.AddChild(mainBase);
+                    GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    curBuildingPreview.QueueFree();
+                    CurState = PlayerState.Normal;
+                    break;
+                case BuildingType.Flag:
+                    Flag flag = FlagPs.Instantiate<Flag>();
+                    flag.Position = snapPos;
+                    GetTree().CurrentScene.AddChild(flag);
                     GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
                     curBuildingPreview.QueueFree();
                     CurState = PlayerState.Normal;

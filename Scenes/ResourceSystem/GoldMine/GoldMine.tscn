@@ -3,19 +3,21 @@
 [ext_resource type="Script" uid="uid://18oov4dxwrmq" path="res://Scripts/ResourceSystem/GoldMine/GoldMine.cs" id="1_8p0xm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8p0xm"]
-albedo_color = Color(0.99607843, 0.74509805, 0.27450982, 1)
+albedo_color = Color(0.85490197, 0.7529412, 0.03529412, 1)
 metallic = 1.0
-roughness = 0.33
+metallic_specular = 0.49
+roughness = 0.56
 
 [sub_resource type="BoxMesh" id="BoxMesh_mtes4"]
 material = SubResource("StandardMaterial3D_8p0xm")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8p0xm"]
-size = Vector3(3.5982513, 1, 3.776497)
+size = Vector3(4.4263573, 3.2142944, 4.3747883)
 
 [node name="GoldMine" type="Node3D" unique_id=741631677 node_paths=PackedStringArray("CurCountLb")]
 script = ExtResource("1_8p0xm")
-MaxCaptureCount = 5000
+MaxCount = 1000
+MaxCaptureCount = 50
 CurCountLb = NodePath("CountLb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1603336118]
@@ -52,12 +54,12 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=89557605]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16806793, 0, -0.0078315735)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16066551, 1.1071472, 0.109461784)
 shape = SubResource("BoxShape3D_8p0xm")
 
 [node name="CountLb" type="Label3D" parent="." unique_id=1951306803]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5520296, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4359477, 0)
 billboard = 1
 text = "12323124"
-font_size = 200
-outline_size = 105
+font_size = 400
+outline_size = 127

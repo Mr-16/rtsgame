@@ -1,43 +1,9 @@
-[gd_scene format=3 uid="uid://45b4xrepa2lj"]
+[gd_scene format=3 uid="uid://nbrpbcyu8weu"]
 
-[ext_resource type="Script" uid="uid://16knbuug3at4" path="res://Scripts/BuildingSystem/MainBase/MainBasePreview.cs" id="1_u8jht"]
+[ext_resource type="Script" uid="uid://c4m31yg4mvppy" path="res://Scripts/BuildingSystem/BuildingPreviewBase.cs" id="1_x0633"]
+[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Scenes/Models/MainBaseModel.tscn" id="2_u78cc"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8q5g"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.4745098)
+[node name="MainBasePreview" type="Node3D" unique_id=1809102051]
+script = ExtResource("1_x0633")
 
-[sub_resource type="BoxMesh" id="BoxMesh_p8q5g"]
-material = SubResource("StandardMaterial3D_p8q5g")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8jht"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.627451)
-
-[sub_resource type="BoxMesh" id="BoxMesh_n23c1"]
-material = SubResource("StandardMaterial3D_u8jht")
-
-[node name="MainBasePreview" type="Node3D" unique_id=1809102051 node_paths=PackedStringArray("meshInstance")]
-script = ExtResource("1_u8jht")
-meshInstance = NodePath("MainBaseModelRoot/Model")
-
-[node name="MainBaseModelRoot" type="Node3D" parent="." unique_id=88810877]
-
-[node name="Model" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=956305984]
-transform = Transform3D(3.604802, 0, 0, 0, 1.5687695, 0, 0, 0, 3.2896006, 0, 0.31173158, 0)
-mesh = SubResource("BoxMesh_p8q5g")
-
-[node name="Model2" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=1299536332]
-transform = Transform3D(3.1072369, 0, 0, 0, 0.74192816, 0, 0, 0, 2.6834686, -0.04038024, 1.246875, 0.06749201)
-mesh = SubResource("BoxMesh_p8q5g")
-
-[node name="Model5" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=732246192]
-transform = Transform3D(0.8963708, 0, 0, 0, 0.74192816, 0, 0, 0, 2.1497242, -0.7779449, 1.7299504, 0)
-mesh = SubResource("BoxMesh_p8q5g")
-
-[node name="Model3" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=1501855043]
-transform = Transform3D(0.14716497, 0, 0, 0, 2.9582493, 0, 0, 0, 0.14089905, 0.21643579, 2.944437, 0)
-mesh = SubResource("BoxMesh_p8q5g")
-
-[node name="Model4" type="MeshInstance3D" parent="MainBaseModelRoot/Model3" unique_id=296524817]
-transform = Transform3D(8.886739, 0, 0, 0, 0.2850819, 0, 0, 0, 0.9999995, 5.011603, 0.34056336, 0)
-mesh = SubResource("BoxMesh_n23c1")
+[node name="MainBaseModel" parent="." unique_id=1711795767 instance=ExtResource("2_u78cc")]

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cqauwr1qapiej"]
+
+[ext_resource type="Script" uid="uid://xbnuqqf46hsw" path="res://Scripts/BuildingSystem/Flag/Flag.cs" id="1_s7ll2"]
+[ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Scenes/Models/FlagModel.tscn" id="2_smlcn"]
+
+[node name="Flag" type="Node3D" unique_id=654582501]
+script = ExtResource("1_s7ll2")
+
+[node name="FlagModel" parent="." unique_id=1357317480 instance=ExtResource("2_smlcn")]
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1114662281]
+radius = 1.0

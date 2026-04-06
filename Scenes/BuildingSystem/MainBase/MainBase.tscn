@@ -1,28 +1,13 @@
 [gd_scene format=3 uid="uid://fjhnxwpxmc0o"]
 
-[ext_resource type="Script" uid="uid://qqlv3tvsxhja" path="res://Scripts/BuildingSystem/MainBase/MainBase.cs" id="2_wsoqs"]
+[ext_resource type="Script" uid="uid://qqlv3tvsxhja" path="res://Scripts/BuildingSystem/MainBase/MainBase.cs" id="1_ei8je"]
+[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Scenes/Models/MainBaseModel.tscn" id="2_c7eov"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lrlth"]
 size = Vector3(4.0856934, 1.3574219, 3.8574219)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hq2fw"]
-albedo_color = Color(0.22745098, 0.33333334, 0.3372549, 1)
-metallic = 0.56
-roughness = 0.5
-
-[sub_resource type="BoxMesh" id="BoxMesh_t5t5a"]
-material = SubResource("StandardMaterial3D_hq2fw")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsoqs"]
-albedo_color = Color(0.8, 0.8980392, 0.3372549, 1)
-metallic = 0.56
-roughness = 0.5
-
-[sub_resource type="BoxMesh" id="BoxMesh_mi0ou"]
-material = SubResource("StandardMaterial3D_wsoqs")
-
 [node name="MainBase" type="Node3D" unique_id=1513774683]
-script = ExtResource("2_wsoqs")
+script = ExtResource("1_ei8je")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=801012032]
 visible = false
@@ -38,24 +23,4 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07458496, 0.17871094, 0.103515625)
 shape = SubResource("BoxShape3D_lrlth")
 
-[node name="MainBaseModelRoot" type="Node3D" parent="." unique_id=167653553]
-
-[node name="Model" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=2080772235]
-transform = Transform3D(3.604802, 0, 0, 0, 1.5687695, 0, 0, 0, 3.2896006, 0, 0.31173158, 0)
-mesh = SubResource("BoxMesh_t5t5a")
-
-[node name="Model2" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=699381805]
-transform = Transform3D(3.1072369, 0, 0, 0, 0.74192816, 0, 0, 0, 2.6834686, -0.04038024, 1.246875, 0.06749201)
-mesh = SubResource("BoxMesh_t5t5a")
-
-[node name="Model5" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=1277649112]
-transform = Transform3D(0.8963708, 0, 0, 0, 0.74192816, 0, 0, 0, 2.1497242, -0.7779449, 1.7299504, 0)
-mesh = SubResource("BoxMesh_t5t5a")
-
-[node name="Model3" type="MeshInstance3D" parent="MainBaseModelRoot" unique_id=83701059]
-transform = Transform3D(0.14716497, 0, 0, 0, 2.9582493, 0, 0, 0, 0.14089905, 0.21643579, 2.944437, 0)
-mesh = SubResource("BoxMesh_t5t5a")
-
-[node name="Model4" type="MeshInstance3D" parent="MainBaseModelRoot/Model3" unique_id=1564838974]
-transform = Transform3D(8.886739, 0, 0, 0, 0.2850819, 0, 0, 0, 0.9999995, 5.011603, 0.34056336, 0)
-mesh = SubResource("BoxMesh_mi0ou")
+[node name="MainBaseModel" parent="." unique_id=1711795767 instance=ExtResource("2_c7eov")]

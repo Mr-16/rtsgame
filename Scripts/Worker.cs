@@ -337,7 +337,7 @@ public partial class Worker : UnitBase
             
             if (_curResItem != null)
             {
-                OwnerPlayer.SetGoldCount(_curResItem.CurCount);
+                OwnerPlayer.TakeGoldCount(_curResItem.CurCount);
                 _curResItem.QueueFree();
                 _curResItem = null;
                 if (IsInstanceValid(_curRes))

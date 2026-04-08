@@ -14,6 +14,7 @@ namespace RtsGame.Scripts
         public BuildingGridMap BuildingGridMap = new BuildingGridMap(new Vector3(-250, 0, -250), 500, 500, 2);
         public List<UnitBase> UnitList = new List<UnitBase>();
         public List<MainBase> MainBaseList = new List<MainBase>();
+        public List<Flag> FlagList = new List<Flag>();
         public uint TERRAIN_MASK = 1 << 0;     // Layer 1
         public uint INTERACTABLE_MASK = 1 << 1; // Layer 2
         public uint UI3D_MASK = 1 << 2; // Layer 3

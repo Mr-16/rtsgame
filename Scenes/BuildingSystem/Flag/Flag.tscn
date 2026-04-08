@@ -2,11 +2,33 @@
 
 [ext_resource type="Script" uid="uid://xbnuqqf46hsw" path="res://Scripts/BuildingSystem/Flag/Flag.cs" id="1_s7ll2"]
 [ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Scenes/Models/FlagModel.tscn" id="2_smlcn"]
+[ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="3_pidee"]
 
-[node name="Flag" type="Node3D" unique_id=654582501]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3tx0y"]
+render_priority = 0
+shader = ExtResource("3_pidee")
+shader_parameter/main_color = Color(1, 1, 1, 1)
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 0.5
+shader_parameter/thickness_softness = 0.0
+shader_parameter/segment_count = 0.0
+shader_parameter/segment_spacing = 0.7070000335825
+shader_parameter/rotation_speed = 0.12700048103249983
+shader_parameter/pulse_speed = 0.0
+shader_parameter/pulse_amplitude = 0.05
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vs4ie"]
+material = SubResource("ShaderMaterial_3tx0y")
+
+[node name="Flag" type="Node3D" unique_id=654582501 node_paths=PackedStringArray("RingMesh")]
 script = ExtResource("1_s7ll2")
+RingMesh = NodePath("Ring")
 
 [node name="FlagModel" parent="." unique_id=1357317480 instance=ExtResource("2_smlcn")]
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1114662281]
 radius = 1.0
+
+[node name="Ring" type="MeshInstance3D" parent="." unique_id=477334601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5434325, 0)
+mesh = SubResource("PlaneMesh_vs4ie")

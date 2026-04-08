@@ -3,6 +3,7 @@ using RtsGame.Scripts;
 using RtsGame.Scripts.Global;
 using System;
 using System.Collections.Generic;
+using System.Reflection.PortableExecutable;
 
 public enum PlayerState
 {
@@ -41,6 +42,9 @@ public partial class Player : Node3D
     [Export] public PackedScene FlagPs;
     [Export] public PackedScene FlagPreviewPs;
 
+    [Export] public PackedScene GoldMakerPs;
+    [Export] public PackedScene GoldMakerPreviewPs;
+
     public override void _Ready()
     {
         GameManager.Instance.Player = this;
@@ -63,6 +67,10 @@ public partial class Player : Node3D
             case PlayerState.PreviewBuilding:
                 if (Input.IsActionJustPressed("Exit") || Input.IsActionJustPressed("RightMouseBtn"))
                 {
+                    foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
+                        showFlagRingMainBase.ShowFlagRing(false);
+                    foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
+                        showBuildingRingFlag.ShowBuildingRing(false);
                     curBuildingPreview.QueueFree();
                     CurState = PlayerState.Normal;
                 }
@@ -75,7 +83,42 @@ public partial class Player : Node3D
                 if (result.Count == 0) return;
                 Vector3 hitPos = (Vector3)result["position"];
                 Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
-                curBuildingPreview.SetCanPlace(GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
+                switch(_curBuildingType)
+                {
+                    case BuildingType.MainBase:
+                        curBuildingPreview.SetCanPlace(GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
+                        
+                        break;
+                    case BuildingType.Flag:
+                    case BuildingType.GoldMaker:
+                        bool inRange = false;
+                        float distSq = 0;
+                        foreach (var curMainBase in GameManager.Instance.MainBaseList)
+                        {
+                            distSq = snapPos.DistanceSquaredTo(curMainBase.GlobalPosition);
+                            if (distSq <= curMainBase.FlagRangeSq)
+                            {
+                                inRange = true;
+                                break;
+                            }
+                        }
+                        if (!inRange)
+                        {
+                            foreach (var curFlag in GameManager.Instance.FlagList)
+                            {
+                                distSq = snapPos.DistanceSquaredTo(curFlag.GlobalPosition);
+                                if (distSq <= curFlag.BuildingRangeSq) // 或者使用 curFlag.FlagRangeSq，取决于你的属性命名
+                                {
+                                    inRange = true;
+                                    break;
+                                }
+                            }
+                        }
+                        bool canGridPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                        curBuildingPreview.SetCanPlace(inRange && canGridPlace);
+                        break;
+                }
+
                 //GD.Print("canplace : " + GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height));
                 GD.Print(GameManager.Instance.BuildingGridMap.WorldToGrid(snapPos));
                 curBuildingPreview.GlobalPosition = snapPos;
@@ -293,9 +336,23 @@ public partial class Player : Node3D
                             GetTree().CurrentScene.AddChild(curBuildingPreview);
                             break;
                         case BuildingType.Flag:
+                            foreach (var mainBase in GameManager.Instance.MainBaseList)
+                                mainBase.ShowFlagRing(true);
+                            foreach (var flag in GameManager.Instance.FlagList)
+                                flag.ShowBuildingRing(true);
                             GD.Print("选了旗帜");
                             _curBuildingType = BuildingType.Flag;
                             curBuildingPreview = FlagPreviewPs.Instantiate<BuildingPreviewBase>();
+                            GetTree().CurrentScene.AddChild(curBuildingPreview);
+                            break;
+                        case BuildingType.GoldMaker:
+                            foreach (var mainBase in GameManager.Instance.MainBaseList)
+                                mainBase.ShowFlagRing(true);
+                            foreach (var flag in GameManager.Instance.FlagList)
+                                flag.ShowBuildingRing(true);
+                            GD.Print("选了金矿机");
+                            _curBuildingType = BuildingType.GoldMaker;
+                            curBuildingPreview = GoldMakerPreviewPs.Instantiate<BuildingPreviewBase>();
                             GetTree().CurrentScene.AddChild(curBuildingPreview);
                             break;
                     }
@@ -318,17 +375,16 @@ public partial class Player : Node3D
             Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
             if (result.Count == 0) return;
             Vector3 hitPos = (Vector3)result["position"];
-            if(GameManager.Instance.BuildingGridMap.CanPlace(hitPos, curBuildingPreview.Width, curBuildingPreview.Height) == false)
+            Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
+            if(GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height) == false)
             {
                 return;
             }
-            
-            Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
             switch (_curBuildingType)
             {
                 case BuildingType.MainBase:
+                    GD.Print("放置了主基地");
                     MainBase mainBase = MainBasePs.Instantiate<MainBase>();
-                    
                     mainBase.Position = snapPos;
                     GetTree().CurrentScene.AddChild(mainBase);
                     GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
@@ -336,10 +392,80 @@ public partial class Player : Node3D
                     CurState = PlayerState.Normal;
                     break;
                 case BuildingType.Flag:
+                    bool inRange = false;
+                    float distSq = 0;
+                    foreach (var curMainBase in GameManager.Instance.MainBaseList)
+                    {
+                        distSq = snapPos.DistanceSquaredTo(curMainBase.GlobalPosition);
+                        if (distSq <= curMainBase.FlagRangeSq)
+                        {
+                            inRange = true;
+                            break;
+                        }
+                    }
+                    if (!inRange)
+                    {
+                        foreach (var curFlag in GameManager.Instance.FlagList)
+                        {
+                            distSq = snapPos.DistanceSquaredTo(curFlag.GlobalPosition);
+                            if (distSq <= curFlag.BuildingRangeSq) // 或者使用 curFlag.FlagRangeSq，取决于你的属性命名
+                            {
+                                inRange = true;
+                                break;
+                            }
+                        }
+                    }
+                    bool canGridPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    if (canGridPlace == false || inRange == false)
+                        return;
+                    GD.Print("放置了旗帜");
                     Flag flag = FlagPs.Instantiate<Flag>();
                     flag.Position = snapPos;
                     GetTree().CurrentScene.AddChild(flag);
                     GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
+                        showFlagRingMainBase.ShowFlagRing(false);
+                    foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
+                        showBuildingRingFlag.ShowBuildingRing(false);
+                    curBuildingPreview.QueueFree();
+                    CurState = PlayerState.Normal;
+                    break;
+                case BuildingType.GoldMaker:
+                    bool goldMakerInRange = false;
+                    float goldMakerDistSq = 0;
+                    foreach (var curMainBase in GameManager.Instance.MainBaseList)
+                    {
+                        distSq = snapPos.DistanceSquaredTo(curMainBase.GlobalPosition);
+                        if (distSq <= curMainBase.FlagRangeSq)
+                        {
+                            goldMakerInRange = true;
+                            break;
+                        }
+                    }
+                    if (!goldMakerInRange)
+                    {
+                        foreach (var curFlag in GameManager.Instance.FlagList)
+                        {
+                            distSq = snapPos.DistanceSquaredTo(curFlag.GlobalPosition);
+                            if (distSq <= curFlag.BuildingRangeSq) // 或者使用 curFlag.FlagRangeSq，取决于你的属性命名
+                            {
+                                goldMakerInRange = true;
+                                break;
+                            }
+                        }
+                    }
+                    bool canGridPlaceGoldMaker = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    if (canGridPlaceGoldMaker == false || goldMakerInRange == false)
+                        return;
+                    GD.Print("放置了金矿机");
+                    GoldMaker goldMaker = GoldMakerPs.Instantiate<GoldMaker>();
+                    goldMaker.Position = snapPos;
+                    GetTree().CurrentScene.AddChild(goldMaker);
+                    GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
+                        showFlagRingMainBase.ShowFlagRing(false);
+                    foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
+                        showBuildingRingFlag.ShowBuildingRing(false);
                     curBuildingPreview.QueueFree();
                     CurState = PlayerState.Normal;
                     break;
@@ -411,7 +537,7 @@ public partial class Player : Node3D
         _curSelectedUnitList.Clear();
     }
 
-    public void SetGoldCount(int count)
+    public void TakeGoldCount(int count)
     {
         _goldCount += count;
         GoldCountLb.Text = $"Gold : {_goldCount}";

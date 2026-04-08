@@ -10,6 +10,7 @@ namespace RtsGame.Scripts.Global
     {
         MainBase,
         Flag,
+        GoldMaker,
         DefenseTower,
     }
 }

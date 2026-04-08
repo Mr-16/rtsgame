@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dkko5xx43y4f0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w88h2"]
+albedo_color = Color(0.62425137, 0.62425107, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qqmnu"]
+material = SubResource("StandardMaterial3D_w88h2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_032fu"]
+albedo_color = Color(0.8051242, 0.8051241, 7.70092e-07, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_70jae"]
+material = SubResource("StandardMaterial3D_032fu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sm6nn"]
+albedo_color = Color(0.79607844, 0.64705884, 0, 1)
+metallic = 1.0
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_r664f"]
+material = SubResource("StandardMaterial3D_sm6nn")
+
+[sub_resource type="TextMesh" id="TextMesh_7f530"]
+text = "$"
+font_size = 127
+
+[node name="GoldMakerModel" type="Node3D" unique_id=2065775939]
+
+[node name="Node3D" type="Node3D" parent="." unique_id=94084933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18582368, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=545897692]
+transform = Transform3D(4.2860155, 0, 0, 0, 0.38215762, 0, 0, 0, 4.2860155, 0, 0.40296078, 0)
+mesh = SubResource("CylinderMesh_qqmnu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D" unique_id=1565948531]
+transform = Transform3D(3.4040844, 0, 0, 0, 0.38215762, 0, 0, 0, 3.4040844, 0, 1.1369821, 0)
+mesh = SubResource("CylinderMesh_70jae")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D" unique_id=631874417]
+transform = Transform3D(2.686246, 0, 0, 0, -5.7650005e-09, -2.686246, 0, 0.13188785, -1.1741953e-07, 0, 3.005553, 4.9395545e-08)
+mesh = SubResource("CylinderMesh_r664f")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D/MeshInstance3D3" unique_id=1091434224]
+transform = Transform3D(0.8705142, 0, 0, 0, -3.3142842e-07, 63.995483, 0, -0.8705142, -3.2116225e-07, 0, -0.16074647, -0.03651786)
+mesh = SubResource("TextMesh_7f530")

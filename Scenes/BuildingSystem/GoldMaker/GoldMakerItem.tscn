@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://jbncdcejq3jc"]
+
+[ext_resource type="PackedScene" uid="uid://dkko5xx43y4f0" path="res://Scenes/Models/GoldMakerModel.tscn" id="1_0yu3m"]
+[ext_resource type="Script" uid="uid://bbxshtersrwtp" path="res://Scripts/BuildingSystem/BuildingItemBase.cs" id="2_0djno"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0djno"]
+size = Vector3(4.6436157, 3.4231796, 4.8338623)
+
+[node name="GoldMakerItem" type="Node3D" unique_id=253741175 node_paths=PackedStringArray("Area")]
+script = ExtResource("2_0djno")
+Type = 2
+Area = NodePath("Area3D")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=500535351]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=764542428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05117798, 1.7080116, -0.37554932)
+shape = SubResource("BoxShape3D_0djno")
+
+[node name="GoldMakerModel" parent="." unique_id=2065775939 instance=ExtResource("1_0yu3m")]

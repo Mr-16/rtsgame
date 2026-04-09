@@ -45,6 +45,9 @@ public partial class Player : Node3D
     [Export] public PackedScene GoldMakerPs;
     [Export] public PackedScene GoldMakerPreviewPs;
 
+    [Export] public PackedScene MagicTowerPs;
+    [Export] public PackedScene MagicTowerPreviewPs;
+
     public override void _Ready()
     {
         GameManager.Instance.Player = this;
@@ -91,6 +94,7 @@ public partial class Player : Node3D
                         break;
                     case BuildingType.Flag:
                     case BuildingType.GoldMaker:
+                    case BuildingType.MagicTower:
                         bool inRange = false;
                         float distSq = 0;
                         foreach (var curMainBase in GameManager.Instance.MainBaseList)
@@ -355,6 +359,16 @@ public partial class Player : Node3D
                             curBuildingPreview = GoldMakerPreviewPs.Instantiate<BuildingPreviewBase>();
                             GetTree().CurrentScene.AddChild(curBuildingPreview);
                             break;
+                        case BuildingType.MagicTower:
+                            foreach (var mainBase in GameManager.Instance.MainBaseList)
+                                mainBase.ShowFlagRing(true);
+                            foreach (var flag in GameManager.Instance.FlagList)
+                                flag.ShowBuildingRing(true);
+                            GD.Print("选了法术塔");
+                            _curBuildingType = BuildingType.MagicTower;
+                            curBuildingPreview = MagicTowerPreviewPs.Instantiate<BuildingPreviewBase>();
+                            GetTree().CurrentScene.AddChild(curBuildingPreview);
+                            break;
                     }
                     GD.Print("点击了一个建筑item, 进入建筑预览模式");
                     return;
@@ -435,8 +449,8 @@ public partial class Player : Node3D
                     float goldMakerDistSq = 0;
                     foreach (var curMainBase in GameManager.Instance.MainBaseList)
                     {
-                        distSq = snapPos.DistanceSquaredTo(curMainBase.GlobalPosition);
-                        if (distSq <= curMainBase.FlagRangeSq)
+                        goldMakerDistSq = snapPos.DistanceSquaredTo(curMainBase.GlobalPosition);
+                        if (goldMakerDistSq <= curMainBase.FlagRangeSq)
                         {
                             goldMakerInRange = true;
                             break;
@@ -446,8 +460,8 @@ public partial class Player : Node3D
                     {
                         foreach (var curFlag in GameManager.Instance.FlagList)
                         {
-                            distSq = snapPos.DistanceSquaredTo(curFlag.GlobalPosition);
-                            if (distSq <= curFlag.BuildingRangeSq) // 或者使用 curFlag.FlagRangeSq，取决于你的属性命名
+                            goldMakerDistSq = snapPos.DistanceSquaredTo(curFlag.GlobalPosition);
+                            if (goldMakerDistSq <= curFlag.BuildingRangeSq) // 或者使用 curFlag.FlagRangeSq，取决于你的属性命名
                             {
                                 goldMakerInRange = true;
                                 break;
@@ -461,6 +475,45 @@ public partial class Player : Node3D
                     GoldMaker goldMaker = GoldMakerPs.Instantiate<GoldMaker>();
                     goldMaker.Position = snapPos;
                     GetTree().CurrentScene.AddChild(goldMaker);
+                    GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
+                        showFlagRingMainBase.ShowFlagRing(false);
+                    foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
+                        showBuildingRingFlag.ShowBuildingRing(false);
+                    curBuildingPreview.QueueFree();
+                    CurState = PlayerState.Normal;
+                    break;
+                case BuildingType.MagicTower:
+                    bool magicTowerInRange = false;
+                    float magicTowerDistSq = 0;
+                    foreach (var curMainBase in GameManager.Instance.MainBaseList)
+                    {
+                        magicTowerDistSq = snapPos.DistanceSquaredTo(curMainBase.GlobalPosition);
+                        if (magicTowerDistSq <= curMainBase.FlagRangeSq)
+                        {
+                            magicTowerInRange = true;
+                            break;
+                        }
+                    }
+                    if (!magicTowerInRange)
+                    {
+                        foreach (var curFlag in GameManager.Instance.FlagList)
+                        {
+                            magicTowerDistSq = snapPos.DistanceSquaredTo(curFlag.GlobalPosition);
+                            if (magicTowerDistSq <= curFlag.BuildingRangeSq) // 或者使用 curFlag.FlagRangeSq，取决于你的属性命名
+                            {
+                                magicTowerInRange = true;
+                                break;
+                            }
+                        }
+                    }
+                    bool canGridPlaceMagicTower = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+                    if (canGridPlaceMagicTower == false || magicTowerInRange == false)
+                        return;
+                    GD.Print("放置了魔法塔");
+                    MagicTower magicTower = MagicTowerPs.Instantiate<MagicTower>();
+                    magicTower.Position = snapPos;
+                    GetTree().CurrentScene.AddChild(magicTower);
                     GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
                     foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
                         showFlagRingMainBase.ShowFlagRing(false);

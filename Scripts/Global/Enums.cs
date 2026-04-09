@@ -12,5 +12,6 @@ namespace RtsGame.Scripts.Global
         Flag,
         GoldMaker,
         DefenseTower,
+        MagicTower,
     }
 }

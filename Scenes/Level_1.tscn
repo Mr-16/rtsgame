@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cq4t1e2ch5604"]
 
 [ext_resource type="PackedScene" uid="uid://cju1vr25mrm6c" path="res://Scenes/Player.tscn" id="2_i63mn"]
+[ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Scenes/Models/MagicTowerModel.tscn" id="2_vnunq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nw7js"]
 sky_top_color = Color(0.69398445, 0.4102423, 0.9096438, 1)
@@ -56,3 +57,6 @@ mesh = SubResource("BoxMesh_oiua3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground/StaticBody3D" unique_id=1335834174]
 shape = SubResource("ConcavePolygonShape3D_i63mn")
+
+[node name="StoneTowerModel" parent="." unique_id=1318580664 instance=ExtResource("2_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.91358, 0.5691669, 34.07823)

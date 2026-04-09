@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cnjlmc4oiffnq"]
+
+[ext_resource type="Script" uid="uid://bbja85lmjms1k" path="res://Scripts/BuildingSystem/MagicTower/MagicTower.cs" id="1_3dpeg"]
+[ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Scenes/Models/MagicTowerModel.tscn" id="1_pji2e"]
+[ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="2_3dpeg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_idin8"]
+size = Vector3(4.0856934, 1.3574219, 3.8574219)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pkwa7"]
+render_priority = 0
+shader = ExtResource("2_3dpeg")
+shader_parameter/main_color = Color(1, 1, 1, 1)
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 0.5
+shader_parameter/thickness_softness = 0.0
+shader_parameter/segment_count = 0.0
+shader_parameter/segment_spacing = 0.7070000335825
+shader_parameter/rotation_speed = 0.12700048103249983
+shader_parameter/pulse_speed = 0.0
+shader_parameter/pulse_amplitude = 0.05
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2jgh0"]
+material = SubResource("ShaderMaterial_pkwa7")
+
+[node name="MagicTower" type="Node3D" unique_id=314582809]
+script = ExtResource("1_3dpeg")
+
+[node name="StoneTowerModel" parent="." unique_id=1318580664 instance=ExtResource("1_pji2e")]
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1371244372]
+radius = 1.5
+height = 0.5
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1636364464]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1025243087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07458496, 0.17871094, 0.103515625)
+shape = SubResource("BoxShape3D_idin8")
+
+[node name="Ring" type="MeshInstance3D" parent="." unique_id=1150850958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5434325, 0)
+mesh = SubResource("PlaneMesh_2jgh0")

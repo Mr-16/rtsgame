@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://1s2lk80xsugn"]
+
+[ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Scenes/Models/MagicTowerModel.tscn" id="1_eqa06"]
+[ext_resource type="Script" uid="uid://c4m31yg4mvppy" path="res://Scripts/BuildingSystem/BuildingPreviewBase.cs" id="2_ttvjt"]
+
+[node name="MagicTowerPreview" type="Node3D" unique_id=390570547]
+script = ExtResource("2_ttvjt")
+
+[node name="StoneTowerModel" parent="." unique_id=1318580664 instance=ExtResource("1_eqa06")]

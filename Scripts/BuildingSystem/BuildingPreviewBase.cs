@@ -26,14 +26,14 @@ namespace RtsGame.Scripts
         {
             foreach (var child in root.GetChildren())
             {
-                GD.Print($"正在检查节点: {child.Name} 类型: {child.GetType()}");
+                //GD.Print($"正在检查节点: {child.Name} 类型: {child.GetType()}");
 
                 if (child is MeshInstance3D meshInstance)
                 {
                     if (meshInstance.Mesh == null) continue;
 
                     int surfaceCount = meshInstance.Mesh.GetSurfaceCount();
-                    GD.Print($"找到 Mesh: {meshInstance.Name}, Surface数量: {surfaceCount}");
+                    //GD.Print($"找到 Mesh: {meshInstance.Name}, Surface数量: {surfaceCount}");
 
                     for (int i = 0; i < surfaceCount; i++)
                     {

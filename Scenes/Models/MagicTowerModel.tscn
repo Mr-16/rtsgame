@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bsixsesloq80n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7o6x1"]
+albedo_color = Color(0.20069969, 0.23762277, 0.47263741, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_un7vl"]
+material = SubResource("StandardMaterial3D_7o6x1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_361rx"]
+albedo_color = Color(0.4392157, 0.37254903, 1, 1)
+metallic = 0.7
+roughness = 0.48
+
+[sub_resource type="SphereMesh" id="SphereMesh_iw3ut"]
+material = SubResource("StandardMaterial3D_361rx")
+radius = 2.0
+height = 4.0
+
+[node name="StoneTowerModel" type="Node3D" unique_id=1318580664]
+
+[node name="Node3D" type="Node3D" parent="." unique_id=909461933]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=1118989635]
+transform = Transform3D(16.253876, 0, 0, 0, 3.631813, 0, 0, 0, 16.253876, 0, 1.7467396, 0)
+mesh = SubResource("BoxMesh_un7vl")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D" unique_id=2016668132]
+transform = Transform3D(9.120256, 0, 0, 0, 3.6318128, 0, 0, 0, 9.120256, 0, 5.192099, 0)
+mesh = SubResource("BoxMesh_un7vl")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D" unique_id=898924795]
+transform = Transform3D(11.899498, 0, 0, 0, 3.6318128, 0, 0, 0, 11.899498, 0, 9.018042, 0)
+mesh = SubResource("BoxMesh_un7vl")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Node3D" unique_id=1578146367]
+transform = Transform3D(7.2846565, 0, 0, 0, 3.6318128, 0, 0, 0, 7.2846565, 0, 15.026364, 0)
+mesh = SubResource("BoxMesh_un7vl")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D" unique_id=102337271]
+transform = Transform3D(2.660168, 0, 0, 0, 9.762551, 0, 0, 0, 2.660168, 0, 15.19398, 0)
+mesh = SubResource("BoxMesh_un7vl")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Node3D" unique_id=1483540134]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.196293, 0)
+mesh = SubResource("SphereMesh_iw3ut")

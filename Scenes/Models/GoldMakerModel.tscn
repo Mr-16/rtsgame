@@ -27,7 +27,7 @@ font_size = 127
 [node name="GoldMakerModel" type="Node3D" unique_id=2065775939]
 
 [node name="Node3D" type="Node3D" parent="." unique_id=94084933]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18582368, 0)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.18582368, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=545897692]
 transform = Transform3D(4.2860155, 0, 0, 0, 0.38215762, 0, 0, 0, 4.2860155, 0, 0.40296078, 0)

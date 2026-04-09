@@ -10,8 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://chbjbeuefoicg" path="res://Scenes/BuildingSystem/Flag/FlagItem.tscn" id="5_52ee3"]
 [ext_resource type="PackedScene" uid="uid://dg7vpfwqa8uny" path="res://Scenes/BuildingSystem/Flag/FlagPreview.tscn" id="5_yoq75"]
 [ext_resource type="PackedScene" uid="uid://kjtxuaqh11r6" path="res://Scenes/BuildingSystem/GoldMaker/GoldMaker.tscn" id="6_glx4g"]
+[ext_resource type="PackedScene" uid="uid://cnjlmc4oiffnq" path="res://Scenes/BuildingSystem/MagicTower/MagicTower.tscn" id="8_1e7my"]
 [ext_resource type="PackedScene" uid="uid://cds12tm5ju5wc" path="res://Scenes/BuildingSystem/GoldMaker/GoldMakerPreview.tscn" id="8_yoq75"]
+[ext_resource type="PackedScene" uid="uid://1s2lk80xsugn" path="res://Scenes/BuildingSystem/MagicTower/MagicTowerPreview.tscn" id="9_arntx"]
 [ext_resource type="PackedScene" uid="uid://jbncdcejq3jc" path="res://Scenes/BuildingSystem/GoldMaker/GoldMakerItem.tscn" id="10_miouo"]
+[ext_resource type="PackedScene" uid="uid://dftxbm3dntsoy" path="res://Scenes/BuildingSystem/MagicTower/MagicTowerItem.tscn" id="11_miouo"]
 
 [node name="Player" type="Node3D" unique_id=1729164241 node_paths=PackedStringArray("_camera", "_selectRect", "GoldCountLb", "BuildingPanelNode")]
 script = ExtResource("1_rpqav")
@@ -25,6 +28,8 @@ FlagPs = ExtResource("4_megsn")
 FlagPreviewPs = ExtResource("5_yoq75")
 GoldMakerPs = ExtResource("6_glx4g")
 GoldMakerPreviewPs = ExtResource("8_yoq75")
+MagicTowerPs = ExtResource("8_1e7my")
+MagicTowerPreviewPs = ExtResource("9_arntx")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=676799997]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
@@ -33,13 +38,16 @@ transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7683716e-07, -1.5364136, -3.9783401)
 
 [node name="FlagItem" parent="Camera3D/BuildingPanelNode" unique_id=729729234 instance=ExtResource("5_52ee3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17759514, -0.9927484, -4.426347)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.030468, -0.9927484, -6.5947056)
 
 [node name="MainBaseItem" parent="Camera3D/BuildingPanelNode" unique_id=1560851358 instance=ExtResource("2_dewec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.672302, 0, -3.551096)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.108639, 0, -7.2281265)
 
 [node name="GoldMakerItem" parent="Camera3D/BuildingPanelNode" unique_id=253741175 instance=ExtResource("10_miouo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6882353, 0, -4.0466204)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1944065, 0, -6.979121)
+
+[node name="MagicTowerItem" parent="Camera3D/BuildingPanelNode" unique_id=1317746433 instance=ExtResource("11_miouo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9885435, 0.30621624, -6.6379137)
 
 [node name="SelectRect" parent="." unique_id=1231996882 instance=ExtResource("2_kyqiw")]
 

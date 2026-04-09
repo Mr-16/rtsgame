@@ -10,6 +10,7 @@ public partial class MainBase : BuildingBase
     private ShaderMaterial _ringMaterial;
     public override void _Ready()
 	{
+        base._Ready();
         GameManager.Instance.MainBaseList.Add(this);
         _ringMaterial = RingMesh.GetActiveMaterial(0) as ShaderMaterial;
         ShowFlagRing(false);

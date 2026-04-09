@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://11f8aorcvur"]
 
 [ext_resource type="Script" uid="uid://bbxshtersrwtp" path="res://Scripts/BuildingSystem/BuildingItemBase.cs" id="1_cda4k"]
-[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Scenes/Models/MainBaseModel.tscn" id="2_cda4k"]
+[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Assets/Models/BuildingModels/MainBaseModel.tscn" id="2_cda4k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8i4h4"]
 size = Vector3(4.6436157, 5.07724, 4.8338623)

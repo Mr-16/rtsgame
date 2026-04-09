@@ -18,6 +18,7 @@ public partial class GoldMaker : Node3D
 
     public override void _Ready()
     {
+        base._Ready();
         if (goldLb != null)
         {
             goldLb.Visible = false;

@@ -11,6 +11,7 @@ namespace RtsGame.Scripts
     {
         public override void _Ready()
         {
+            GameManager.Instance.BuildingList.Add(this);
         }
 
         public override void _Process(double delta)

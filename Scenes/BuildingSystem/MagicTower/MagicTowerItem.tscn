@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dftxbm3dntsoy"]
 
 [ext_resource type="Script" uid="uid://bbxshtersrwtp" path="res://Scripts/BuildingSystem/BuildingItemBase.cs" id="1_12hf6"]
-[ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Scenes/Models/MagicTowerModel.tscn" id="2_x000k"]
+[ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Assets/Models/BuildingModels/MagicTowerModel.tscn" id="2_x000k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pk8oe"]
 size = Vector3(4.6436157, 5.07724, 4.8338623)

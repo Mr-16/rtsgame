@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://b2vx5jhwwt5wb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s35a4"]
+albedo_color = Color(0, 0.23529412, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i4i8k"]
+material = SubResource("StandardMaterial3D_s35a4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ueo4s"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_poeqo"]
+material = SubResource("StandardMaterial3D_ueo4s")
+
+[node name="ZombieModel" type="Node3D" unique_id=1157258495]
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1654869352]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=1899963824]
+mesh = SubResource("CapsuleMesh_i4i8k")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D" unique_id=265099037]
+transform = Transform3D(-1.4095359e-08, -0.42672563, 0, 0.32246423, -1.865277e-08, 0, 0, 0, 0.32246423, 0.24310541, 0.07597852, 0.7067847)
+mesh = SubResource("CapsuleMesh_i4i8k")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D" unique_id=850603429]
+transform = Transform3D(-1.4095359e-08, -0.42672563, 0, 0.32246423, -1.865277e-08, 0, 0, 0, 0.32246423, 0.24310541, 0.07597852, -0.7118622)
+mesh = SubResource("CapsuleMesh_i4i8k")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D" unique_id=2131937746]
+transform = Transform3D(0.4253538, 0, 0, 0, 0.49432293, 0, 0, 0, 0.44046736, 0.41087174, 0.3904479, 0)
+mesh = SubResource("SphereMesh_poeqo")

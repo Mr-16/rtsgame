@@ -11,6 +11,7 @@ public partial class Flag : BuildingBase
 
     public override void _Ready()
 	{
+        base._Ready();
         GameManager.Instance.FlagList.Add(this);
         _ringMaterial = RingMesh.GetActiveMaterial(0) as ShaderMaterial;
         ShowBuildingRing(false);

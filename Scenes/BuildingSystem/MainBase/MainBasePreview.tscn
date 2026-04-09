@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://nbrpbcyu8weu"]
 
 [ext_resource type="Script" uid="uid://c4m31yg4mvppy" path="res://Scripts/BuildingSystem/BuildingPreviewBase.cs" id="1_x0633"]
-[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Scenes/Models/MainBaseModel.tscn" id="2_u78cc"]
+[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Assets/Models/BuildingModels/MainBaseModel.tscn" id="2_u78cc"]
 
 [node name="MainBasePreview" type="Node3D" unique_id=1809102051]
 script = ExtResource("1_x0633")

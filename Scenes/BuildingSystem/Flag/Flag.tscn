@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqauwr1qapiej"]
 
 [ext_resource type="Script" uid="uid://xbnuqqf46hsw" path="res://Scripts/BuildingSystem/Flag/Flag.cs" id="1_s7ll2"]
-[ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Scenes/Models/FlagModel.tscn" id="2_smlcn"]
+[ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Assets/Models/BuildingModels/FlagModel.tscn" id="2_smlcn"]
 [ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="3_pidee"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3tx0y"]

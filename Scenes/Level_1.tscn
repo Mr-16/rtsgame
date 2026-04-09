@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://cq4t1e2ch5604"]
 
 [ext_resource type="PackedScene" uid="uid://cju1vr25mrm6c" path="res://Scenes/Player.tscn" id="2_i63mn"]
-[ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Scenes/Models/MagicTowerModel.tscn" id="2_vnunq"]
+[ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Assets/Models/BuildingModels/MagicTowerModel.tscn" id="2_vnunq"]
+[ext_resource type="PackedScene" uid="uid://b60f2i1sxn7ue" path="res://Scenes/EnemySystem/Zombie.tscn" id="3_vnunq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nw7js"]
 sky_top_color = Color(0.69398445, 0.4102423, 0.9096438, 1)
@@ -60,3 +61,60 @@ shape = SubResource("ConcavePolygonShape3D_i63mn")
 
 [node name="StoneTowerModel" parent="." unique_id=1318580664 instance=ExtResource("2_vnunq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.91358, 0.5691669, 34.07823)
+
+[node name="Zombie" parent="." unique_id=1761458888 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.27097, 1.5000076, 64.39503)
+
+[node name="Zombie2" parent="." unique_id=1530032512 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.77885, 1.5000076, 74.047104)
+
+[node name="Zombie3" parent="." unique_id=1984175916 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.778847, 1.5000076, 48.047104)
+
+[node name="Zombie4" parent="." unique_id=270773982 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.668488, 1.5000076, 4.3474655)
+
+[node name="Zombie5" parent="." unique_id=352545134 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.93582, 1.5000076, -43.72332)
+
+[node name="Zombie6" parent="." unique_id=1783605687 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107.5101, 1.5000076, 61.580345)
+
+[node name="Zombie7" parent="." unique_id=1780434593 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.50873, 1.5000076, 4.0340195)
+
+[node name="Zombie8" parent="." unique_id=749557778 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 144.27094, 1.5000076, -55.67402)
+
+[node name="Zombie9" parent="." unique_id=1034509781 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.558075, 1.5000076, -83.4486)
+
+[node name="Zombie10" parent="." unique_id=782063725 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.66886, 1.5000076, -6.9749985)
+
+[node name="Zombie11" parent="." unique_id=1020218106 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.214577, 1.5000076, -56.10859)
+
+[node name="Zombie12" parent="." unique_id=664718111 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.785423, 1.5000076, -101.10859)
+
+[node name="Zombie13" parent="." unique_id=1767733135 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.785423, 1.5000076, 79.79908)
+
+[node name="Zombie14" parent="." unique_id=671249531 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.214577, 1.5000076, 88.79908)
+
+[node name="Zombie15" parent="." unique_id=882062954 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.309643, 1.5000076, 72.738945)
+
+[node name="Zombie16" parent="." unique_id=471947255 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5123901, 1.5000076, 106.76917)
+
+[node name="Zombie17" parent="." unique_id=1452928382 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.48761, 1.5000076, 102.76917)
+
+[node name="Zombie18" parent="." unique_id=540109132 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.48761, 18.721996, 115.46766)
+
+[node name="Zombie19" parent="." unique_id=837543697 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.48761, 18.721996, 115.46766)

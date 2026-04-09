@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://b60f2i1sxn7ue"]
+
+[ext_resource type="Script" uid="uid://byt7gfhkiqrsj" path="res://Scripts/EnemySystem/Zombie.cs" id="1_gu6e4"]
+[ext_resource type="PackedScene" uid="uid://b2vx5jhwwt5wb" path="res://Assets/Models/CharacterModels/ZombieModel.tscn" id="2_yvxqv"]
+
+[node name="Zombie" type="Node3D" unique_id=1761458888]
+script = ExtResource("1_gu6e4")
+
+[node name="ZombieModel" parent="." unique_id=1157258495 instance=ExtResource("2_yvxqv")]

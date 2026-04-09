@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://kjtxuaqh11r6"]
 
-[ext_resource type="PackedScene" uid="uid://dkko5xx43y4f0" path="res://Scenes/Models/GoldMakerModel.tscn" id="1_1ojli"]
+[ext_resource type="PackedScene" uid="uid://dkko5xx43y4f0" path="res://Assets/Models/BuildingModels/GoldMakerModel.tscn" id="1_1ojli"]
 [ext_resource type="Script" uid="uid://c4o856jce6jgg" path="res://Scripts/BuildingSystem/GoldMaker/GoldMaker.cs" id="1_t66jo"]
 
 [node name="GoldMaker" type="Node3D" unique_id=1913044115 node_paths=PackedStringArray("goldLb")]
@@ -17,5 +17,5 @@ radius = 2.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.832354, 0)
 billboard = 1
 text = "+100"
-font_size = 391
-outline_size = 127
+font_size = 200
+outline_size = 50

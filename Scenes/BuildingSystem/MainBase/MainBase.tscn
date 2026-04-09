@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://fjhnxwpxmc0o"]
 
 [ext_resource type="Script" uid="uid://qqlv3tvsxhja" path="res://Scripts/BuildingSystem/MainBase/MainBase.cs" id="1_ei8je"]
-[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Scenes/Models/MainBaseModel.tscn" id="2_c7eov"]
+[ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Assets/Models/BuildingModels/MainBaseModel.tscn" id="2_c7eov"]
 [ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="3_n636v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lrlth"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dg7vpfwqa8uny"]
 
 [ext_resource type="Script" uid="uid://c4m31yg4mvppy" path="res://Scripts/BuildingSystem/BuildingPreviewBase.cs" id="1_oinsr"]
-[ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Scenes/Models/FlagModel.tscn" id="2_gqak2"]
+[ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Assets/Models/BuildingModels/FlagModel.tscn" id="2_gqak2"]
 
 [node name="FlagPreview" type="Node3D" unique_id=1490402754]
 script = ExtResource("1_oinsr")

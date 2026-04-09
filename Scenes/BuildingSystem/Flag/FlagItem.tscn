@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://chbjbeuefoicg"]
 
-[ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Scenes/Models/FlagModel.tscn" id="2_pq4xu"]
+[ext_resource type="PackedScene" uid="uid://dbij7dhsyjwrm" path="res://Assets/Models/BuildingModels/FlagModel.tscn" id="2_pq4xu"]
 [ext_resource type="Script" uid="uid://bbxshtersrwtp" path="res://Scripts/BuildingSystem/BuildingItemBase.cs" id="2_r7yfr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1f36q"]

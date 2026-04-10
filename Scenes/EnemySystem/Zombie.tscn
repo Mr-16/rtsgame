@@ -3,7 +3,80 @@
 [ext_resource type="Script" uid="uid://byt7gfhkiqrsj" path="res://Scripts/EnemySystem/Zombie.cs" id="1_gu6e4"]
 [ext_resource type="PackedScene" uid="uid://b2vx5jhwwt5wb" path="res://Assets/Models/CharacterModels/ZombieModel.tscn" id="2_yvxqv"]
 
-[node name="Zombie" type="Node3D" unique_id=1761458888]
+[sub_resource type="Animation" id="Animation_1htrt"]
+resource_name = "Atk"
+length = 0.53333336
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZombieModel:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0), Vector3(0, 1.5707964, -0.9215338), Vector3(0, 1.5707964, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gu6e4"]
+resource_name = "Move"
+length = 0.6333333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZombieModel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.275, 1.275, 1.275), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yvxqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZombieModel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZombieModel:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1htrt"]
+_data = {
+&"Atk": SubResource("Animation_1htrt"),
+&"Move": SubResource("Animation_gu6e4"),
+&"RESET": SubResource("Animation_yvxqv")
+}
+
+[node name="Zombie" type="Node3D" unique_id=1761458888 node_paths=PackedStringArray("animPlayer")]
 script = ExtResource("1_gu6e4")
+animPlayer = NodePath("AnimationPlayer")
 
 [node name="ZombieModel" parent="." unique_id=1157258495 instance=ExtResource("2_yvxqv")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.95002675, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=177989970]
+libraries/ = SubResource("AnimationLibrary_1htrt")

@@ -13,29 +13,26 @@ public enum ZombieState
 
 public partial class Zombie : Node3D
 {
-    [Export] public float MoveSpeed = 3.0f;
-    [Export] public float AtkRange = 2.0f;
+    [Export] public float MoveSpeed = 5.0f;
+    [Export] public float AtkRange = 10.0f;
     [Export] public int MaxHp = 100;
+    [Export] private AnimationPlayer animPlayer;
 
     private float _atkRangeSq;
     private int _curHp;
-    private ZombieState _curState = ZombieState.Chase;
+    private ZombieState _curState;
     private BuildingBase _targetBuilding;
 
     public override void _Ready()
     {
         _curHp = MaxHp;
         _atkRangeSq = AtkRange * AtkRange;
+        animPlayer.Play("Move");
+        _curState = ZombieState.Chase;
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        // 简单的死亡检查
-        if (_curHp <= 0 && _curState != ZombieState.Death)
-        {
-            _curState = ZombieState.Death;
-        }
-
         switch (_curState)
         {
             case ZombieState.Chase:
@@ -51,24 +48,27 @@ public partial class Zombie : Node3D
                 UpdateDeath((float)delta);
                 break;
         }
+        //GD.Print("_curState : " + _curState);
     }
 
 
 
     private void UpdateChase(float delta)
     {
+        if (_curHp <= 0 && _curState != ZombieState.Death)
+        {
+            _curState = ZombieState.Death;
+        }
+
         _targetBuilding = FindNearestBuilding();
-        //GD.Print("_targetBuilding : " + _targetBuilding);
-        // 修正逻辑：如果目标无效，则返回
         if (_targetBuilding == null || !IsInstanceValid(_targetBuilding))
             return;
 
         Vector3 targetPos = _targetBuilding.GlobalPosition;
         float distToTargetSq = GlobalPosition.DistanceSquaredTo(targetPos);
-
-        // 1. 检查是否进入攻击范围
         if (distToTargetSq <= _atkRangeSq)
         {
+            animPlayer.Play("Atk");
             _curState = ZombieState.Atk;
             return; // 进入攻击状态后不再执行移动和转向
         }
@@ -81,6 +81,11 @@ public partial class Zombie : Node3D
 
     private void UpdateAtk(float delta)
     {
+        if (_curHp <= 0 && _curState != ZombieState.Death)
+        {
+            _curState = ZombieState.Death;
+        }
+
         //if (!IsInstanceValid(_targetBuilding))
         //{
         //    TransitionTo(ZombieState.Chase);
@@ -101,6 +106,11 @@ public partial class Zombie : Node3D
 
     private void UpdateHurt(float delta)
     {
+        if (_curHp <= 0 && _curState != ZombieState.Death)
+        {
+            _curState = ZombieState.Death;
+        }
+
         //throw new NotImplementedException();
     }
 
@@ -108,8 +118,6 @@ public partial class Zombie : Node3D
     {
         //throw new NotImplementedException();
     }
-
-    
 
     private BuildingBase FindNearestBuilding()
     {
@@ -132,13 +140,4 @@ public partial class Zombie : Node3D
         }
         return nearest;
     }
-
-    //private void TransitionTo(ZombieState newState)
-    //{
-    //    if (_curState == newState) return;
-    //    _curState = newState;
-
-    //    // 可以在这里触发动画切换
-    //    // _animPlayer.Play(newState.ToString());
-    //}
 }

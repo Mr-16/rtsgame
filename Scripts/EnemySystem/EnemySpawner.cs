@@ -10,7 +10,7 @@ public partial class EnemySpawner : Node3D
     [Export] public PackedScene ZombiePs;
 
     // --- 半径控制 ---
-    [Export] public float SpawnRadius = 10.0f;
+    [Export] public float SpawnRadius = 50.0f;
 
     private float _curTimer = 0;
     private RandomNumberGenerator _rng = new RandomNumberGenerator();

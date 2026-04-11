@@ -58,19 +58,4 @@ mesh = SubResource("BoxMesh_oiua3")
 shape = SubResource("ConcavePolygonShape3D_i63mn")
 
 [node name="EnemySpawner" parent="." unique_id=656649651 instance=ExtResource("2_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -177.71715, 0.5, -129.54507)
-
-[node name="EnemySpawner2" parent="." unique_id=708823852 instance=ExtResource("2_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.065456, 0.5, -123.939156)
-
-[node name="EnemySpawner3" parent="." unique_id=408664179 instance=ExtResource("2_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.08492, 0.5, -24.56092)
-
-[node name="EnemySpawner4" parent="." unique_id=683257311 instance=ExtResource("2_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 189.92418, 0.5, 177.30832)
-
-[node name="EnemySpawner5" parent="." unique_id=849660294 instance=ExtResource("2_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -199.5745, 0.5, 78.94191)
-
-[node name="EnemySpawner6" parent="." unique_id=1190086595 instance=ExtResource("2_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.236664, 0.5, 214.69394)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.36473, 0.5, -129.54507)

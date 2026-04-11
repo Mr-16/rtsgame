@@ -20,11 +20,15 @@ shader_parameter/pulse_amplitude = 0.05
 [sub_resource type="PlaneMesh" id="PlaneMesh_vs4ie"]
 material = SubResource("ShaderMaterial_3tx0y")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_pidee"]
+size = Vector3(3.2501335, 6.4438477, 2.2582397)
+
 [node name="Flag" type="Node3D" unique_id=654582501 node_paths=PackedStringArray("RingMesh")]
 script = ExtResource("1_s7ll2")
 RingMesh = NodePath("Ring")
 
 [node name="FlagModel" parent="." unique_id=1357317480 instance=ExtResource("2_smlcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5625274, 0, 0)
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1114662281]
 radius = 1.0
@@ -32,3 +36,13 @@ radius = 1.0
 [node name="Ring" type="MeshInstance3D" parent="." unique_id=477334601]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5434325, 0)
 mesh = SubResource("PlaneMesh_vs4ie")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=735799440]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=831521276]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1539936, 2.7219238, -0.16342163)
+shape = SubResource("BoxShape3D_pidee")

@@ -18,5 +18,10 @@ namespace RtsGame.Scripts
         public override void _Process(double delta)
         {
         }
+
+        public virtual void SetSelected(bool isSelected)
+        {
+
+        }
     }
 }

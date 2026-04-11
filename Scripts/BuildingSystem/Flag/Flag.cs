@@ -36,4 +36,9 @@ public partial class Flag : BuildingBase
             RingMesh.Visible = false;
         }
     }
+
+    public override void SetSelected(bool isSelected)
+    {
+        ShowBuildingRing(isSelected);
+    }
 }

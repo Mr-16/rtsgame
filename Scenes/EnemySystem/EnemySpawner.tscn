@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://djat5t43npghb"]
+
+[ext_resource type="Script" uid="uid://m5e6d2d8hdpx" path="res://Scripts/EnemySystem/EnemySpawner.cs" id="1_77f3x"]
+[ext_resource type="PackedScene" uid="uid://b60f2i1sxn7ue" path="res://Scenes/EnemySystem/Zombie/Zombie.tscn" id="2_v6ei0"]
+
+[node name="EnemySpawner" type="Node3D" unique_id=656649651]
+script = ExtResource("1_77f3x")
+ZombiePs = ExtResource("2_v6ei0")

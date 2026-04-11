@@ -14,4 +14,9 @@ namespace RtsGame.Scripts.Global
         DefenseTower,
         MagicTower,
     }
+
+    public enum EnemeyType
+    {
+        Zombie,
+    }
 }

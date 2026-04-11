@@ -18,8 +18,8 @@ public partial class MagicTower : BuildingBase
     //选中后可以显示攻击范围
     [Export] public PackedScene BallPs;
     [Export] public float AtkRange = 20;
-    [Export] public float Damage = 38;
-    [Export] public float CdTime = 1f;
+    [Export] public float Damage = 57;
+    [Export] public float CdTime = 2f;
     private float _atkRangeSq;
     private EnemyBase _curTargetEnemy;
     private MagicTowerState _curState;

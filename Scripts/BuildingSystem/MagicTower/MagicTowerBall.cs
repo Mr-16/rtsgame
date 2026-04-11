@@ -4,7 +4,7 @@ using System;
 
 public partial class MagicTowerBall : Node3D
 {
-    [Export] private float _moveSpeed = 10f;
+    [Export] private float _moveSpeed = 20f;
     private EnemyBase _targetEnemy;
     private float _damage;
 

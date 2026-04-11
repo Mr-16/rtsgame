@@ -2,7 +2,7 @@
 using RtsGame.Scripts;
 using System;
 
-public partial class GoldMaker : Node3D
+public partial class GoldMaker : BuildingBase
 {
     [Export] public Label3D goldLb;
     [Export] public float MakeGoldDuration = 5.0f;     // 生产周期
@@ -35,6 +35,7 @@ public partial class GoldMaker : Node3D
         if (_makeGoldTimer >= MakeGoldDuration)
         {
             GenerateGold();
+            PlayBounceAnimation();
             _makeGoldTimer = 0;
         }
     }
@@ -95,5 +96,10 @@ public partial class GoldMaker : Node3D
         // 动画结束后自动销毁
         await ToSignal(tween, "finished");
         floatingLabel.QueueFree();
+    }
+
+    public override void SetSelected(bool isSelected)
+    {
+        base.SetSelected(isSelected);
     }
 }

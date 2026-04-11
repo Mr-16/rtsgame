@@ -12,8 +12,8 @@ size = Vector3(4.0856934, 1.3574219, 3.8574219)
 render_priority = 0
 shader = ExtResource("2_3dpeg")
 shader_parameter/main_color = Color(1, 1, 1, 1)
-shader_parameter/inner_radius = 0.0
-shader_parameter/outer_radius = 0.5
+shader_parameter/inner_radius = 0.42400002014
+shader_parameter/outer_radius = 0.4370000207575
 shader_parameter/thickness_softness = 0.0
 shader_parameter/segment_count = 0.0
 shader_parameter/segment_spacing = 0.7070000335825
@@ -24,11 +24,13 @@ shader_parameter/pulse_amplitude = 0.05
 [sub_resource type="PlaneMesh" id="PlaneMesh_2jgh0"]
 material = SubResource("ShaderMaterial_pkwa7")
 
-[node name="MagicTower" type="Node3D" unique_id=314582809]
+[node name="MagicTower" type="Node3D" unique_id=314582809 node_paths=PackedStringArray("RingMesh")]
 script = ExtResource("1_3dpeg")
 BallPs = ExtResource("2_idin8")
+RingMesh = NodePath("Ring")
 
-[node name="StoneTowerModel" parent="." unique_id=1318580664 instance=ExtResource("1_pji2e")]
+[node name="MagicTowerModel" parent="." unique_id=1318580664 instance=ExtResource("1_pji2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20324183, 0)
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1371244372]
 radius = 1.5

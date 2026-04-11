@@ -54,8 +54,7 @@ public partial class Player : Node3D
     {
         GameManager.Instance.Player = this;
         GoldCountLb.Text = $"Gold : {_goldCount}";
-        BuildingPanelNode.Visible = false;
-        BuildingPanelNode.ProcessMode = ProcessModeEnum.Disabled;
+        OpenBuildingPanel(false);
         _zoomTarget = GlobalPosition.Y;
     }
 
@@ -95,15 +94,16 @@ public partial class Player : Node3D
     //正常状态
     private void NormalProcess(float delta)
     {
-        HandleSelectionAndCommand();
+       
     }
     private void NormalPhysicsProcess(float delta)
     {
         HandleMovement(delta);
+        HandleSelectionAndCommand();
         if (Input.IsActionJustPressed("Build"))
         {
-            BuildingPanelNode.Visible = true;
-            BuildingPanelNode.ProcessMode = ProcessModeEnum.Inherit;
+            OpenBuildingPanel(true);
+            
             CurState = PlayerState.ChooseBuilding;
         }
     }
@@ -117,8 +117,7 @@ public partial class Player : Node3D
     {
         if (Input.IsActionJustPressed("Exit"))
         {
-            BuildingPanelNode.Visible = false;
-            BuildingPanelNode.ProcessMode = ProcessModeEnum.Disabled;
+            OpenBuildingPanel(false);
             CurState = PlayerState.Normal;
         }
         Vector2 mousePos = GetViewport().GetMousePosition();
@@ -162,8 +161,7 @@ public partial class Player : Node3D
                     break;
             }
             GD.Print("点击了一个建筑item, 进入建筑预览模式");
-            BuildingPanelNode.Visible = false;
-            BuildingPanelNode.ProcessMode = ProcessModeEnum.Disabled;
+            OpenBuildingPanel(false);
             GetTree().CurrentScene.AddChild(curBuildingPreview);
             CurState = PlayerState.PreviewBuilding;
         }
@@ -460,6 +458,7 @@ public partial class Player : Node3D
             mainBase.Position = snapPos;
             GetTree().CurrentScene.AddChild(mainBase);
             GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+            mainBase.PlayBounceAnimation();
             curBuildingPreview.QueueFree();
             CurState = PlayerState.Normal;
         }
@@ -479,6 +478,7 @@ public partial class Player : Node3D
                 showFlagRingMainBase.ShowFlagRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
+            flag.PlayBounceAnimation();
             curBuildingPreview.QueueFree();
             CurState = PlayerState.Normal;
         }
@@ -498,6 +498,7 @@ public partial class Player : Node3D
                 showFlagRingMainBase.ShowFlagRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
+            goldMaker.PlayBounceAnimation();
             curBuildingPreview.QueueFree();
             CurState = PlayerState.Normal;
         }
@@ -517,11 +518,31 @@ public partial class Player : Node3D
                 showFlagRingMainBase.ShowFlagRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
+            magicTower.PlayBounceAnimation();
             curBuildingPreview.QueueFree();
             CurState = PlayerState.Normal;
         }
     }
 
+    private void OpenBuildingPanel(bool isOpen)
+    {
+        if(isOpen)
+        {
+            foreach(var node in BuildingPanelNode.GetChildren())
+            {
+                if (node is not BuildingItemBase bdItem)
+                    continue;
+                bdItem.PlayBounceAnimation();
+            }
+            BuildingPanelNode.Visible = true;
+            BuildingPanelNode.ProcessMode = ProcessModeEnum.Inherit;
+        }
+        else
+        {
+            BuildingPanelNode.Visible = false;
+            BuildingPanelNode.ProcessMode = ProcessModeEnum.Disabled;
+        }
+    }
 
     public void TakeGoldCount(int count)
     {

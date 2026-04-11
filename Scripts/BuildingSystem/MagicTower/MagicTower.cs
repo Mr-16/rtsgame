@@ -23,13 +23,16 @@ public partial class MagicTower : BuildingBase
     private float _atkRangeSq;
     private EnemyBase _curTargetEnemy;
     private MagicTowerState _curState;
+    [Export] public MeshInstance3D RingMesh;
+    private ShaderMaterial _ringMaterial;
 
-
-	public override void _Ready()
+    public override void _Ready()
 	{
         base._Ready();
         _atkRangeSq = AtkRange * AtkRange;
         _curState = MagicTowerState.Idle;
+        _ringMaterial = RingMesh.GetActiveMaterial(0) as ShaderMaterial;
+        ShowRing(false);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -77,6 +80,7 @@ public partial class MagicTower : BuildingBase
     private void UpdateAtk(float delta)
     {
         GD.Print("Atk!!!");
+        PlayBounceAnimation();
         MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();
         GetTree().CurrentScene.AddChild(ball);
         ball.Position = GlobalPosition;
@@ -120,5 +124,25 @@ public partial class MagicTower : BuildingBase
             }
         }
         return nearest;
+    }
+
+    public void ShowRing(bool isShow)
+    {
+        if (isShow)
+        {
+            RingMesh.Visible = true;
+            RingMesh.Scale = new Vector3(AtkRange, 1.0f, AtkRange);
+            _ringMaterial.SetShaderParameter("main_color", new Color(0.5f, 1f, 0.3f, 0.1f));
+            _ringMaterial.SetShaderParameter("segment_count", 10f);
+        }
+        else
+        {
+            RingMesh.Visible = false;
+        }
+    }
+    public override void SetSelected(bool isSelected)
+    {
+        base.SetSelected(isSelected);
+        ShowRing(isSelected);
     }
 }

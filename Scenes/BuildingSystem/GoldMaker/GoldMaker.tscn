@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dkko5xx43y4f0" path="res://Assets/Models/BuildingModels/GoldMakerModel.tscn" id="1_1ojli"]
 [ext_resource type="Script" uid="uid://c4o856jce6jgg" path="res://Scripts/BuildingSystem/GoldMaker/GoldMaker.cs" id="1_t66jo"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_t66jo"]
+size = Vector3(4.753296, 3.7739258, 5.0928345)
+
 [node name="GoldMaker" type="Node3D" unique_id=1913044115 node_paths=PackedStringArray("goldLb")]
 script = ExtResource("1_t66jo")
 goldLb = NodePath("Label3D")
@@ -19,3 +22,9 @@ billboard = 1
 text = "+100"
 font_size = 200
 outline_size = 50
+
+[node name="Area3D" type="Area3D" parent="." unique_id=535188964]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1802493951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1362915, 1.3869629, -0.0921936)
+shape = SubResource("BoxShape3D_t66jo")

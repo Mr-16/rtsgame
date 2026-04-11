@@ -39,6 +39,7 @@ public partial class Flag : BuildingBase
 
     public override void SetSelected(bool isSelected)
     {
+        base.SetSelected(isSelected);
         ShowBuildingRing(isSelected);
     }
 }

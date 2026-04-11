@@ -49,6 +49,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1944065, 0, -6.979121)
 [node name="MagicTowerItem" parent="Camera3D/BuildingPanelNode" unique_id=1317746433 instance=ExtResource("11_miouo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9885435, 0.30621624, -6.6379137)
 
+[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D/BuildingPanelNode" unique_id=5794739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5239315, 9.573603, -3.3132482)
+light_color = Color(1, 0.76862746, 0.40392157, 1)
+light_energy = 11.635
+omni_range = 24.613
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Camera3D/BuildingPanelNode" unique_id=1768510564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6752553, 3.7707314, -6.1747274)
+light_color = Color(1, 0.72156864, 0.05490196, 1)
+light_energy = 11.635
+omni_range = 24.613
+
 [node name="SelectRect" parent="." unique_id=1231996882 instance=ExtResource("2_kyqiw")]
 
 [node name="DebugLb" parent="." unique_id=1192042872 instance=ExtResource("3_gntrk")]

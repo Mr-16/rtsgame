@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bbja85lmjms1k" path="res://Scripts/BuildingSystem/MagicTower/MagicTower.cs" id="1_3dpeg"]
 [ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Assets/Models/BuildingModels/MagicTowerModel.tscn" id="1_pji2e"]
 [ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="2_3dpeg"]
+[ext_resource type="PackedScene" uid="uid://csh3vpavi2duk" path="res://Scenes/BuildingSystem/MagicTower/MagicTowerBall.tscn" id="2_idin8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_idin8"]
 size = Vector3(4.0856934, 1.3574219, 3.8574219)
@@ -25,6 +26,7 @@ material = SubResource("ShaderMaterial_pkwa7")
 
 [node name="MagicTower" type="Node3D" unique_id=314582809]
 script = ExtResource("1_3dpeg")
+BallPs = ExtResource("2_idin8")
 
 [node name="StoneTowerModel" parent="." unique_id=1318580664 instance=ExtResource("1_pji2e")]
 

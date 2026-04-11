@@ -50,7 +50,7 @@ public partial class GoldMaker : Node3D
         }
 
         GameManager.Instance.Player.TakeGoldCount(gainedGold);
-        GD.Print($"金矿机产出了 {gainedGold} 金币");
+        //GD.Print($"金矿机产出了 {gainedGold} 金币");
     }
 
     private async void ShowFloatingText(int gainedGold)

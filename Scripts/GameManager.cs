@@ -1,4 +1,5 @@
 using Godot;
+using RtsGame.Scripts.EnemySystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,6 +21,7 @@ namespace RtsGame.Scripts
         public uint INTERACTABLE_MASK = 1 << 1; // Layer 2
         public uint UI3D_MASK = 1 << 2; // Layer 3
         public Player Player;
+        public List<EnemyBase> EnemyList = new List<EnemyBase>();
 
         public override void _Ready()
         {

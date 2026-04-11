@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://csh3vpavi2duk"]
+
+[ext_resource type="Script" uid="uid://b6rotp8lb7r4u" path="res://Scripts/BuildingSystem/MagicTower/MagicTowerBall.cs" id="1_xfwit"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vbiar"]
+albedo_color = Color(0.3882353, 0, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xfwit"]
+material = SubResource("StandardMaterial3D_vbiar")
+
+[node name="MagicTowerBall" type="Node3D" unique_id=1455148901]
+script = ExtResource("1_xfwit")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1207613070]
+mesh = SubResource("SphereMesh_xfwit")

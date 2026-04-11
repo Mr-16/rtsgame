@@ -1,20 +1,20 @@
 [gd_scene format=3 uid="uid://cq4t1e2ch5604"]
 
 [ext_resource type="PackedScene" uid="uid://cju1vr25mrm6c" path="res://Scenes/Player.tscn" id="2_i63mn"]
-[ext_resource type="PackedScene" uid="uid://b60f2i1sxn7ue" path="res://Scenes/EnemySystem/Zombie.tscn" id="3_vnunq"]
+[ext_resource type="PackedScene" uid="uid://b60f2i1sxn7ue" path="res://Scenes/EnemySystem/Zombie/Zombie.tscn" id="3_vnunq"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nw7js"]
-sky_top_color = Color(0.69398445, 0.4102423, 0.9096438, 1)
-sky_horizon_color = Color(1.3113818, 1.1302875, 1.2688514, 1)
-ground_bottom_color = Color(0.9245726, 0.48393774, 0.53879166, 1)
-ground_horizon_color = Color(1.3113818, 1.1302875, 1.2688514, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i63mn"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Sky" id="Sky_nh7xm"]
-sky_material = SubResource("ProceduralSkyMaterial_nw7js")
+[sub_resource type="Sky" id="Sky_vnunq"]
+sky_material = SubResource("ProceduralSkyMaterial_i63mn")
 
-[sub_resource type="Environment" id="Environment_j0k67"]
+[sub_resource type="Environment" id="Environment_nw7js"]
 background_mode = 2
-sky = SubResource("Sky_nh7xm")
+sky = SubResource("Sky_vnunq")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -34,13 +34,12 @@ data = PackedVector3Array(-250, 0.5, 250, 250, 0.5, 250, -250, -0.5, 250, 250, 0
 
 [node name="Level1" type="Node3D" unique_id=325649260]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1714244248]
-environment = SubResource("Environment_j0k67")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=151057533]
+environment = SubResource("Environment_nw7js")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1771314375]
-transform = Transform3D(-0.9851093, 0.015881184, -0.17119397, 0, 0.9957247, 0.09237059, 0.17192902, 0.09099513, -0.98089767, 0, 0, 0)
-light_color = Color(0.95687574, 0.8738433, 0.95415694, 1)
-light_energy = 1.3
+transform = Transform3D(-0.9851093, 0.10959171, -0.13247362, 0, 0.7705132, 0.63742393, 0.17192908, 0.62793225, -0.7590397, 0, 0, 0)
+light_energy = 1.5
 shadow_enabled = true
 directional_shadow_max_distance = 119.0
 
@@ -59,226 +58,217 @@ mesh = SubResource("BoxMesh_oiua3")
 shape = SubResource("ConcavePolygonShape3D_i63mn")
 
 [node name="Zombie" parent="." unique_id=1761458888 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.01038, 0.54997516, 59.186028)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.261131, 0.54997516, 20.641914)
 
-[node name="Zombie2" parent="." unique_id=1462059421 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.566689, 0.54997516, 60.907326)
+[node name="Zombie3" parent="." unique_id=738095296 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.26803, 0.54997516, 7.4557343)
 
-[node name="Zombie3" parent="." unique_id=2048087398 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.463371, 0.54997516, 61.836514)
+[node name="Zombie4" parent="." unique_id=975888787 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.26803, 0.54997516, -15.544266)
 
-[node name="Zombie4" parent="." unique_id=798270109 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.484955, 0.54997516, 46.609184)
+[node name="Zombie5" parent="." unique_id=1979651387 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.26803, 0.54997516, -28.544266)
 
-[node name="Zombie5" parent="." unique_id=2023993137 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.041267, 0.54997516, 48.330482)
+[node name="Zombie6" parent="." unique_id=464032481 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.268028, 0.54997516, -54.544266)
 
-[node name="Zombie6" parent="." unique_id=497553946 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.937948, 0.54997516, 49.25967)
+[node name="Zombie7" parent="." unique_id=311120754 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7927856, 0.54997516, -60.26178)
 
-[node name="Zombie7" parent="." unique_id=1226963450 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.988644, 0.54997516, 51.04889)
+[node name="Zombie8" parent="." unique_id=778760423 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.598503, 0.54997516, -58.206177)
 
-[node name="Zombie8" parent="." unique_id=1503413314 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.544956, 0.54997516, 52.770187)
+[node name="Zombie9" parent="." unique_id=808971121 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.598503, 0.54997516, -58.206177)
 
-[node name="Zombie9" parent="." unique_id=321632565 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.441637, 0.54997516, 53.699375)
+[node name="Zombie2" parent="." unique_id=2059476408 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.40616, 0.54997516, 6.257683)
 
-[node name="Zombie10" parent="." unique_id=984934067 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.01135, 0.54997516, 11.048889)
+[node name="Zombie10" parent="." unique_id=1306108362 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.661949, 0.54997516, 37.04477)
 
-[node name="Zombie11" parent="." unique_id=2110047908 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.45505, 0.54997516, 12.770187)
+[node name="Zombie11" parent="." unique_id=213326424 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.668846, 0.54997516, 23.85859)
 
-[node name="Zombie12" parent="." unique_id=1456479694 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.558365, 0.54997516, 13.699375)
+[node name="Zombie12" parent="." unique_id=812050276 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.668846, 0.54997516, 0.8585892)
 
-[node name="Zombie13" parent="." unique_id=1073373946 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.789696, 0.54997516, 69.99982)
+[node name="Zombie13" parent="." unique_id=438799016 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.668846, 0.54997516, -12.141411)
 
-[node name="Zombie14" parent="." unique_id=2108935144 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.23339, 0.54997516, 71.721115)
+[node name="Zombie14" parent="." unique_id=1094796883 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.668846, 0.54997516, -38.14141)
 
-[node name="Zombie15" parent="." unique_id=1481129191 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.336708, 0.54997516, 72.6503)
+[node name="Zombie15" parent="." unique_id=567528173 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8063965, 0.54997516, -43.858925)
 
-[node name="Zombie16" parent="." unique_id=1364575847 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.705982, 0.54997516, -85.758064)
+[node name="Zombie16" parent="." unique_id=1657201952 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.197685, 0.54997516, -41.80332)
 
-[node name="Zombie17" parent="." unique_id=568140338 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.149673, 0.54997516, -84.036766)
+[node name="Zombie17" parent="." unique_id=1000649328 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.197685, 0.54997516, -41.80332)
 
-[node name="Zombie18" parent="." unique_id=587624260 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.25299, 0.54997516, -83.107574)
+[node name="Zombie18" parent="." unique_id=1999538652 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.00534, 0.54997516, 22.660538)
 
-[node name="Zombie19" parent="." unique_id=1259173782 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.231407, 0.54997516, -98.33491)
+[node name="Zombie19" parent="." unique_id=292702082 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.66195, 0.54997516, -41.95523)
 
-[node name="Zombie20" parent="." unique_id=432816835 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.675095, 0.54997516, -96.61361)
+[node name="Zombie20" parent="." unique_id=2029043151 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -110.668846, 0.54997516, -55.14141)
 
-[node name="Zombie21" parent="." unique_id=1312185795 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.778414, 0.54997516, -95.68442)
+[node name="Zombie21" parent="." unique_id=1221812440 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114.668846, 0.54997516, -78.14141)
 
-[node name="Zombie22" parent="." unique_id=1041984391 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.727718, 0.54997516, -93.8952)
+[node name="Zombie22" parent="." unique_id=1021146194 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.668846, 0.54997516, -91.14141)
 
-[node name="Zombie23" parent="." unique_id=1767655169 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.171406, 0.54997516, -92.173904)
+[node name="Zombie23" parent="." unique_id=2053636503 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.668846, 0.54997516, -117.14141)
 
-[node name="Zombie24" parent="." unique_id=1563875740 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.274725, 0.54997516, -91.24472)
+[node name="Zombie24" parent="." unique_id=349109879 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.1936, 0.54997516, -122.858925)
 
-[node name="Zombie25" parent="." unique_id=1462312829 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 137.72772, 0.54997516, -133.8952)
+[node name="Zombie25" parent="." unique_id=1303917938 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.802315, 0.54997516, -120.80332)
 
-[node name="Zombie26" parent="." unique_id=1253807371 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.17142, 0.54997516, -132.1739)
+[node name="Zombie26" parent="." unique_id=495118869 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.802315, 0.54997516, -120.80332)
 
-[node name="Zombie27" parent="." unique_id=928082105 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 148.27472, 0.54997516, -131.24472)
+[node name="Zombie27" parent="." unique_id=947968412 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.99466, 0.54997516, -56.339462)
 
-[node name="Zombie28" parent="." unique_id=1026793004 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.50606, 0.54997516, -74.944275)
+[node name="Zombie28" parent="." unique_id=1272336643 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.83592, 0.54997516, -64.79907)
 
-[node name="Zombie29" parent="." unique_id=1773388685 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.94975, 0.54997516, -73.22298)
+[node name="Zombie29" parent="." unique_id=403066172 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -151.84282, 0.54997516, -77.98525)
 
-[node name="Zombie30" parent="." unique_id=1521196381 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.05307, 0.54997516, -72.29379)
+[node name="Zombie30" parent="." unique_id=1246342204 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -155.84282, 0.54997516, -100.98525)
 
-[node name="Zombie31" parent="." unique_id=1894600421 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -155.37715, 0.54997516, -85.758064)
+[node name="Zombie31" parent="." unique_id=1593239856 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.84282, 0.54997516, -113.98525)
 
-[node name="Zombie32" parent="." unique_id=1806382847 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150.93346, 0.54997516, -84.036766)
+[node name="Zombie32" parent="." unique_id=1536251528 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.84282, 0.54997516, -139.98526)
 
-[node name="Zombie33" parent="." unique_id=545856286 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.83014, 0.54997516, -83.107574)
+[node name="Zombie33" parent="." unique_id=1002043661 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.367584, 0.54997516, -145.70276)
 
-[node name="Zombie34" parent="." unique_id=326522987 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -157.85172, 0.54997516, -98.33491)
+[node name="Zombie34" parent="." unique_id=1772122582 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.97629, 0.54997516, -143.64716)
 
-[node name="Zombie35" parent="." unique_id=251412869 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -153.40804, 0.54997516, -96.61361)
+[node name="Zombie35" parent="." unique_id=1981095745 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.97629, 0.54997516, -143.64716)
 
-[node name="Zombie36" parent="." unique_id=284988388 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -147.30472, 0.54997516, -95.68442)
+[node name="Zombie36" parent="." unique_id=669808484 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.16864, 0.54997516, -79.183304)
 
-[node name="Zombie37" parent="." unique_id=1410031949 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -158.35541, 0.54997516, -93.8952)
+[node name="Zombie37" parent="." unique_id=697256713 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.36229, 0.54997516, -66.168564)
 
-[node name="Zombie38" parent="." unique_id=1769348228 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -153.91173, 0.54997516, -92.173904)
+[node name="Zombie38" parent="." unique_id=1252784391 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.355392, 0.54997516, -79.354744)
 
-[node name="Zombie39" parent="." unique_id=1891939841 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -147.80841, 0.54997516, -91.24472)
+[node name="Zombie39" parent="." unique_id=798379956 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.355392, 0.54997516, -102.354744)
 
-[node name="Zombie40" parent="." unique_id=1719495596 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.355408, 0.54997516, -133.8952)
+[node name="Zombie40" parent="." unique_id=1434872118 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.355392, 0.54997516, -115.354744)
 
-[node name="Zombie41" parent="." unique_id=587652494 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.911713, 0.54997516, -132.1739)
+[node name="Zombie41" parent="." unique_id=1158869052 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.35539, 0.54997516, -141.35475)
 
-[node name="Zombie42" parent="." unique_id=451221600 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.80841, 0.54997516, -131.24472)
+[node name="Zombie42" parent="." unique_id=352999551 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.83063, 0.54997516, -147.07225)
 
-[node name="Zombie43" parent="." unique_id=1217717202 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.57707, 0.54997516, -74.944275)
+[node name="Zombie43" parent="." unique_id=685548438 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.221924, 0.54997516, -145.01665)
 
-[node name="Zombie44" parent="." unique_id=1531143470 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.13338, 0.54997516, -73.22298)
+[node name="Zombie44" parent="." unique_id=1692099225 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.221924, 0.54997516, -145.01665)
 
-[node name="Zombie45" parent="." unique_id=1146585507 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.03006, 0.54997516, -72.29379)
+[node name="Zombie45" parent="." unique_id=2082743947 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.02957, 0.54997516, -80.552795)
 
-[node name="Zombie46" parent="." unique_id=271119761 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -155.37715, 0.54997516, 9.412804)
+[node name="Zombie46" parent="." unique_id=1758136822 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.36365, 0.54997516, -57.793182)
 
-[node name="Zombie47" parent="." unique_id=1820224197 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150.93346, 0.54997516, 11.134102)
+[node name="Zombie47" parent="." unique_id=300700532 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.35675, 0.54997516, -70.97936)
 
-[node name="Zombie48" parent="." unique_id=1687687245 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.83014, 0.54997516, 12.063293)
+[node name="Zombie48" parent="." unique_id=588358874 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.35675, 0.54997516, -93.97936)
 
-[node name="Zombie49" parent="." unique_id=574439769 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -157.85172, 0.54997516, -3.1640396)
+[node name="Zombie49" parent="." unique_id=654439128 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.35675, 0.54997516, -106.97936)
 
-[node name="Zombie50" parent="." unique_id=1177840157 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -153.40804, 0.54997516, -1.4427414)
+[node name="Zombie50" parent="." unique_id=1449016851 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.35675, 0.54997516, -132.97937)
 
-[node name="Zombie51" parent="." unique_id=1853482919 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -147.30472, 0.54997516, -0.5135498)
+[node name="Zombie51" parent="." unique_id=1338321365 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 145.83199, 0.54997516, -138.69687)
 
-[node name="Zombie52" parent="." unique_id=151611613 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -158.35541, 0.54997516, 1.2756653)
+[node name="Zombie52" parent="." unique_id=1047988244 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 173.22328, 0.54997516, -136.64127)
 
-[node name="Zombie53" parent="." unique_id=452778887 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -153.91173, 0.54997516, 2.9969635)
+[node name="Zombie53" parent="." unique_id=1225109574 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 173.22328, 0.54997516, -136.64127)
 
-[node name="Zombie54" parent="." unique_id=43498009 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -147.80841, 0.54997516, 3.9261475)
+[node name="Zombie54" parent="." unique_id=1591320538 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.03093, 0.54997516, -72.177414)
 
-[node name="Zombie55" parent="." unique_id=1398909665 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.355408, 0.54997516, -38.724335)
+[node name="Zombie55" parent="." unique_id=1661559120 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.364456, 0.54997516, 37.424377)
 
-[node name="Zombie56" parent="." unique_id=281633087 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.911713, 0.54997516, -37.003036)
+[node name="Zombie56" parent="." unique_id=405380391 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88.35756, 0.54997516, 24.238197)
 
-[node name="Zombie57" parent="." unique_id=637039506 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.80841, 0.54997516, -36.073853)
+[node name="Zombie57" parent="." unique_id=1198328806 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.35756, 0.54997516, 1.2381973)
 
-[node name="Zombie58" parent="." unique_id=776637323 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.57707, 0.54997516, 20.226593)
+[node name="Zombie58" parent="." unique_id=77271738 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.35756, 0.54997516, -11.761803)
 
-[node name="Zombie59" parent="." unique_id=976373477 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.13338, 0.54997516, 21.947891)
+[node name="Zombie59" parent="." unique_id=620747305 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.35756, 0.54997516, -37.76181)
 
-[node name="Zombie60" parent="." unique_id=115068174 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.03006, 0.54997516, 22.877075)
+[node name="Zombie60" parent="." unique_id=644846854 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.8328, 0.54997516, -43.47931)
 
-[node name="Zombie61" parent="." unique_id=923071882 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.93283, 0.54997516, 9.412804)
+[node name="Zombie61" parent="." unique_id=522172499 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 162.22409, 0.54997516, -41.423706)
 
-[node name="Zombie62" parent="." unique_id=1112323529 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114.489136, 0.54997516, 11.134102)
+[node name="Zombie62" parent="." unique_id=2123284653 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 162.22409, 0.54997516, -41.423706)
 
-[node name="Zombie63" parent="." unique_id=442378523 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -108.38582, 0.54997516, 12.063293)
+[node name="Zombie63" parent="." unique_id=50714352 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.03174, 0.54997516, 23.040146)
 
-[node name="Zombie64" parent="." unique_id=297992872 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.407394, 0.54997516, -3.1640396)
+[node name="Zombie64" parent="." unique_id=152559945 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.44714, 0.54997516, 71.723694)
 
-[node name="Zombie65" parent="." unique_id=498802048 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -116.963715, 0.54997516, -1.4427414)
+[node name="Zombie65" parent="." unique_id=599111258 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.44025, 0.54997516, 58.537514)
 
-[node name="Zombie66" parent="." unique_id=550317791 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -110.8604, 0.54997516, -0.5135498)
+[node name="Zombie66" parent="." unique_id=1629493955 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.440247, 0.54997516, 35.537514)
 
-[node name="Zombie67" parent="." unique_id=598138003 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.91109, 0.54997516, 1.2756653)
+[node name="Zombie67" parent="." unique_id=430550286 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.44025, 0.54997516, 22.537514)
 
-[node name="Zombie68" parent="." unique_id=1336413499 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -117.46741, 0.54997516, 2.9969635)
+[node name="Zombie68" parent="." unique_id=1562875740 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.44025, 0.54997516, -3.462494)
 
-[node name="Zombie69" parent="." unique_id=1321625751 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.36409, 0.54997516, 3.9261475)
+[node name="Zombie69" parent="." unique_id=470223374 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.91548, 0.54997516, -9.179993)
 
-[node name="Zombie70" parent="." unique_id=1531913 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.088913, 0.54997516, -38.724335)
+[node name="Zombie70" parent="." unique_id=227959409 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140.30678, 0.54997516, -7.1243896)
 
-[node name="Zombie71" parent="." unique_id=565775482 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.532608, 0.54997516, -37.003036)
+[node name="Zombie71" parent="." unique_id=232721737 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140.30678, 0.54997516, -7.1243896)
 
-[node name="Zombie72" parent="." unique_id=214700241 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.63591, 0.54997516, -36.073853)
-
-[node name="Zombie73" parent="." unique_id=1910170831 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.13275, 0.54997516, 20.226593)
-
-[node name="Zombie74" parent="." unique_id=273620308 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.689056, 0.54997516, 21.947891)
-
-[node name="Zombie75" parent="." unique_id=1385727647 instance=ExtResource("3_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.58574, 0.54997516, 22.877075)
+[node name="Zombie72" parent="." unique_id=714739887 instance=ExtResource("3_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150.11443, 0.54997516, 57.339462)

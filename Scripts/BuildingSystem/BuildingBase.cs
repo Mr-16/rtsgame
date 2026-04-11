@@ -9,6 +9,7 @@ namespace RtsGame.Scripts
 {
     public partial class BuildingBase : Node3D
     {
+        [Export] public float ModelRadius = 2;
         public override void _Ready()
         {
             GameManager.Instance.BuildingList.Add(this);

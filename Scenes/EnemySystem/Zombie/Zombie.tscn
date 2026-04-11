@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byt7gfhkiqrsj" path="res://Scripts/EnemySystem/Zombie.cs" id="1_gu6e4"]
 [ext_resource type="PackedScene" uid="uid://b2vx5jhwwt5wb" path="res://Assets/Models/CharacterModels/ZombieModel.tscn" id="2_yvxqv"]
+[ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="3_t14eh"]
 
 [sub_resource type="Animation" id="Animation_1htrt"]
 resource_name = "Atk"
@@ -71,12 +72,31 @@ _data = {
 &"RESET": SubResource("Animation_yvxqv")
 }
 
-[node name="Zombie" type="Node3D" unique_id=1761458888 node_paths=PackedStringArray("animPlayer")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t14eh"]
+render_priority = 0
+shader = ExtResource("3_t14eh")
+shader_parameter/health_value = 0.3410000161975
+shader_parameter/color_good = Color(0, 1, 0, 1)
+shader_parameter/color_bad = Color(1, 0, 0, 1)
+shader_parameter/color_bg = Color(0.1, 0.1, 0.1, 0.8)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_xjftu"]
+material = SubResource("ShaderMaterial_t14eh")
+size = Vector2(2.875, 0.2)
+
+[node name="Zombie" type="Node3D" unique_id=1761458888 node_paths=PackedStringArray("animPlayer", "HpBarMesh")]
 script = ExtResource("1_gu6e4")
 animPlayer = NodePath("AnimationPlayer")
+HpBarMesh = NodePath("HpMesh")
 
 [node name="ZombieModel" parent="." unique_id=1157258495 instance=ExtResource("2_yvxqv")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.95002675, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=177989970]
 libraries/ = SubResource("AnimationLibrary_1htrt")
+
+[node name="HpMesh" type="MeshInstance3D" parent="." unique_id=829494295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5923069, 0)
+mesh = SubResource("QuadMesh_xjftu")

@@ -50,7 +50,7 @@ public partial class GoldMaker : BuildingBase
             ShowFloatingText(gainedGold);
         }
 
-        GameManager.Instance.Player.TakeGoldCount(gainedGold);
+        GameManager.Instance.Player.ChangeGoldCount(gainedGold);
         //GD.Print($"金矿机产出了 {gainedGold} 金币");
     }
 

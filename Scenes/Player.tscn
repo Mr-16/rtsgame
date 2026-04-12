@@ -35,28 +35,28 @@ MagicTowerPreviewPs = ExtResource("9_arntx")
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
 
 [node name="BuildingPanelNode" type="Node3D" parent="Camera3D" unique_id=1460582463]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7683716e-07, -1.5364136, -3.9783401)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7683716e-07, -1.5364136, -16.78307)
 
 [node name="FlagItem" parent="Camera3D/BuildingPanelNode" unique_id=729729234 instance=ExtResource("5_52ee3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.030468, -0.9927484, -6.5947056)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.921671, -1.0447985, 1.5146217)
 
 [node name="MainBaseItem" parent="Camera3D/BuildingPanelNode" unique_id=1560851358 instance=ExtResource("2_dewec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.108639, 0, -7.2281265)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.939087, 9.536743e-07, 3.0221272)
 
 [node name="GoldMakerItem" parent="Camera3D/BuildingPanelNode" unique_id=253741175 instance=ExtResource("10_miouo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1944065, 0, -6.979121)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.546898, -0.45176792, 4.0706615)
 
 [node name="MagicTowerItem" parent="Camera3D/BuildingPanelNode" unique_id=1317746433 instance=ExtResource("11_miouo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9885435, 0.30621624, -6.6379137)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9045773, -0.6726266, 2.5407934)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Camera3D/BuildingPanelNode" unique_id=5794739]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5239315, 9.573603, -3.3132482)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5239315, 9.573603, 4.497917)
 light_color = Color(1, 0.76862746, 0.40392157, 1)
 light_energy = 11.635
 omni_range = 24.613
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Camera3D/BuildingPanelNode" unique_id=1768510564]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6752553, 3.7707314, -6.1747274)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6752553, 3.7707314, 1.6364365)
 light_color = Color(1, 0.72156864, 0.05490196, 1)
 light_energy = 11.635
 omni_range = 24.613

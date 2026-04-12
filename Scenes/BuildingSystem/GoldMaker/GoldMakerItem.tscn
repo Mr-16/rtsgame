@@ -6,10 +6,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_0djno"]
 size = Vector3(4.6436157, 3.4231796, 4.8338623)
 
-[node name="GoldMakerItem" type="Node3D" unique_id=253741175 node_paths=PackedStringArray("Area")]
+[node name="GoldMakerItem" type="Node3D" unique_id=253741175 node_paths=PackedStringArray("Area", "PriceLb")]
 script = ExtResource("2_0djno")
 Type = 2
 Area = NodePath("Area3D")
+PriceLb = NodePath("PriceLb")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=500535351]
 collision_layer = 4
@@ -20,3 +21,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05117798, 1.7080116, -0.37
 shape = SubResource("BoxShape3D_0djno")
 
 [node name="GoldMakerModel" parent="." unique_id=2065775939 instance=ExtResource("1_0yu3m")]
+
+[node name="PriceLb" type="Label3D" parent="." unique_id=1197276904]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8695278, 0)
+modulate = Color(1, 0.8235294, 0, 1)
+text = "300Gold"
+font_size = 114
+outline_size = 38

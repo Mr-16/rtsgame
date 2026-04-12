@@ -6,10 +6,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_1f36q"]
 size = Vector3(2.9893265, 5.003826, 4.8338623)
 
-[node name="FlagItem" type="Node3D" unique_id=729729234 node_paths=PackedStringArray("Area")]
+[node name="FlagItem" type="Node3D" unique_id=729729234 node_paths=PackedStringArray("Area", "PriceLb")]
 script = ExtResource("2_r7yfr")
 Type = 1
 Area = NodePath("Area3D")
+PriceLb = NodePath("PriceLb")
+Price = 50
 
 [node name="FlagModel" parent="." unique_id=1357317480 instance=ExtResource("2_pq4xu")]
 
@@ -20,3 +22,10 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=229929592]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7550087, 2.6950321, -0.37554932)
 shape = SubResource("BoxShape3D_1f36q")
+
+[node name="PriceLb" type="Label3D" parent="." unique_id=1885379998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.92813635, 0)
+modulate = Color(1, 0.8235294, 0, 1)
+text = "300Gold"
+font_size = 150
+outline_size = 38

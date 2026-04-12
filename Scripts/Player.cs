@@ -27,7 +27,7 @@ public partial class Player : Node3D
     const float DragThreshold = 5f; // 拖拽阈值, 超过这个值才算拖拽, 不然算单击
 
     [Export] public Label GoldCountLb;
-    private int _goldCount = 0;
+    private int _goldCount = 1000;
     private List<UnitBase> _curSelectedUnitList = new List<UnitBase>();
 
     public PlayerState CurState = PlayerState.Normal;
@@ -133,6 +133,9 @@ public partial class Player : Node3D
             Node3D hitObject = (Node3D)result["collider"];
             if (hitObject is not Area3D area || area.Owner is not BuildingItemBase item)
                 return;
+            if (_goldCount < item.Price)
+                return;
+            ChangeGoldCount(-item.Price);
             foreach (var mainBase in GameManager.Instance.MainBaseList)
                 mainBase.ShowFlagRing(true);
             foreach (var flag in GameManager.Instance.FlagList)
@@ -544,7 +547,7 @@ public partial class Player : Node3D
         }
     }
 
-    public void TakeGoldCount(int count)
+    public void ChangeGoldCount(int count)
     {
         _goldCount += count;
         GoldCountLb.Text = $"Gold : {_goldCount}";

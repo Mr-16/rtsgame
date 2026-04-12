@@ -6,10 +6,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_pk8oe"]
 size = Vector3(4.6436157, 5.07724, 4.8338623)
 
-[node name="MagicTowerItem" type="Node3D" unique_id=1317746433 node_paths=PackedStringArray("Area")]
+[node name="MagicTowerItem" type="Node3D" unique_id=1317746433 node_paths=PackedStringArray("Area", "PriceLb")]
 script = ExtResource("1_12hf6")
 Type = 4
 Area = NodePath("Area3D")
+PriceLb = NodePath("PriceLb")
+Price = 200
 
 [node name="StoneTowerModel" parent="." unique_id=1318580664 instance=ExtResource("2_x000k")]
 
@@ -20,3 +22,10 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1017243223]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05117798, 2.03862, -0.37554932)
 shape = SubResource("BoxShape3D_pk8oe")
+
+[node name="PriceLb" type="Label3D" parent="." unique_id=1406554760]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0693501, 0)
+modulate = Color(1, 0.8235294, 0, 1)
+text = "300Gold"
+font_size = 114
+outline_size = 38

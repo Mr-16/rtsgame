@@ -5,8 +5,9 @@ using System;
 public partial class BuildingItemBase : Node3D
 {
     [Export] public BuildingType Type;
-
     [Export] public Area3D Area;
+    [Export] public Label3D PriceLb;
+    [Export] public int Price = 100;
 
     private Tween tween;
     private Vector3 _originalScale = Vector3.One;
@@ -19,6 +20,8 @@ public partial class BuildingItemBase : Node3D
         Area.MouseExited += OnMouseExited;
         _hoverScale = new Vector3(_scale, _scale, _scale);
         _originalScale = Scale;  // 保存初始缩放
+        PriceLb.Text = $"{Price}Gold";
+        PriceLb.FontSize = 150;
     }
 
     private void OnMouseEntered()

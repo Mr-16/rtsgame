@@ -81,6 +81,7 @@ public partial class MagicTower : BuildingBase
     {
         GD.Print("Atk!!!");
         PlayBounceAnimation();
+        _curTargetEnemy.LogicCurHp -= Damage;
         MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();
         GetTree().CurrentScene.AddChild(ball);
         ball.Position = GlobalPosition;
@@ -115,7 +116,7 @@ public partial class MagicTower : BuildingBase
         foreach (var enemy in enemys)
         {
             if (!IsInstanceValid(enemy)) continue;
-
+            if(enemy.LogicCurHp <= 0) continue;
             float dist = GlobalPosition.DistanceSquaredTo(enemy.GlobalPosition);
             if (dist < minDistance)
             {

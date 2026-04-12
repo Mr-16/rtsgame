@@ -58,4 +58,6 @@ mesh = SubResource("BoxMesh_oiua3")
 shape = SubResource("ConcavePolygonShape3D_i63mn")
 
 [node name="EnemySpawner" parent="." unique_id=656649651 instance=ExtResource("2_vnunq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.36473, 0.5, -129.54507)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.36473, 0.5, -109.66171)
+CdTime = 1.0
+SpawnRadius = 100.0

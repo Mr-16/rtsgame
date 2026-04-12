@@ -14,20 +14,20 @@ namespace RtsGame.Scripts.EnemySystem
     {
         [Export] public float MoveSpeed = 4.0f;
         [Export] public float AtkRange = 1.0f;
-        [Export] public float MaxHp = 100;
         [Export] private AnimationPlayer animPlayer;
         [Export] private MeshInstance3D HpBarMesh;
         private ShaderMaterial _hpMaterial;
 
         private float _atkRangeSq;
-        private float _curHp;
         private ZombieState _curState;
         private BuildingBase _targetBuilding;
+
 
         public override void _Ready()
         {
             base._Ready();
             _curHp = MaxHp;
+            LogicCurHp = _curHp;
             _atkRangeSq = AtkRange * AtkRange;
             animPlayer.Play("Move");
             _curState = ZombieState.Chase;

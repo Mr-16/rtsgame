@@ -11,6 +11,9 @@ namespace RtsGame.Scripts.EnemySystem
     public partial class EnemyBase : Node3D
     {
         [Export] public EnemeyType Type;
+        [Export] public float MaxHp = 100;
+        protected float _curHp;
+        public float LogicCurHp;
 
         public override void _Ready()
         {

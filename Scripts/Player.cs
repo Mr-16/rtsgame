@@ -201,7 +201,7 @@ public partial class Player : Node3D
         Vector3 hitPos = (Vector3)result["position"];
         Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
 
-        bool inRange = false;
+        bool inRange = false;//是否在圈内
         float distSq = 0;
         foreach (var curMainBase in GameManager.Instance.MainBaseList)
         {
@@ -225,23 +225,23 @@ public partial class Player : Node3D
             }
         }
 
-        bool isPlace = false;
+        bool isPlaced = false;
         switch (_curBuildingType)
         {
             case BuildingType.MainBase:
-                isPlace = PreviewMainBase(snapPos);
+                isPlaced = PreviewMainBase(snapPos);
                 break;
             case BuildingType.Flag:
-                isPlace = PreviewFlag(snapPos, inRange);
+                isPlaced = PreviewFlag(snapPos, inRange);
                 break;
             case BuildingType.GoldMaker:
-                isPlace = PreviewGoldMaker(snapPos, inRange);
+                isPlaced = PreviewGoldMaker(snapPos, inRange);
                 break;
             case BuildingType.MagicTower:
-                isPlace = PreviewMagicTower(snapPos, inRange);
+                isPlaced = PreviewMagicTower(snapPos, inRange);
                 break;
         }
-        if(isPlace)
+        if(isPlaced)
         {
             foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
                 showFlagRingMainBase.ShowFlagRing(false);

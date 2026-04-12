@@ -103,14 +103,14 @@ namespace RtsGame.Scripts
             }
 
             // 这里存的时候，建议依然存 start 索引，方便后续 Remove
-            _occupiedAreas[start] = cells;
+            Vector2I snapWorldPos = WorldToGrid(centerWorldPos);
+            _occupiedAreas[snapWorldPos] = cells;
             return true;
         }
 
         public void Remove(Vector3 worldPos)
         {
             Vector2I start = WorldToGrid(worldPos);
-
             if (_occupiedAreas.TryGetValue(start, out var cells))
             {
                 foreach (var cell in cells)

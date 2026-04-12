@@ -66,7 +66,7 @@ namespace RtsGame.Scripts
                 var mat = _materialList[i];
                 if (canPlace)
                 {
-                    // 变为红色半透明
+                    // 变为绿色半透明
                     mat.AlbedoColor = new Color(0.0f, 1.0f, 0.0f, 0.5f);
 
                     // 如果原本不是透明的，必须开启 Alpha 混合，否则半透明无效

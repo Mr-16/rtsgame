@@ -78,6 +78,8 @@ namespace RtsGame.Scripts.EnemySystem
             if (distToTargetSq <= totalRangeSq)
             {
                 animPlayer.Play("Atk");
+                animPlayer.AnimationFinished += OnAtkAnimFinish;
+                _targetBuilding.TakeDmg(23);
                 _curState = ZombieState.Atk;
                 return;
             }
@@ -95,23 +97,6 @@ namespace RtsGame.Scripts.EnemySystem
                 _curState = ZombieState.Death;
                 QueueFree();
             }
-
-            //if (!IsInstanceValid(_targetBuilding))
-            //{
-            //    TransitionTo(ZombieState.Chase);
-            //    return;
-            //}
-
-            //// 检查目标是否跑出了范围（可选）
-            //float distToTarget = GlobalPosition.DistanceTo(_targetBuilding.GlobalPosition);
-            //if (distToTarget > AtkRange + 0.5f) // 加一点缓冲防止状态抖动
-            //{
-            //    TransitionTo(ZombieState.Chase);
-            //    return;
-            //}
-
-            // 这里编写攻击逻辑，例如扣除建筑血量
-            // GD.Print("正在撕咬建筑...");
         }
 
         private void UpdateHurt(float delta)
@@ -161,6 +146,12 @@ namespace RtsGame.Scripts.EnemySystem
             }
             _hpMaterial.SetShaderParameter("health_value", _curHp / MaxHp);
             HpBarMesh.SetSurfaceOverrideMaterial(0, _hpMaterial);
+        }
+
+        private void OnAtkAnimFinish(StringName name)
+        {
+            _curState = ZombieState.Chase;
+            animPlayer.AnimationFinished -= OnAtkAnimFinish;
         }
     }
 }

@@ -42,4 +42,10 @@ public partial class Flag : BuildingBase
         base.SetSelected(isSelected);
         ShowBuildingRing(isSelected);
     }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        GameManager.Instance.FlagList.Remove(this);
+    }
 }

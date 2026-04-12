@@ -27,12 +27,13 @@ public partial class Player : Node3D
     const float DragThreshold = 5f; // 拖拽阈值, 超过这个值才算拖拽, 不然算单击
 
     [Export] public Label GoldCountLb;
-    private int _goldCount = 1000;
+    private int _goldCount = 10000;
     private List<UnitBase> _curSelectedUnitList = new List<UnitBase>();
 
     public PlayerState CurState = PlayerState.Normal;
 
     private BuildingType _curBuildingType;
+    private int _curBuildingPrice;
     [Export] public Node3D BuildingPanelNode;
     private BuildingPreviewBase curBuildingPreview;
 
@@ -136,6 +137,7 @@ public partial class Player : Node3D
             if (_goldCount < item.Price)
                 return;
             ChangeGoldCount(-item.Price);
+            _curBuildingPrice = item.Price;
             foreach (var mainBase in GameManager.Instance.MainBaseList)
                 mainBase.ShowFlagRing(true);
             foreach (var flag in GameManager.Instance.FlagList)
@@ -185,6 +187,7 @@ public partial class Player : Node3D
                 showFlagRingMainBase.ShowFlagRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
+            ChangeGoldCount(_curBuildingPrice);
             curBuildingPreview.QueueFree();
             CurState = PlayerState.Normal;
         }
@@ -222,22 +225,36 @@ public partial class Player : Node3D
             }
         }
 
+        bool isPlace = false;
         switch (_curBuildingType)
         {
             case BuildingType.MainBase:
-                PreviewMainBase(snapPos);
+                isPlace = PreviewMainBase(snapPos);
                 break;
             case BuildingType.Flag:
-                PreviewFlag(snapPos, inRange);
+                isPlace = PreviewFlag(snapPos, inRange);
                 break;
             case BuildingType.GoldMaker:
-                PreviewGoldMaker(snapPos, inRange);
+                isPlace = PreviewGoldMaker(snapPos, inRange);
                 break;
             case BuildingType.MagicTower:
-                PreviewMagicTower(snapPos, inRange);
+                isPlace = PreviewMagicTower(snapPos, inRange);
                 break;
         }
-        curBuildingPreview.GlobalPosition = snapPos;
+        if(isPlace)
+        {
+            foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
+                showFlagRingMainBase.ShowFlagRing(false);
+            foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
+                showBuildingRingFlag.ShowBuildingRing(false);
+            GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
+            curBuildingPreview.QueueFree();
+            CurState = PlayerState.Normal;
+        }
+        else
+        {
+            curBuildingPreview.GlobalPosition = snapPos;
+        }
     }
 
     private void HandleMovement(float delta)
@@ -451,7 +468,7 @@ public partial class Player : Node3D
         _curSelectedUnitList.Clear();
     }
 
-    private void PreviewMainBase(Vector3 snapPos)
+    private bool PreviewMainBase(Vector3 snapPos)
     {
         bool canPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
         curBuildingPreview.SetCanPlace(canPlace);
@@ -460,13 +477,12 @@ public partial class Player : Node3D
             MainBase mainBase = MainBasePs.Instantiate<MainBase>();
             mainBase.Position = snapPos;
             GetTree().CurrentScene.AddChild(mainBase);
-            GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
             mainBase.PlayBounceAnimation();
-            curBuildingPreview.QueueFree();
-            CurState = PlayerState.Normal;
+            return true;
         }
+        return false;
     }
-    private void PreviewFlag(Vector3 snapPos, bool inRange)
+    private bool PreviewFlag(Vector3 snapPos, bool inRange)
     {
         bool canPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height) && inRange;
         curBuildingPreview.SetCanPlace(canPlace);
@@ -476,17 +492,12 @@ public partial class Player : Node3D
             Flag flag = FlagPs.Instantiate<Flag>();
             flag.Position = snapPos;
             GetTree().CurrentScene.AddChild(flag);
-            GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
-            foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
-                showFlagRingMainBase.ShowFlagRing(false);
-            foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
-                showBuildingRingFlag.ShowBuildingRing(false);
             flag.PlayBounceAnimation();
-            curBuildingPreview.QueueFree();
-            CurState = PlayerState.Normal;
+            return true;
         }
+        return false;
     }
-    private void PreviewGoldMaker(Vector3 snapPos, bool inRange)
+    private bool PreviewGoldMaker(Vector3 snapPos, bool inRange)
     {
         bool canPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height) && inRange;
         curBuildingPreview.SetCanPlace(canPlace);
@@ -496,17 +507,12 @@ public partial class Player : Node3D
             GoldMaker goldMaker = GoldMakerPs.Instantiate<GoldMaker>();
             goldMaker.Position = snapPos;
             GetTree().CurrentScene.AddChild(goldMaker);
-            GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
-            foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
-                showFlagRingMainBase.ShowFlagRing(false);
-            foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
-                showBuildingRingFlag.ShowBuildingRing(false);
             goldMaker.PlayBounceAnimation();
-            curBuildingPreview.QueueFree();
-            CurState = PlayerState.Normal;
+            return true;
         }
+        return false;
     }
-    private void PreviewMagicTower(Vector3 snapPos, bool inRange)
+    private bool PreviewMagicTower(Vector3 snapPos, bool inRange)
     {
         bool canPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height) && inRange;
         curBuildingPreview.SetCanPlace(canPlace);
@@ -516,15 +522,10 @@ public partial class Player : Node3D
             MagicTower magicTower = MagicTowerPs.Instantiate<MagicTower>();
             magicTower.Position = snapPos;
             GetTree().CurrentScene.AddChild(magicTower);
-            GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
-            foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
-                showFlagRingMainBase.ShowFlagRing(false);
-            foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
-                showBuildingRingFlag.ShowBuildingRing(false);
             magicTower.PlayBounceAnimation();
-            curBuildingPreview.QueueFree();
-            CurState = PlayerState.Normal;
+            return true;
         }
+        return false;
     }
 
     private void OpenBuildingPanel(bool isOpen)

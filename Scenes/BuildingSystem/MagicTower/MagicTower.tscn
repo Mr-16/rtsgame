@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bsixsesloq80n" path="res://Assets/Models/BuildingModels/MagicTowerModel.tscn" id="1_pji2e"]
 [ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="2_3dpeg"]
 [ext_resource type="PackedScene" uid="uid://csh3vpavi2duk" path="res://Scenes/BuildingSystem/MagicTower/MagicTowerBall.tscn" id="2_idin8"]
+[ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="5_pkwa7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_idin8"]
 size = Vector3(4.0856934, 1.3574219, 3.8574219)
@@ -24,10 +25,25 @@ shader_parameter/pulse_amplitude = 0.05
 [sub_resource type="PlaneMesh" id="PlaneMesh_2jgh0"]
 material = SubResource("ShaderMaterial_pkwa7")
 
-[node name="MagicTower" type="Node3D" unique_id=314582809 node_paths=PackedStringArray("RingMesh")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t14eh"]
+render_priority = 0
+shader = ExtResource("5_pkwa7")
+shader_parameter/health_value = 0.3410000161975
+shader_parameter/color_good = Color(0, 1, 0, 1)
+shader_parameter/color_bad = Color(1, 0, 0, 1)
+shader_parameter/color_bg = Color(0.1, 0.1, 0.1, 0.8)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_2jgh0"]
+material = SubResource("ShaderMaterial_t14eh")
+size = Vector2(2.875, 0.2)
+
+[node name="MagicTower" type="Node3D" unique_id=314582809 node_paths=PackedStringArray("RingMesh", "HpBarMesh")]
 script = ExtResource("1_3dpeg")
 BallPs = ExtResource("2_idin8")
 RingMesh = NodePath("Ring")
+HpBarMesh = NodePath("HpMesh")
 
 [node name="MagicTowerModel" parent="." unique_id=1318580664 instance=ExtResource("1_pji2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20324183, 0)
@@ -49,3 +65,7 @@ shape = SubResource("BoxShape3D_idin8")
 [node name="Ring" type="MeshInstance3D" parent="." unique_id=1150850958]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5434325, 0)
 mesh = SubResource("PlaneMesh_2jgh0")
+
+[node name="HpMesh" type="MeshInstance3D" parent="." unique_id=385835287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1707506, 0)
+mesh = SubResource("QuadMesh_2jgh0")

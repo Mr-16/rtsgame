@@ -41,4 +41,10 @@ public partial class MainBase : BuildingBase
         base.SetSelected(isSelected);
         ShowFlagRing(isSelected);
     }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        GameManager.Instance.MainBaseList.Remove(this);
+    }
 }

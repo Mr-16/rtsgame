@@ -146,4 +146,10 @@ public partial class MagicTower : BuildingBase
         base.SetSelected(isSelected);
         ShowRing(isSelected);
     }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        //GameManager.Instance.BuildingGridMap.Remove(GlobalPosition);
+    }
 }

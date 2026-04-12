@@ -7,7 +7,6 @@
 [sub_resource type="Animation" id="Animation_1htrt"]
 resource_name = "Atk"
 length = 0.53333336
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

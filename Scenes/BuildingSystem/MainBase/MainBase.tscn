@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://qqlv3tvsxhja" path="res://Scripts/BuildingSystem/MainBase/MainBase.cs" id="1_ei8je"]
 [ext_resource type="PackedScene" uid="uid://cakopr0j6tprj" path="res://Assets/Models/BuildingModels/MainBaseModel.tscn" id="2_c7eov"]
 [ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="3_n636v"]
+[ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="4_3tx0y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lrlth"]
 size = Vector3(4.0856934, 1.3574219, 3.8574219)
@@ -23,10 +24,25 @@ shader_parameter/pulse_amplitude = 0.05
 [sub_resource type="PlaneMesh" id="PlaneMesh_cc1fh"]
 material = SubResource("ShaderMaterial_3tx0y")
 
-[node name="MainBase" type="Node3D" unique_id=1513774683 node_paths=PackedStringArray("RingMesh")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cc1fh"]
+render_priority = 0
+shader = ExtResource("4_3tx0y")
+shader_parameter/health_value = 0.3410000161975
+shader_parameter/color_good = Color(0, 1, 0, 1)
+shader_parameter/color_bad = Color(1, 0, 0, 1)
+shader_parameter/color_bg = Color(0.1, 0.1, 0.1, 0.8)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_b16cw"]
+material = SubResource("ShaderMaterial_cc1fh")
+size = Vector2(2.875, 0.2)
+
+[node name="MainBase" type="Node3D" unique_id=1513774683 node_paths=PackedStringArray("RingMesh", "HpBarMesh")]
 script = ExtResource("1_ei8je")
 FlagRange = 5.0
 RingMesh = NodePath("Ring")
+HpBarMesh = NodePath("HpMesh")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=801012032]
 radius = 2.2
@@ -46,3 +62,7 @@ shape = SubResource("BoxShape3D_lrlth")
 [node name="Ring" type="MeshInstance3D" parent="." unique_id=1717960613]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5434325, 0)
 mesh = SubResource("PlaneMesh_cc1fh")
+
+[node name="HpMesh" type="MeshInstance3D" parent="." unique_id=2087477193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.456647, 0)
+mesh = SubResource("QuadMesh_b16cw")

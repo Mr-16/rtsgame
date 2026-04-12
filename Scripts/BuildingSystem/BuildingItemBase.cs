@@ -22,6 +22,7 @@ public partial class BuildingItemBase : Node3D
         _originalScale = Scale;  // 保存初始缩放
         PriceLb.Text = $"{Price}Gold";
         PriceLb.FontSize = 150;
+        
     }
 
     private void OnMouseEntered()

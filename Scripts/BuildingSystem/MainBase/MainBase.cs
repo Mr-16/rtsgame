@@ -4,42 +4,32 @@ using System;
 
 public partial class MainBase : BuildingBase
 {
-    [Export] public float FlagRange = 10;
+    [Export] public float BuildRange = 10;
     public float FlagRangeSq;
-    [Export] public MeshInstance3D RingMesh;
+    [Export] public MeshInstance3D BuildRingMesh;
     private ShaderMaterial _ringMaterial;
     public override void _Ready()
 	{
         base._Ready();
         GameManager.Instance.MainBaseList.Add(this);
-        _ringMaterial = RingMesh.GetActiveMaterial(0) as ShaderMaterial;
-        ShowFlagRing(false);
-        FlagRangeSq = FlagRange * FlagRange;
+        _ringMaterial = BuildRingMesh.GetActiveMaterial(0) as ShaderMaterial;
+        ShowBuildRing(false);
+        FlagRangeSq = BuildRange * BuildRange;
     }
 
 	public override void _Process(double delta)
 	{
 	}
 
-    public void ShowFlagRing(bool isShow)
+    public void ShowBuildRing(bool isShow)
     {
-        if (isShow)
-        {
-            RingMesh.Visible = true;
-            RingMesh.Scale = new Vector3(FlagRange, 1.0f, FlagRange);
-            _ringMaterial.SetShaderParameter("main_color", new Color(0.7f, 0.3f, 0.3f, 0.1f));
-            _ringMaterial.SetShaderParameter("segment_count", 0f);
-        }
-        else
-        {
-            RingMesh.Visible = false;
-        }
+        BuildRingMesh.Visible = isShow;
     }
 
     public override void SetSelected(bool isSelected)
     {
         base.SetSelected(isSelected);
-        ShowFlagRing(isSelected);
+        ShowBuildRing(isSelected);
     }
 
     public override void _ExitTree()

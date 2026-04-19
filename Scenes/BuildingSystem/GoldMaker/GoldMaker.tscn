@@ -3,31 +3,57 @@
 [ext_resource type="PackedScene" uid="uid://dkko5xx43y4f0" path="res://Assets/Models/BuildingModels/GoldMakerModel.tscn" id="1_1ojli"]
 [ext_resource type="Script" uid="uid://c4o856jce6jgg" path="res://Scripts/BuildingSystem/GoldMaker/GoldMaker.cs" id="1_t66jo"]
 [ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="3_e2xev"]
+[ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="4_vxr4o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t66jo"]
 size = Vector3(4.753296, 3.7739258, 5.0928345)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cc1fh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2xev"]
 render_priority = 0
 shader = ExtResource("3_e2xev")
-shader_parameter/health_value = 0.3410000161975
-shader_parameter/color_good = Color(0, 1, 0, 1)
-shader_parameter/color_bad = Color(1, 0, 0, 1)
-shader_parameter/color_bg = Color(0.1, 0.1, 0.1, 0.8)
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/health_value = 0.8
+shader_parameter/buffer_value = 0.9
+shader_parameter/color_good = Color(0.2, 1, 0.4, 1)
+shader_parameter/color_bad = Color(1, 0.1, 0.1, 1)
+shader_parameter/color_buffer = Color(1, 1, 1, 0.5)
+shader_parameter/color_bg = Color(0.05, 0.05, 0.05, 0.7)
+shader_parameter/quad_size = Vector2(4, 0.6)
+shader_parameter/color_border = Color(0, 0, 0, 1)
+shader_parameter/border_thickness = Vector2(0.16, 0.125)
+shader_parameter/corner_radius = 0.2890000137275
+shader_parameter/smoothness = Vector2(0.01, 0.01)
+shader_parameter/pulse_speed = 5.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_vxr4o"]
-material = SubResource("ShaderMaterial_cc1fh")
-size = Vector2(2.875, 0.2)
+material = SubResource("ShaderMaterial_e2xev")
+size = Vector2(4, 0.6)
 
-[node name="GoldMaker" type="Node3D" unique_id=1913044115 node_paths=PackedStringArray("goldLb", "HpBarMesh")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b16cw"]
+render_priority = 0
+shader = ExtResource("4_vxr4o")
+shader_parameter/main_color = Color(0, 1, 0, 1)
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 0.42800002033
+shader_parameter/thickness_softness = 0.0330000015675
+shader_parameter/segment_count = 0.0
+shader_parameter/segment_spacing = 0.5
+shader_parameter/rotation_speed = 0.0
+shader_parameter/pulse_speed = 0.0
+shader_parameter/pulse_amplitude = 0.05
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vy3y1"]
+material = SubResource("ShaderMaterial_b16cw")
+size = Vector2(5, 5)
+
+[node name="GoldMaker" type="Node3D" unique_id=1913044115 node_paths=PackedStringArray("goldLb", "HpBarMesh", "_selectionMarkMesh")]
 script = ExtResource("1_t66jo")
 goldLb = NodePath("Label3D")
 MakeGoldDuration = 1.0
 HpBarMesh = NodePath("HpMesh")
+_selectionMarkMesh = NodePath("SelectionMark")
 
 [node name="GoldMakerModel" parent="." unique_id=2065775939 instance=ExtResource("1_1ojli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64306414, 0)
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1212557719]
 radius = 2.3
@@ -45,6 +71,10 @@ outline_size = 50
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1362915, 1.3869629, -0.0921936)
 shape = SubResource("BoxShape3D_t66jo")
 
-[node name="HpMesh" type="MeshInstance3D" parent="." unique_id=2121582914]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.858123, 0)
+[node name="HpMesh" type="MeshInstance3D" parent="." unique_id=791274252]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.744339, 0)
 mesh = SubResource("QuadMesh_vxr4o")
+
+[node name="SelectionMark" type="MeshInstance3D" parent="." unique_id=108016660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6284449, 0)
+mesh = SubResource("PlaneMesh_vy3y1")

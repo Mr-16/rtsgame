@@ -17,9 +17,9 @@ public partial class MagicTower : BuildingBase
     //todo
     //选中后可以显示攻击范围
     [Export] public PackedScene BallPs;
-    [Export] public float AtkRange = 20;
-    [Export] public float Damage = 57;
-    [Export] public float CdTime = 2f;
+    [Export] public float AtkRange = 25;
+    [Export] public float Damage = 38;
+    [Export] public float CdTime = 1f;
     private float _atkRangeSq;
     private EnemyBase _curTargetEnemy;
     private MagicTowerState _curState;
@@ -84,7 +84,9 @@ public partial class MagicTower : BuildingBase
         _curTargetEnemy.LogicCurHp -= Damage;
         MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();
         GetTree().CurrentScene.AddChild(ball);
-        ball.Position = GlobalPosition;
+        Vector3 newPos = GlobalPosition;
+        newPos.Y += 2.0f;
+        ball.GlobalPosition = newPos;
         ball.Init(_curTargetEnemy, Damage);
         _curState = MagicTowerState.CD;
     }

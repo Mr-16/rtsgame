@@ -27,7 +27,7 @@ public partial class Player : Node3D
     const float DragThreshold = 5f; // 拖拽阈值, 超过这个值才算拖拽, 不然算单击
 
     [Export] public Label GoldCountLb;
-    private int _goldCount = 10000;
+    private int _goldCount = 1000;
     private List<UnitBase> _curSelectedUnitList = new List<UnitBase>();
 
     public PlayerState CurState = PlayerState.Normal;
@@ -51,12 +51,17 @@ public partial class Player : Node3D
     [Export] public PackedScene MagicTowerPs;
     [Export] public PackedScene MagicTowerPreviewPs;
 
+    private Tween _shakeTween;
+    private Tween _goldShakeTween;
+
     public override void _Ready()
     {
         GameManager.Instance.Player = this;
         GoldCountLb.Text = $"Gold : {_goldCount}";
         OpenBuildingPanel(false);
         _zoomTarget = GlobalPosition.Y;
+        _originalLbPos = GoldCountLb.Position;
+
     }
 
     public override void _Process(double delta)
@@ -104,7 +109,7 @@ public partial class Player : Node3D
         if (Input.IsActionJustPressed("Build"))
         {
             OpenBuildingPanel(true);
-            
+            PlayShakeAnimation();
             CurState = PlayerState.ChooseBuilding;
         }
     }
@@ -139,7 +144,7 @@ public partial class Player : Node3D
             ChangeGoldCount(-item.Price);
             _curBuildingPrice = item.Price;
             foreach (var mainBase in GameManager.Instance.MainBaseList)
-                mainBase.ShowFlagRing(true);
+                mainBase.ShowBuildRing(true);
             foreach (var flag in GameManager.Instance.FlagList)
                 flag.ShowBuildingRing(true);
             switch (item.Type)
@@ -165,6 +170,7 @@ public partial class Player : Node3D
                     curBuildingPreview = MagicTowerPreviewPs.Instantiate<BuildingPreviewBase>();
                     break;
             }
+            PlayShakeAnimation();
             GD.Print("点击了一个建筑item, 进入建筑预览模式");
             OpenBuildingPanel(false);
             GetTree().CurrentScene.AddChild(curBuildingPreview);
@@ -184,7 +190,7 @@ public partial class Player : Node3D
         if (Input.IsActionJustPressed("Exit") || Input.IsActionJustPressed("RightMouseBtn"))
         {
             foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
-                showFlagRingMainBase.ShowFlagRing(false);
+                showFlagRingMainBase.ShowBuildRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
             ChangeGoldCount(_curBuildingPrice);
@@ -243,8 +249,9 @@ public partial class Player : Node3D
         }
         if(isPlaced)
         {
+            PlayShakeAnimation();
             foreach (var showFlagRingMainBase in GameManager.Instance.MainBaseList)
-                showFlagRingMainBase.ShowFlagRing(false);
+                showFlagRingMainBase.ShowBuildRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
             GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
@@ -552,5 +559,67 @@ public partial class Player : Node3D
     {
         _goldCount += count;
         GoldCountLb.Text = $"Gold : {_goldCount}";
+        GoldLbShake();
     }
+
+
+    public void PlayShakeAnimation(float strength = 5f, float duration = 0.05f, int shakeCount = 8)
+    {
+        if (_shakeTween != null && _shakeTween.IsRunning())
+        {
+            _shakeTween.Kill();
+        }
+        if (_camera == null) return; // 确保摄像机引用正确
+        if (_shakeTween != null && _shakeTween.IsRunning()) _shakeTween.Kill();
+
+        _shakeTween = CreateTween();
+        float segmentDuration = duration / shakeCount;
+
+        for (int i = 0; i < shakeCount; i++)
+        {
+            // 3D 摄像机使用 HOffset (水平) 和 VOffset (垂直)
+            float h = (float)GD.RandRange(-strength, strength);
+            float v = (float)GD.RandRange(-strength, strength);
+
+            // 并行震动两个属性
+            _shakeTween.Parallel().TweenProperty(_camera, "h_offset", h, segmentDuration);
+            _shakeTween.Parallel().TweenProperty(_camera, "v_offset", v, segmentDuration);
+
+            strength *= 0.8f;
+        }
+
+        _shakeTween.TweenProperty(_camera, "h_offset", 0f, 0.05f);
+        _shakeTween.TweenProperty(_camera, "v_offset", 0f, 0.05f);
+    }
+
+    private Vector2 _originalLbPos; // 在类成员变量里记录初始位置
+
+    private void GoldLbShake(float strength = 5f, float duration = 0.05f, int shakeCount = 8)
+    {
+        if (GoldCountLb == null) return;
+        if (_goldShakeTween != null && _goldShakeTween.IsValid())
+        {
+            _goldShakeTween.Kill();
+        }
+
+        _goldShakeTween = CreateTween();
+        float segmentDuration = duration / shakeCount;
+
+        for (int i = 0; i < shakeCount; i++)
+        {
+            // 随机计算 2D 偏移量
+            float offset_x = (float)GD.RandRange(-strength, strength);
+            float offset_y = (float)GD.RandRange(-strength, strength);
+            Vector2 targetPos = _originalLbPos + new Vector2(offset_x, offset_y);
+
+            // UI 节点使用 "position" 属性
+            _goldShakeTween.TweenProperty(GoldCountLb, "position", targetPos, segmentDuration);
+
+            strength *= 0.8f;
+        }
+
+        // 最后回归初始位置
+        _goldShakeTween.Chain().TweenProperty(GoldCountLb, "position", _originalLbPos, 0.05f);
+    }
+
 }

@@ -137,6 +137,7 @@ namespace RtsGame.Scripts.EnemySystem
             return nearest;
         }
 
+        private Tween _bufferTween;
         public override void TakeDmg(float damage)
         {
             _curHp -= damage;
@@ -144,8 +145,18 @@ namespace RtsGame.Scripts.EnemySystem
             {
                 _curHp = 0;
             }
-            _hpMaterial.SetShaderParameter("health_value", _curHp / MaxHp);
-            HpBarMesh.SetSurfaceOverrideMaterial(0, _hpMaterial);
+            float healthRatio = _curHp / MaxHp;
+            _hpMaterial.SetShaderParameter("health_value", healthRatio);
+            if (_bufferTween != null && _bufferTween.IsRunning())
+            {
+                _bufferTween.Kill(); // 如果上次动画没播完，停掉它重新播
+            }
+            _bufferTween = CreateTween();
+            _bufferTween.SetParallel(false);
+            _bufferTween.TweenInterval(0.2f);
+            _bufferTween.TweenProperty(_hpMaterial, "shader_parameter/buffer_value", healthRatio, 0.4f)
+                        .SetTrans(Tween.TransitionType.Sine)
+                        .SetEase(Tween.EaseType.Out);
         }
 
         private void OnAtkAnimFinish(StringName name)

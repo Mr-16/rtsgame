@@ -11,7 +11,7 @@ public partial class GoldMaker : BuildingBase
 
     // 新增：可调节的动画参数（推荐默认值）
     [Export] public float FloatUpDistance = 2.5f;      // 向上飘多高
-    [Export] public float PopDuration = 1.4f;          // 整个动画持续时间
+    [Export] public float PopDuration = 0.4f;          // 整个动画持续时间
     [Export] public Color StartColor = new Color(1.0f, 0.9f, 0.3f); // 亮金色
 
     private float _makeGoldTimer = 0;
@@ -70,7 +70,7 @@ public partial class GoldMaker : BuildingBase
         // 初始状态
         floatingLabel.Scale = new Vector3(0.2f, 0.2f, 0.2f);
         floatingLabel.Modulate = StartColor;
-        floatingLabel.Position = new Vector3(0, 4f, 0);   // 根据你的模型调整起始高度
+        floatingLabel.Position = new Vector3(0, 3.5f, 0);   // 根据你的模型调整起始高度
 
         var tween = CreateTween();
         tween.SetParallel();

@@ -1,12 +1,28 @@
 [gd_scene format=3 uid="uid://csh3vpavi2duk"]
 
 [ext_resource type="Script" uid="uid://b6rotp8lb7r4u" path="res://Scripts/BuildingSystem/MagicTower/MagicTowerBall.cs" id="1_xfwit"]
+[ext_resource type="Shader" uid="uid://cylnhghp3a0sa" path="res://Shaders/MagicBall.gdshader" id="2_jgpy6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vbiar"]
-albedo_color = Color(0.3882353, 0, 1, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v52rf"]
+render_priority = 0
+shader = ExtResource("2_jgpy6")
+shader_parameter/primary_color = Color(1, 1, 1, 1)
+shader_parameter/secondary_color = Color(1, 0.34409294, 0.12835406, 1)
+shader_parameter/emission = 25.605
+shader_parameter/emission_mult = -1.23
+shader_parameter/alpha_as_factor = false
+shader_parameter/grow_factor = 0.5
+shader_parameter/streaks_amount = 4.0
+shader_parameter/variance1_amplitude = 12.0
+shader_parameter/variance2_amplitude = 5.0
+shader_parameter/edge_hardness = 0.5
+shader_parameter/edge_position = 0.57999998703584
+shader_parameter/proximity_fade = false
+shader_parameter/proximity_fade_distance = 1.0
+shader_parameter/billboard = false
 
 [sub_resource type="SphereMesh" id="SphereMesh_xfwit"]
-material = SubResource("StandardMaterial3D_vbiar")
+material = SubResource("ShaderMaterial_v52rf")
 
 [node name="MagicTowerBall" type="Node3D" unique_id=1455148901]
 script = ExtResource("1_xfwit")

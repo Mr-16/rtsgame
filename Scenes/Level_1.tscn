@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://djat5t43npghb" path="res://Scenes/EnemySystem/EnemySpawner.tscn" id="2_vnunq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i63mn"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0, 0, 0, 1)
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0, 0, 0, 1)
+sky_top_color = Color(0.8474744, 0.84747446, 0.84747446, 1)
+sky_horizon_color = Color(0.36282945, 0.36282945, 0.36282945, 1)
+ground_bottom_color = Color(0.28118682, 0.28118688, 0.2811868, 1)
+ground_horizon_color = Color(0.29586652, 0.2958665, 0.2958665, 1)
 
 [sub_resource type="Sky" id="Sky_vnunq"]
 sky_material = SubResource("ProceduralSkyMaterial_i63mn")
@@ -23,7 +23,7 @@ vertices = PackedVector3Array(-249.5, 1, -249.5, -249.5, 1, 249.5, 249.5, 1, 249
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmdio"]
-albedo_color = Color(0.16206557, 0.1620656, 0.16206557, 1)
+albedo_color = Color(0.25558022, 0.41095477, 0.08399714, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_oiua3"]
 material = SubResource("StandardMaterial3D_gmdio")
@@ -33,12 +33,14 @@ size = Vector3(500, 1, 500)
 data = PackedVector3Array(-250, 0.5, 250, 250, 0.5, 250, -250, -0.5, 250, 250, 0.5, 250, 250, -0.5, 250, -250, -0.5, 250, 250, 0.5, -250, -250, 0.5, -250, 250, -0.5, -250, -250, 0.5, -250, -250, -0.5, -250, 250, -0.5, -250, 250, 0.5, 250, 250, 0.5, -250, 250, -0.5, 250, 250, 0.5, -250, 250, -0.5, -250, 250, -0.5, 250, -250, 0.5, -250, -250, 0.5, 250, -250, -0.5, -250, -250, 0.5, 250, -250, -0.5, 250, -250, -0.5, -250, 250, 0.5, 250, -250, 0.5, 250, 250, 0.5, -250, -250, 0.5, 250, -250, 0.5, -250, 250, 0.5, -250, -250, -0.5, 250, 250, -0.5, 250, -250, -0.5, -250, 250, -0.5, 250, 250, -0.5, -250, -250, -0.5, -250)
 
 [node name="Level1" type="Node3D" unique_id=325649260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6300535, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=151057533]
 environment = SubResource("Environment_nw7js")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1771314375]
-transform = Transform3D(-0.9851093, 0.10959171, -0.13247362, 0, 0.7705132, 0.63742393, 0.17192908, 0.62793225, -0.7590397, 0, 0, 0)
+transform = Transform3D(-0.5105429, 0.58311707, -0.6319179, 0, 0.73491454, 0.6781596, 0.85985225, 0.34622958, -0.3752054, 0, 0, 0)
+light_color = Color(0.8405491, 0.8403488, 0.82408476, 1)
 light_energy = 1.5
 shadow_enabled = true
 directional_shadow_max_distance = 119.0
@@ -47,6 +49,7 @@ directional_shadow_max_distance = 119.0
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, -2.660696, 44.590073, 68.94416)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=719491947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3867588, 0)
 navigation_mesh = SubResource("NavigationMesh_i63mn")
 
 [node name="Ground" type="MeshInstance3D" parent="NavigationRegion3D" unique_id=1768589768]
@@ -59,5 +62,20 @@ shape = SubResource("ConcavePolygonShape3D_i63mn")
 
 [node name="EnemySpawner" parent="." unique_id=656649651 instance=ExtResource("2_vnunq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.36473, 0.5, -109.66171)
-CdTime = 1.0
+CdTime = 4.5
+SpawnRadius = 100.0
+
+[node name="EnemySpawner2" parent="." unique_id=1154174501 instance=ExtResource("2_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -195.32405, 0.5000076, 19.08371)
+CdTime = 4.5
+SpawnRadius = 100.0
+
+[node name="EnemySpawner3" parent="." unique_id=920899812 instance=ExtResource("2_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.138214, 0.5000076, 191.40189)
+CdTime = 4.5
+SpawnRadius = 100.0
+
+[node name="EnemySpawner4" parent="." unique_id=2135980749 instance=ExtResource("2_vnunq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 195.9518, 0.5000076, -6.0179596)
+CdTime = 4.5
 SpawnRadius = 100.0

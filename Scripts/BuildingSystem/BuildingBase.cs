@@ -9,6 +9,7 @@ namespace RtsGame.Scripts
         [Export] public float MaxHp = 100;
         protected float _curHp;
         [Export] private MeshInstance3D HpBarMesh;
+        [Export] private MeshInstance3D _selectionMarkMesh;
         private ShaderMaterial _hpMaterial;
         private Tween _bounceTween; // 保存当前的 Tween，防止多次点击导致动画冲突
         public override void _Ready()
@@ -18,6 +19,7 @@ namespace RtsGame.Scripts
             _hpMaterial = HpBarMesh.GetActiveMaterial(0).Duplicate() as ShaderMaterial;
             _hpMaterial.SetShaderParameter("health_value", _curHp / MaxHp);
             HpBarMesh.SetSurfaceOverrideMaterial(0, _hpMaterial);
+            _selectionMarkMesh.Visible = false;
         }
 
         public virtual void SetSelected(bool isSelected)
@@ -25,7 +27,9 @@ namespace RtsGame.Scripts
             if (isSelected)
             {
                 PlayBounceAnimation();
+                
             }
+            _selectionMarkMesh.Visible = isSelected;
         }
 
         public void PlayBounceAnimation()
@@ -40,8 +44,10 @@ namespace RtsGame.Scripts
             _bounceTween.SetEase(Tween.EaseType.Out);
             _bounceTween.TweenProperty(this, "scale", new Vector3(1.15f, 1.15f, 1.15f), 0.1f);
             _bounceTween.TweenProperty(this, "scale", Vector3.One, 0.2f);
+            //GameManager.Instance.Player.PlayShakeAnimation();
         }
 
+        private Tween _bufferTween;
         public virtual void TakeDmg(float damage)
         {
             _curHp -= damage;
@@ -50,8 +56,18 @@ namespace RtsGame.Scripts
                 _curHp = 0;
                 QueueFree();
             }
-            _hpMaterial.SetShaderParameter("health_value", _curHp / MaxHp);
-            HpBarMesh.SetSurfaceOverrideMaterial(0, _hpMaterial);
+            float healthRatio = _curHp / MaxHp;
+            _hpMaterial.SetShaderParameter("health_value", healthRatio);
+            if (_bufferTween != null && _bufferTween.IsRunning())
+            {
+                _bufferTween.Kill(); // 如果上次动画没播完，停掉它重新播
+            }
+            _bufferTween = CreateTween();
+            _bufferTween.SetParallel(false);
+            _bufferTween.TweenInterval(0.2f);
+            _bufferTween.TweenProperty(_hpMaterial, "shader_parameter/buffer_value", healthRatio, 0.4f)
+                        .SetTrans(Tween.TransitionType.Sine)
+                        .SetEase(Tween.EaseType.Out);
         }
 
         public override void _ExitTree()

@@ -70,7 +70,7 @@ public partial class GoldMaker : BuildingBase
         // 初始状态
         floatingLabel.Scale = new Vector3(0.2f, 0.2f, 0.2f);
         floatingLabel.Modulate = StartColor;
-        floatingLabel.Position = new Vector3(0, 3.5f, 0);   // 根据你的模型调整起始高度
+        floatingLabel.Position = new Vector3(0, 1.5f, 0);   // 根据你的模型调整起始高度
 
         var tween = CreateTween();
         tween.SetParallel();

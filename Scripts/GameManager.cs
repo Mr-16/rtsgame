@@ -12,7 +12,7 @@ namespace RtsGame.Scripts
     public partial class GameManager : Node
     {
         public static GameManager Instance { get; private set; }
-        public BuildingGridMap BuildingGridMap = new BuildingGridMap(new Vector3(-250, 0, -250), 500, 500, 2);
+        public BuildingGridMap BuildingGridMap = new BuildingGridMap(new Vector3(-250, 0, -250), 500, 500, 1);
         public List<BuildingBase> BuildingList = new List<BuildingBase>();
         public List<UnitBase> UnitList = new List<UnitBase>();
         public List<MainBase> MainBaseList = new List<MainBase>();

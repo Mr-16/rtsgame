@@ -14,8 +14,6 @@ public enum MagicTowerState
 
 public partial class MagicTower : BuildingBase
 {
-    //todo
-    //选中后可以显示攻击范围
     [Export] public PackedScene BallPs;
     [Export] public float AtkRange = 25;
     [Export] public float Damage = 38;
@@ -23,15 +21,13 @@ public partial class MagicTower : BuildingBase
     private float _atkRangeSq;
     private EnemyBase _curTargetEnemy;
     private MagicTowerState _curState;
-    [Export] public MeshInstance3D RingMesh;
-    private ShaderMaterial _ringMaterial;
+    [Export] public MeshInstance3D AtkRingMesh;
 
     public override void _Ready()
 	{
         base._Ready();
         _atkRangeSq = AtkRange * AtkRange;
         _curState = MagicTowerState.Idle;
-        _ringMaterial = RingMesh.GetActiveMaterial(0) as ShaderMaterial;
         ShowRing(false);
     }
 
@@ -131,17 +127,7 @@ public partial class MagicTower : BuildingBase
 
     public void ShowRing(bool isShow)
     {
-        if (isShow)
-        {
-            RingMesh.Visible = true;
-            RingMesh.Scale = new Vector3(AtkRange, 1.0f, AtkRange);
-            _ringMaterial.SetShaderParameter("main_color", new Color(0.5f, 1f, 0.3f, 0.1f));
-            _ringMaterial.SetShaderParameter("segment_count", 10f);
-        }
-        else
-        {
-            RingMesh.Visible = false;
-        }
+        AtkRingMesh.Visible = isShow;
     }
     public override void SetSelected(bool isSelected)
     {
@@ -152,6 +138,5 @@ public partial class MagicTower : BuildingBase
     public override void _ExitTree()
     {
         base._ExitTree();
-        //GameManager.Instance.BuildingGridMap.Remove(GlobalPosition);
     }
 }

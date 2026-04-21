@@ -7,12 +7,10 @@ public partial class MainBase : BuildingBase
     [Export] public float BuildRange = 10;
     public float FlagRangeSq;
     [Export] public MeshInstance3D BuildRingMesh;
-    private ShaderMaterial _ringMaterial;
     public override void _Ready()
 	{
         base._Ready();
         GameManager.Instance.MainBaseList.Add(this);
-        _ringMaterial = BuildRingMesh.GetActiveMaterial(0) as ShaderMaterial;
         ShowBuildRing(false);
         FlagRangeSq = BuildRange * BuildRange;
     }

@@ -10,7 +10,7 @@ size = Vector3(4.6436157, 5.07724, 4.8338623)
 script = ExtResource("1_cda4k")
 Area = NodePath("Area3D")
 PriceLb = NodePath("PriceLb")
-Price = 300
+Price = 500
 
 [node name="MainBaseModel" parent="." unique_id=1711795767 instance=ExtResource("2_cda4k")]
 

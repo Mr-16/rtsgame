@@ -7,23 +7,7 @@
 [ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="5_pkwa7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_idin8"]
-size = Vector3(4.0856934, 1.3574219, 3.8574219)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pkwa7"]
-render_priority = 0
-shader = ExtResource("2_3dpeg")
-shader_parameter/main_color = Color(1, 1, 1, 1)
-shader_parameter/inner_radius = 0.42400002014
-shader_parameter/outer_radius = 0.4370000207575
-shader_parameter/thickness_softness = 0.0
-shader_parameter/segment_count = 0.0
-shader_parameter/segment_spacing = 0.7070000335825
-shader_parameter/rotation_speed = 0.12700048103249983
-shader_parameter/pulse_speed = 0.0
-shader_parameter/pulse_amplitude = 0.05
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_2jgh0"]
-material = SubResource("ShaderMaterial_pkwa7")
+size = Vector3(4.0856934, 4.6879883, 3.8574219)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2jgh0"]
 render_priority = 0
@@ -51,7 +35,7 @@ shader = ExtResource("2_3dpeg")
 shader_parameter/main_color = Color(0, 1, 0, 1)
 shader_parameter/inner_radius = 0.0
 shader_parameter/outer_radius = 0.42800002033
-shader_parameter/thickness_softness = 0.0330000015675
+shader_parameter/thickness_softness = 0.0150000007125
 shader_parameter/segment_count = 0.0
 shader_parameter/segment_spacing = 0.5
 shader_parameter/rotation_speed = 0.0
@@ -62,15 +46,32 @@ shader_parameter/pulse_amplitude = 0.05
 material = SubResource("ShaderMaterial_b16cw")
 size = Vector2(5, 5)
 
-[node name="MagicTower" type="Node3D" unique_id=314582809 node_paths=PackedStringArray("RingMesh", "HpBarMesh", "_selectionMarkMesh")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pkwa7"]
+render_priority = 0
+shader = ExtResource("2_3dpeg")
+shader_parameter/main_color = Color(1, 1, 1, 1)
+shader_parameter/inner_radius = 0.4990000237025
+shader_parameter/outer_radius = 0.5
+shader_parameter/thickness_softness = 0.006000000285
+shader_parameter/segment_count = 0.0
+shader_parameter/segment_spacing = 0.5
+shader_parameter/rotation_speed = 0.0
+shader_parameter/pulse_speed = 0.0
+shader_parameter/pulse_amplitude = 0.05
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2jgh0"]
+material = SubResource("ShaderMaterial_pkwa7")
+size = Vector2(50, 50)
+
+[node name="MagicTower" type="Node3D" unique_id=314582809 node_paths=PackedStringArray("AtkRingMesh", "HpBarMesh", "_selectionMarkMesh")]
 script = ExtResource("1_3dpeg")
 BallPs = ExtResource("2_idin8")
-RingMesh = NodePath("Ring")
+AtkRingMesh = NodePath("AtkRing")
 HpBarMesh = NodePath("HpMesh")
 _selectionMarkMesh = NodePath("SelectionMark")
 
 [node name="MagicTowerModel" parent="." unique_id=1318580664 instance=ExtResource("1_pji2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53560364, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1837436, 0)
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1371244372]
 radius = 1.5
@@ -83,17 +84,17 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1025243087]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07458496, 0.17871094, 0.103515625)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07458496, 1.8439941, 0.103515625)
 shape = SubResource("BoxShape3D_idin8")
 
-[node name="Ring" type="MeshInstance3D" parent="." unique_id=1150850958]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5434325, 0)
-mesh = SubResource("PlaneMesh_2jgh0")
-
 [node name="HpMesh" type="MeshInstance3D" parent="." unique_id=1500640394]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.0009146, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.806204, 0)
 mesh = SubResource("QuadMesh_t7lep")
 
 [node name="SelectionMark" type="MeshInstance3D" parent="." unique_id=818484395]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47417974, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11903858, 0)
 mesh = SubResource("PlaneMesh_pkwa7")
+
+[node name="AtkRing" type="MeshInstance3D" parent="." unique_id=1150850958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.024918914, 0)
+mesh = SubResource("PlaneMesh_2jgh0")

@@ -7,17 +7,13 @@ public partial class Flag : BuildingBase
     [Export] public float BuildRange = 10;
     public float BuildingRangeSq;
     [Export] public MeshInstance3D BuildRingMesh;
-    private ShaderMaterial _ringMaterial;
 
     public override void _Ready()
 	{
         base._Ready();
         GameManager.Instance.FlagList.Add(this);
-        _ringMaterial = BuildRingMesh.GetActiveMaterial(0) as ShaderMaterial;
         ShowBuildingRing(false);
         BuildingRangeSq = BuildRange * BuildRange;
-        //_ringMaterial.SetShaderParameter("main_color", new Color(0.0f, 0.7f, 1.0f, 0.2f));
-        //_ringMaterial.SetShaderParameter("segment_count", 0.0f);
     }
 
 	public override void _Process(double delta)

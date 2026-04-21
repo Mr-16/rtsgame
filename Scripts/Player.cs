@@ -110,6 +110,7 @@ public partial class Player : Node3D
         {
             OpenBuildingPanel(true);
             PlayShakeAnimation();
+            ClearSelect();
             CurState = PlayerState.ChooseBuilding;
         }
     }
@@ -121,7 +122,7 @@ public partial class Player : Node3D
     }
     private void ChooseBuildingPhysicsProcess(float delta)
     {
-        if (Input.IsActionJustPressed("Exit"))
+        if (Input.IsActionJustPressed("Exit") || Input.IsActionJustPressed("Build"))
         {
             OpenBuildingPanel(false);
             CurState = PlayerState.Normal;

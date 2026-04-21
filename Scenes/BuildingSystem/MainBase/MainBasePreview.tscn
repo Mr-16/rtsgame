@@ -5,5 +5,7 @@
 
 [node name="MainBasePreview" type="Node3D" unique_id=1809102051]
 script = ExtResource("1_x0633")
+Width = 5
+Height = 5
 
 [node name="MainBaseModel" parent="." unique_id=1711795767 instance=ExtResource("2_u78cc")]

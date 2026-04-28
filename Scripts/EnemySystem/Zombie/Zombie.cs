@@ -1,4 +1,5 @@
 ﻿using Godot;
+using System;
 
 namespace RtsGame.Scripts.EnemySystem
 {
@@ -12,7 +13,7 @@ namespace RtsGame.Scripts.EnemySystem
 
     public partial class Zombie : EnemyBase
     {
-        [Export] public float MoveSpeed = 4.0f;
+        [Export] public float MoveSpeed = 2.0f;
         [Export] public float AtkRange = 1.0f;
         [Export] private AnimationPlayer animPlayer;
         [Export] private MeshInstance3D HpBarMesh;
@@ -22,6 +23,8 @@ namespace RtsGame.Scripts.EnemySystem
         private ZombieState _curState;
         private BuildingBase _targetBuilding;
 
+        private int _searchInterval = 1; // 每10帧搜寻一次
+        private int _frameOffset;
 
         public override void _Ready()
         {
@@ -34,6 +37,7 @@ namespace RtsGame.Scripts.EnemySystem
             _hpMaterial = HpBarMesh.GetActiveMaterial(0).Duplicate() as ShaderMaterial;
             _hpMaterial.SetShaderParameter("health_value", _curHp / MaxHp);
             HpBarMesh.SetSurfaceOverrideMaterial(0, _hpMaterial);
+            _frameOffset = Math.Abs(GetHashCode()) % _searchInterval;
         }
 
         public override void _PhysicsProcess(double delta)
@@ -66,7 +70,11 @@ namespace RtsGame.Scripts.EnemySystem
                 QueueFree();
             }
 
-            _targetBuilding = FindNearestBuilding();
+            if (Engine.GetFramesDrawn() % _searchInterval == _frameOffset)
+            {
+                _targetBuilding = FindNearestBuilding();
+            }
+            
             if (_targetBuilding == null || !IsInstanceValid(_targetBuilding))
                 return;
 

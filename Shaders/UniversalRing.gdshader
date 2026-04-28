@@ -7,7 +7,7 @@ render_mode unshaded, blend_mix, depth_draw_never, cull_back;
 uniform vec4 main_color : source_color = vec4(0.0, 1.0, 0.5, 1.0);
 uniform float inner_radius : hint_range(0.0, 0.5) = 0.4;
 uniform float outer_radius : hint_range(0.0, 0.5) = 0.45;
-uniform float thickness_softness : hint_range(0.0, 0.1) = 0.01; // 边缘平滑度
+uniform float thickness_softness : hint_range(0.0, 0.1) = 0.00; // 边缘平滑度
 
 // 虚线设置
 uniform float segment_count : hint_range(0.0, 50.0) = 0.0; // 0 为实线

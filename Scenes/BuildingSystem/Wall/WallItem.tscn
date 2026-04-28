@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dclj2mwcoo66b"]
+
+[ext_resource type="PackedScene" uid="uid://xtjyqik5oeyt" path="res://Assets/Models/BuildingModels/WallModel.tscn" id="1_gxhsl"]
+[ext_resource type="Script" uid="uid://bbxshtersrwtp" path="res://Scripts/BuildingSystem/BuildingItemBase.cs" id="1_vj2vk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vj2vk"]
+size = Vector3(1.7863941, 1.277792, 2.0734634)
+
+[node name="WallItem" type="Node3D" unique_id=945423048 node_paths=PackedStringArray("Area", "PriceLb")]
+script = ExtResource("1_vj2vk")
+Type = 5
+Area = NodePath("Area3D")
+PriceLb = NodePath("PriceLb")
+Price = 50
+
+[node name="WallModel" parent="." unique_id=944723679 instance=ExtResource("1_gxhsl")]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1003548928]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1537788971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021000862, 0.83201504, -0.02199936)
+shape = SubResource("BoxShape3D_vj2vk")
+
+[node name="PriceLb" type="Label3D" parent="." unique_id=1484942681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.92813635, 0)
+modulate = Color(1, 0.8235294, 0, 1)
+text = "300Gold"
+font_size = 150
+outline_size = 38

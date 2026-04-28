@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c01qjo2efp47t"]
+
+[ext_resource type="Shader" uid="uid://bc01s47skn2c3" path="res://Shaders/Grid.gdshader" id="1_ninb0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ooqfy"]
+render_priority = 0
+shader = ExtResource("1_ninb0")
+shader_parameter/grid_color = Color(0.50956357, 0.60038817, 0, 1)
+shader_parameter/grid_size = 1.0
+shader_parameter/line_width = 0.5
+shader_parameter/antialias = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dyjh7"]
+material = SubResource("ShaderMaterial_ooqfy")
+size = Vector2(1000, 1000)
+
+[node name="BuildGridMesh" type="Node3D" unique_id=259589698]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1585845307]
+mesh = SubResource("PlaneMesh_dyjh7")

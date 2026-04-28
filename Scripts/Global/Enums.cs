@@ -13,6 +13,8 @@ namespace RtsGame.Scripts.Global
         GoldMaker,
         DefenseTower,
         MagicTower,
+        Wall,
+        CatapultTower,
     }
 
     public enum EnemeyType

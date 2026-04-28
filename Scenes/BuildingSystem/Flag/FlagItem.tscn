@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bbxshtersrwtp" path="res://Scripts/BuildingSystem/BuildingItemBase.cs" id="2_r7yfr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1f36q"]
-size = Vector3(2.9893265, 5.003826, 4.8338623)
+size = Vector3(1.6860695, 2.741293, 1.2653046)
 
 [node name="FlagItem" type="Node3D" unique_id=729729234 node_paths=PackedStringArray("Area", "PriceLb")]
 script = ExtResource("2_r7yfr")
@@ -20,7 +20,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=229929592]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7550087, 2.6950321, -0.37554932)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1033802, 1.5637655, -0.034248352)
 shape = SubResource("BoxShape3D_1f36q")
 
 [node name="PriceLb" type="Label3D" parent="." unique_id=1885379998]

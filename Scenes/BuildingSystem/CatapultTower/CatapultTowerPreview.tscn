@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bnnp5qmlnjo5d"]
+
+[ext_resource type="PackedScene" uid="uid://gjs86yryn2ue" path="res://Assets/Models/BuildingModels/CatapultTowerModel.tscn" id="1_qqtbp"]
+[ext_resource type="Script" uid="uid://c4m31yg4mvppy" path="res://Scripts/BuildingSystem/BuildingPreviewBase.cs" id="2_1fh2t"]
+
+[node name="CatapultTowerPreview" type="Node3D" unique_id=1967833535]
+script = ExtResource("2_1fh2t")
+
+[node name="CatapultTowerModel" parent="." unique_id=628798087 instance=ExtResource("1_qqtbp")]

@@ -22,6 +22,7 @@ namespace RtsGame.Scripts
         public uint UI3D_MASK = 1 << 2; // Layer 3
         public Player Player;
         public List<EnemyBase> EnemyList = new List<EnemyBase>();
+        public Level_1 Level1;
 
         public override void _Ready()
         {

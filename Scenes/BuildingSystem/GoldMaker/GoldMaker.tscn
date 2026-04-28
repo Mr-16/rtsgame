@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="4_vxr4o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t66jo"]
-size = Vector3(2.6741638, 2.2042236, 2.412857)
+size = Vector3(2.1245956, 0.83425903, 2.014225)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2xev"]
 render_priority = 0
@@ -26,15 +26,15 @@ shader_parameter/pulse_speed = 5.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_vxr4o"]
 material = SubResource("ShaderMaterial_e2xev")
-size = Vector2(2.5, 0.5)
+size = Vector2(2, 0.3)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b16cw"]
 render_priority = 0
 shader = ExtResource("4_vxr4o")
 shader_parameter/main_color = Color(0, 1, 0, 1)
 shader_parameter/inner_radius = 0.0
-shader_parameter/outer_radius = 0.2610000123975
-shader_parameter/thickness_softness = 0.0150000007125
+shader_parameter/outer_radius = 0.1890000089775
+shader_parameter/thickness_softness = 0.0
 shader_parameter/segment_count = 0.0
 shader_parameter/segment_spacing = 0.5
 shader_parameter/rotation_speed = 0.0
@@ -52,7 +52,6 @@ HpBarMesh = NodePath("HpMesh")
 _selectionMarkMesh = NodePath("SelectionMark")
 
 [node name="GoldMakerModel" parent="." unique_id=2065775939 instance=ExtResource("1_1ojli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12967551, 0)
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1212557719]
 radius = 2.3
@@ -67,13 +66,13 @@ outline_size = 50
 [node name="Area3D" type="Area3D" parent="." unique_id=535188964]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1802493951]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.087631226, 0.6021118, -0.3017807)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02878189, -0.08287048, -0.013418198)
 shape = SubResource("BoxShape3D_t66jo")
 
 [node name="HpMesh" type="MeshInstance3D" parent="." unique_id=791274252]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.373993, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5059469, 0)
 mesh = SubResource("QuadMesh_vxr4o")
 
 [node name="SelectionMark" type="MeshInstance3D" parent="." unique_id=108016660]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10370922, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.009170175, 0)
 mesh = SubResource("PlaneMesh_vy3y1")

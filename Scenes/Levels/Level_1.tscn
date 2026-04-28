@@ -2,19 +2,8 @@
 
 [ext_resource type="Script" uid="uid://ckkoqrewmyjy5" path="res://Scripts/Levels/Level_1.cs" id="1_trw0a"]
 [ext_resource type="PackedScene" uid="uid://cju1vr25mrm6c" path="res://Scenes/Player.tscn" id="2_tjcye"]
-[ext_resource type="PackedScene" uid="uid://4lvvkglb50wg" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_4_C_Color1.fbx" id="3_557vl"]
-[ext_resource type="PackedScene" uid="uid://clw6bpbxqbbvh" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_4_B_Color1.fbx" id="4_tjj3e"]
-[ext_resource type="PackedScene" uid="uid://di5xufsv023jl" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_4_A_Color1.fbx" id="5_qxyq8"]
-[ext_resource type="PackedScene" uid="uid://6uiwt0a82are" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_1_B_Color1.fbx" id="6_q6jrw"]
-[ext_resource type="PackedScene" uid="uid://d5qksgg1te2r" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_1_C_Color1.fbx" id="7_x6ugg"]
-[ext_resource type="PackedScene" uid="uid://b7oo85ujs0q3g" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_2_A_Color1.fbx" id="8_i6xvf"]
-[ext_resource type="PackedScene" uid="uid://crfv5s1ac3u7r" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_2_B_Color1.fbx" id="9_6vjt7"]
-[ext_resource type="PackedScene" uid="uid://dx1cdxhtyrpgr" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_2_C_Color1.fbx" id="10_uigiy"]
-[ext_resource type="PackedScene" uid="uid://b1uan7xcuykkb" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_2_D_Color1.fbx" id="11_trgpn"]
-[ext_resource type="PackedScene" uid="uid://8ngcspcw42sr" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Tree_2_E_Color1.fbx" id="12_2dy8h"]
-[ext_resource type="PackedScene" uid="uid://odcpgli364to" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Rock_3_N_Color1.fbx" id="13_es41r"]
-[ext_resource type="PackedScene" uid="uid://dxxmahe6hviya" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/fbx/Rock_3_L_Color1.fbx" id="14_k77tw"]
-[ext_resource type="PackedScene" uid="uid://djat5t43npghb" path="res://Scenes/EnemySystem/EnemySpawner.tscn" id="15_rpvm8"]
+[ext_resource type="PackedScene" uid="uid://djat5t43npghb" path="res://Scenes/EnemySystem/EnemySpawner.tscn" id="3_q8yj7"]
+[ext_resource type="PackedScene" uid="uid://c01qjo2efp47t" path="res://Scenes/BuildingSystem/BuildGridMesh.tscn" id="4_87l2y"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i63mn"]
 sky_top_color = Color(0.8474744, 0.84747446, 0.84747446, 1)
@@ -45,12 +34,13 @@ size = Vector3(500, 1, 500)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_i63mn"]
 data = PackedVector3Array(-250, 0.5, 250, 250, 0.5, 250, -250, -0.5, 250, 250, 0.5, 250, 250, -0.5, 250, -250, -0.5, 250, 250, 0.5, -250, -250, 0.5, -250, 250, -0.5, -250, -250, 0.5, -250, -250, -0.5, -250, 250, -0.5, -250, 250, 0.5, 250, 250, 0.5, -250, 250, -0.5, 250, 250, 0.5, -250, 250, -0.5, -250, 250, -0.5, 250, -250, 0.5, -250, -250, 0.5, 250, -250, -0.5, -250, -250, 0.5, 250, -250, -0.5, 250, -250, -0.5, -250, 250, 0.5, 250, -250, 0.5, 250, 250, 0.5, -250, -250, 0.5, 250, -250, 0.5, -250, 250, 0.5, -250, -250, -0.5, 250, 250, -0.5, 250, -250, -0.5, -250, 250, -0.5, 250, 250, -0.5, -250, -250, -0.5, -250)
 
-[node name="Level1" type="Node3D" unique_id=325649260 node_paths=PackedStringArray("Spawner1", "Spawner2", "Spawner3", "Spawner4")]
+[node name="Level1" type="Node3D" unique_id=325649260 node_paths=PackedStringArray("Spawner1", "Spawner2", "Spawner3", "Spawner4", "BuildGridMesh")]
 script = ExtResource("1_trw0a")
 Spawner1 = NodePath("spawners/EnemySpawner")
 Spawner2 = NodePath("spawners/EnemySpawner2")
 Spawner3 = NodePath("spawners/EnemySpawner3")
 Spawner4 = NodePath("spawners/EnemySpawner4")
+BuildGridMesh = NodePath("BuildGridMesh")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=151057533]
 environment = SubResource("Environment_nw7js")
@@ -58,12 +48,11 @@ environment = SubResource("Environment_nw7js")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1771314375]
 transform = Transform3D(-0.5105429, 0.58311707, -0.6319179, 0, 0.73491454, 0.6781596, 0.85985225, 0.34622958, -0.3752054, 0, 0, 0)
 light_color = Color(0.8405491, 0.8403488, 0.82408476, 1)
-light_energy = 1.5
 shadow_enabled = true
 directional_shadow_max_distance = 119.0
 
 [node name="Player" parent="." unique_id=1729164241 instance=ExtResource("2_tjcye")]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, -2.660696, 14.375061, 68.94416)
+transform = Transform3D(1, 0, 0, 0, 0.4226182, 0.90630776, 0, -0.90630776, 0.4226182, -2.660696, 14.375061, 68.94416)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=719491947]
 transform = Transform3D(0.9999619, 0, -0.008726535, 0, 1, 0, 0.008726535, 0, 0.9999619, 0, -0.5957718, 0)
@@ -79,94 +68,19 @@ shape = SubResource("ConcavePolygonShape3D_i63mn")
 
 [node name="tree" type="Node3D" parent="." unique_id=472460400]
 
-[node name="Tree_4_C_Color1" parent="tree" unique_id=261977717 instance=ExtResource("3_557vl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.14074, 0.2607505, 11.676971)
-
-[node name="Tree_4_B_Color1" parent="tree" unique_id=890007085 instance=ExtResource("4_tjj3e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.206783, 0.28061712, 2.8437805)
-
-[node name="Tree_4_A_Color1" parent="tree" unique_id=421887482 instance=ExtResource("5_qxyq8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.8225, 0.24634561, -7.837677)
-
-[node name="Tree_1_B_Color1" parent="tree" unique_id=1077443701 instance=ExtResource("6_q6jrw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.182514, 0.24526519, 16.775467)
-
-[node name="Tree_1_C_Color1" parent="tree" unique_id=1062360094 instance=ExtResource("7_x6ugg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.580627, 0.29654065, -30.690598)
-
-[node name="Tree_2_A_Color1" parent="tree" unique_id=204176506 instance=ExtResource("8_i6xvf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.97395, 0.2777389, -33.99823)
-
-[node name="Tree_2_B_Color1" parent="tree" unique_id=881989651 instance=ExtResource("9_6vjt7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.205917, 0.24899524, 30.557213)
-
-[node name="Tree_2_C_Color1" parent="tree" unique_id=1872778923 instance=ExtResource("10_uigiy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.40142, 0.29746798, -31.383522)
-
-[node name="Tree_2_D_Color1" parent="tree" unique_id=1429082064 instance=ExtResource("11_trgpn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.349163, 0.29746804, 46.1387)
-
-[node name="Tree_2_E_Color1" parent="tree" unique_id=639125074 instance=ExtResource("12_2dy8h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.452038, 0.34059304, -40.634956)
-
-[node name="Rock_3_N_Color1" parent="tree" unique_id=1668740220 instance=ExtResource("13_es41r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.447674, 1.4964293, -22.201004)
-
-[node name="Rock_3_L_Color1" parent="tree" unique_id=819191949 instance=ExtResource("14_k77tw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.730286, 0.9502182, -23.508446)
-
-[node name="Rock_3_N_Color2" parent="tree" unique_id=346973620 instance=ExtResource("13_es41r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.273192, 1.4964293, -44.320404)
-
-[node name="Tree_4_C_Color2" parent="tree" unique_id=750856572 instance=ExtResource("3_557vl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.013767, 0.45805427, 82.39549)
-
-[node name="Tree_4_B_Color2" parent="tree" unique_id=167000171 instance=ExtResource("4_tjj3e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.333755, 0.4779209, 73.5623)
-
-[node name="Tree_4_A_Color2" parent="tree" unique_id=2018652051 instance=ExtResource("5_qxyq8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.695526, 0.44364938, 62.880848)
-
-[node name="Tree_1_B_Color2" parent="tree" unique_id=309627569 instance=ExtResource("6_q6jrw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.055542, 0.44256896, 87.49399)
-
-[node name="Tree_1_C_Color2" parent="tree" unique_id=1916330576 instance=ExtResource("7_x6ugg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.60254, 0.49384442, 20.782848)
-
-[node name="Tree_2_A_Color2" parent="tree" unique_id=1744739877 instance=ExtResource("8_i6xvf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.846977, 0.47504267, 36.720295)
-
-[node name="Tree_2_B_Color2" parent="tree" unique_id=1199323669 instance=ExtResource("9_6vjt7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.33289, 0.44629902, 101.27574)
-
-[node name="Tree_2_C_Color2" parent="tree" unique_id=480723158 instance=ExtResource("10_uigiy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.27445, 0.49477175, 39.335003)
-
-[node name="Tree_2_D_Color2" parent="tree" unique_id=1404135490 instance=ExtResource("11_trgpn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.476135, 0.4947718, 116.85722)
-
-[node name="Tree_2_E_Color2" parent="tree" unique_id=590491215 instance=ExtResource("12_2dy8h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.57901, 0.5378968, 30.083569)
-
-[node name="Rock_3_N_Color3" parent="tree" unique_id=936203254 instance=ExtResource("13_es41r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.3207, 1.6937331, 48.51752)
-
-[node name="Rock_3_L_Color2" parent="tree" unique_id=1484597767 instance=ExtResource("14_k77tw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.857258, 1.147522, 47.21008)
-
-[node name="Rock_3_N_Color4" parent="tree" unique_id=242449202 instance=ExtResource("13_es41r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.928604, 1.6937331, -1.008255)
-
 [node name="spawners" type="Node3D" parent="." unique_id=1427017528]
 
-[node name="EnemySpawner" parent="spawners" unique_id=656649651 instance=ExtResource("15_rpvm8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -243.6878, 0, -246.23306)
+[node name="EnemySpawner" parent="spawners" unique_id=656649651 instance=ExtResource("3_q8yj7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3714452, -6.1035156e-05, -388.5489)
 
-[node name="EnemySpawner2" parent="spawners" unique_id=454384142 instance=ExtResource("15_rpvm8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 249.33118, 0, -242.37727)
+[node name="EnemySpawner2" parent="spawners" unique_id=300719954 instance=ExtResource("3_q8yj7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -391.71405, -3.0517578e-05, 1.1201172)
 
-[node name="EnemySpawner3" parent="spawners" unique_id=2097670773 instance=ExtResource("15_rpvm8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -247.33487, 0, 242.56746)
+[node name="EnemySpawner3" parent="spawners" unique_id=1899336185 instance=ExtResource("3_q8yj7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 375.9266, -3.0517578e-05, 1.5385437)
 
-[node name="EnemySpawner4" parent="spawners" unique_id=9844169 instance=ExtResource("15_rpvm8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240.07828, 0, 247.82944)
+[node name="EnemySpawner4" parent="spawners" unique_id=1914524710 instance=ExtResource("3_q8yj7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.741455, 6.1035156e-05, 379.56537)
+
+[node name="BuildGridMesh" parent="." unique_id=259589698 instance=ExtResource("4_87l2y")]
+visible = false

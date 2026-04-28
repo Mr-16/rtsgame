@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="4_3tx0y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lrlth"]
-size = Vector3(5.79187, 8.643433, 5.859375)
+size = Vector3(4.9747715, 1.2726746, 4.7763214)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cc1fh"]
 render_priority = 0
@@ -26,15 +26,15 @@ shader_parameter/pulse_speed = 5.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_b16cw"]
 material = SubResource("ShaderMaterial_cc1fh")
-size = Vector2(6, 0.8)
+size = Vector2(3, 0.4)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b16cw"]
 render_priority = 0
 shader = ExtResource("3_n636v")
 shader_parameter/main_color = Color(0, 1, 0, 1)
 shader_parameter/inner_radius = 0.0
-shader_parameter/outer_radius = 0.3590000170525
-shader_parameter/thickness_softness = 0.022000001045
+shader_parameter/outer_radius = 0.2270000107825
+shader_parameter/thickness_softness = 0.0
 shader_parameter/segment_count = 0.0
 shader_parameter/segment_spacing = 0.5
 shader_parameter/rotation_speed = 0.0
@@ -79,20 +79,19 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=203112493]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11431885, 3.8217163, 0.28027344)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.036679268, 0.13633728, -0.09912872)
 shape = SubResource("BoxShape3D_lrlth")
 
 [node name="MainBaseModel" parent="." unique_id=1711795767 instance=ExtResource("2_c7eov")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22551084, 0)
 
 [node name="HpMesh" type="MeshInstance3D" parent="." unique_id=1378624945]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.203495, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2030497, 0)
 mesh = SubResource("QuadMesh_b16cw")
 
 [node name="SelectionMark" type="MeshInstance3D" parent="." unique_id=1193267821]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1817131, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.014241219, 0)
 mesh = SubResource("PlaneMesh_dhrb4")
 
 [node name="BuildRing" type="MeshInstance3D" parent="." unique_id=1717960613]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11897302, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.050355196, 0)
 mesh = SubResource("PlaneMesh_cc1fh")

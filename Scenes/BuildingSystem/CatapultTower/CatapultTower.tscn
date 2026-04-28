@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://cedlsbct1t5yu"]
+
+[ext_resource type="Script" uid="uid://ecx1r85sld6p" path="res://Scripts/BuildingSystem/CatapultTower/CatapultTower.cs" id="1_5qc77"]
+[ext_resource type="PackedScene" uid="uid://gjs86yryn2ue" path="res://Assets/Models/BuildingModels/CatapultTowerModel.tscn" id="1_lay5v"]
+[ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="2_cfexo"]
+[ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="3_5qc77"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l3rnc"]
+size = Vector3(3.1278007, 0.6627197, 3.0475597)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kxksq"]
+render_priority = 0
+shader = ExtResource("2_cfexo")
+shader_parameter/health_value = 0.8
+shader_parameter/buffer_value = 0.9
+shader_parameter/color_good = Color(0.2, 1, 0.4, 1)
+shader_parameter/color_bad = Color(1, 0.1, 0.1, 1)
+shader_parameter/color_buffer = Color(1, 1, 1, 0.5)
+shader_parameter/color_bg = Color(0.05, 0.05, 0.05, 0.7)
+shader_parameter/quad_size = Vector2(4, 0.6)
+shader_parameter/color_border = Color(0, 0, 0, 1)
+shader_parameter/border_thickness = Vector2(0.16, 0.125)
+shader_parameter/corner_radius = 0.2890000137275
+shader_parameter/smoothness = Vector2(0.01, 0.01)
+shader_parameter/pulse_speed = 5.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_x7ine"]
+material = SubResource("ShaderMaterial_kxksq")
+size = Vector2(2, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_52kon"]
+render_priority = 0
+shader = ExtResource("3_5qc77")
+shader_parameter/main_color = Color(0, 1, 0, 1)
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 0.2800000133
+shader_parameter/thickness_softness = 0.0
+shader_parameter/segment_count = 0.0
+shader_parameter/segment_spacing = 0.5
+shader_parameter/rotation_speed = 0.0
+shader_parameter/pulse_speed = 0.0
+shader_parameter/pulse_amplitude = 0.05
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s80lm"]
+material = SubResource("ShaderMaterial_52kon")
+size = Vector2(5, 5)
+
+[node name="CatapultTower" type="Node3D" unique_id=1596440637 node_paths=PackedStringArray("HpBarMesh", "_selectionMarkMesh")]
+script = ExtResource("1_5qc77")
+MaxHp = 1000.0
+HpBarMesh = NodePath("HpMesh")
+_selectionMarkMesh = NodePath("SelectionMark")
+
+[node name="CatapultTowerModel" parent="." unique_id=628798087 instance=ExtResource("1_lay5v")]
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=843048731]
+radius = 1.5
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1799101203]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=319143525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013286471, -0.16864014, -0.021960258)
+shape = SubResource("BoxShape3D_l3rnc")
+
+[node name="HpMesh" type="MeshInstance3D" parent="." unique_id=2006960332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.398333, 0)
+mesh = SubResource("QuadMesh_x7ine")
+
+[node name="SelectionMark" type="MeshInstance3D" parent="." unique_id=932028077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.033157527, 0)
+mesh = SubResource("PlaneMesh_s80lm")

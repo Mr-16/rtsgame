@@ -27,7 +27,8 @@ public partial class Player : Node3D
     const float DragThreshold = 5f; // 拖拽阈值, 超过这个值才算拖拽, 不然算单击
 
     [Export] public Label GoldCountLb;
-    private int _goldCount = 1000;
+    [Export] public Label TimeLb;
+    private int _goldCount = 1000000;
     private List<UnitBase> _curSelectedUnitList = new List<UnitBase>();
 
     public PlayerState CurState = PlayerState.Normal;
@@ -50,6 +51,12 @@ public partial class Player : Node3D
 
     [Export] public PackedScene MagicTowerPs;
     [Export] public PackedScene MagicTowerPreviewPs;
+
+    [Export] public PackedScene WallPs;
+    [Export] public PackedScene WallPreviewPs;
+
+    [Export] public PackedScene CatapultTowerPs;
+    [Export] public PackedScene CatapultTowerPreviewPs;
 
     private Tween _shakeTween;
     private Tween _goldShakeTween;
@@ -170,9 +177,20 @@ public partial class Player : Node3D
                     _curBuildingType = BuildingType.MagicTower;
                     curBuildingPreview = MagicTowerPreviewPs.Instantiate<BuildingPreviewBase>();
                     break;
+                case BuildingType.Wall:
+                    GD.Print("选了墙");
+                    _curBuildingType = BuildingType.Wall;
+                    curBuildingPreview = WallPreviewPs.Instantiate<BuildingPreviewBase>();
+                    break;
+                case BuildingType.CatapultTower:
+                    GD.Print("选了投石塔");
+                    _curBuildingType = BuildingType.CatapultTower;
+                    curBuildingPreview = CatapultTowerPreviewPs.Instantiate<BuildingPreviewBase>();
+                    break;
             }
             PlayShakeAnimation();
             GD.Print("点击了一个建筑item, 进入建筑预览模式");
+            GameManager.Instance.Level1.BuildGridMesh.Visible = true;
             OpenBuildingPanel(false);
             GetTree().CurrentScene.AddChild(curBuildingPreview);
             CurState = PlayerState.PreviewBuilding;
@@ -194,6 +212,7 @@ public partial class Player : Node3D
                 showFlagRingMainBase.ShowBuildRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
+            GameManager.Instance.Level1.BuildGridMesh.Visible = false;
             ChangeGoldCount(_curBuildingPrice);
             curBuildingPreview.QueueFree();
             CurState = PlayerState.Normal;
@@ -206,7 +225,7 @@ public partial class Player : Node3D
         Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
         if (result.Count == 0) return;
         Vector3 hitPos = (Vector3)result["position"];
-        Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos);
+        Vector3 snapPos = GameManager.Instance.BuildingGridMap.SnapToGrid(hitPos, curBuildingPreview.Width, curBuildingPreview.Height);
 
         bool inRange = false;//是否在圈内
         float distSq = 0;
@@ -247,6 +266,12 @@ public partial class Player : Node3D
             case BuildingType.MagicTower:
                 isPlaced = PreviewMagicTower(snapPos, inRange);
                 break;
+            case BuildingType.Wall:
+                isPlaced = PreviewWall(snapPos, inRange);
+                break;
+            case BuildingType.CatapultTower:
+                isPlaced = PreviewCatapultTower(snapPos, inRange);
+                break;
         }
         if(isPlaced)
         {
@@ -255,6 +280,7 @@ public partial class Player : Node3D
                 showFlagRingMainBase.ShowBuildRing(false);
             foreach (var showBuildingRingFlag in GameManager.Instance.FlagList)
                 showBuildingRingFlag.ShowBuildingRing(false);
+            GameManager.Instance.Level1.BuildGridMesh.Visible = false;
             GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
             curBuildingPreview.QueueFree();
             CurState = PlayerState.Normal;
@@ -535,6 +561,36 @@ public partial class Player : Node3D
         }
         return false;
     }
+    private bool PreviewWall(Vector3 snapPos, bool inRange)
+    {
+        bool canPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height) && inRange;
+        curBuildingPreview.SetCanPlace(canPlace);
+        if (Input.IsActionJustReleased("LeftMouseBtn") && canPlace)
+        {
+            GD.Print("放置了墙");
+            Wall wall = WallPs.Instantiate<Wall>();
+            wall.Position = snapPos;
+            GetTree().CurrentScene.AddChild(wall);
+            wall.PlayBounceAnimation();
+            return true;
+        }
+        return false;
+    }
+    private bool PreviewCatapultTower(Vector3 snapPos, bool inRange)
+    {
+        bool canPlace = GameManager.Instance.BuildingGridMap.CanPlace(snapPos, curBuildingPreview.Width, curBuildingPreview.Height) && inRange;
+        curBuildingPreview.SetCanPlace(canPlace);
+        if (Input.IsActionJustReleased("LeftMouseBtn") && canPlace)
+        {
+            GD.Print("放置了投石塔");
+            CatapultTower catapultTower = CatapultTowerPs.Instantiate<CatapultTower>();
+            catapultTower.Position = snapPos;
+            GetTree().CurrentScene.AddChild(catapultTower);
+            catapultTower.PlayBounceAnimation();
+            return true;
+        }
+        return false;
+    }
 
     private void OpenBuildingPanel(bool isOpen)
     {
@@ -623,4 +679,8 @@ public partial class Player : Node3D
         _goldShakeTween.Chain().TweenProperty(GoldCountLb, "position", _originalLbPos, 0.05f);
     }
 
+    public void SetTimeLb(string timeStr)
+    {
+        TimeLb.Text = timeStr;
+    }
 }

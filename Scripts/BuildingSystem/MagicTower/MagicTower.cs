@@ -23,12 +23,16 @@ public partial class MagicTower : BuildingBase
     private MagicTowerState _curState;
     [Export] public MeshInstance3D AtkRingMesh;
 
+    private int _searchInterval = 1; // 每10帧搜寻一次
+    private int _frameOffset;
+
     public override void _Ready()
 	{
         base._Ready();
         _atkRangeSq = AtkRange * AtkRange;
         _curState = MagicTowerState.Idle;
         ShowRing(false);
+        _frameOffset = Math.Abs(GetHashCode()) % _searchInterval;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -64,10 +68,14 @@ public partial class MagicTower : BuildingBase
     }
     private void UpdateIdle(float delta)
     {
-        if(_curTargetEnemy == null || IsInstanceValid(_curTargetEnemy) == false)
+        if (Engine.GetFramesDrawn() % _searchInterval == _frameOffset)
+        {
             _curTargetEnemy = FindNearestEnemy();
-        if (_curTargetEnemy == null || IsInstanceValid(_curTargetEnemy) == false)
+        }
+
+        if (_curTargetEnemy == null || !IsInstanceValid(_curTargetEnemy))
             return;
+
         if (GlobalPosition.DistanceSquaredTo(_curTargetEnemy.GlobalPosition) <= _atkRangeSq)
         {
             _curState = MagicTowerState.Atk;
@@ -75,7 +83,7 @@ public partial class MagicTower : BuildingBase
     }
     private void UpdateAtk(float delta)
     {
-        GD.Print("Atk!!!");
+        //GD.Print("Atk!!!");
         PlayBounceAnimation();
         _curTargetEnemy.LogicCurHp -= Damage;
         MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();

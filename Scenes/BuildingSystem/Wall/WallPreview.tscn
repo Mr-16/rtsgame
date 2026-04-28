@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://chdfdpp5sidq6"]
+
+[ext_resource type="Script" uid="uid://c4m31yg4mvppy" path="res://Scripts/BuildingSystem/BuildingPreviewBase.cs" id="1_twqnc"]
+[ext_resource type="PackedScene" uid="uid://xtjyqik5oeyt" path="res://Assets/Models/BuildingModels/WallModel.tscn" id="2_twqnc"]
+
+[node name="WallPreview" type="Node3D" unique_id=58546645]
+script = ExtResource("1_twqnc")
+Width = 2
+Height = 2
+
+[node name="WallModel" parent="." unique_id=944723679 instance=ExtResource("2_twqnc")]

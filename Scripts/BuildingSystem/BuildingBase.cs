@@ -19,6 +19,7 @@ namespace RtsGame.Scripts
             _hpMaterial = HpBarMesh.GetActiveMaterial(0).Duplicate() as ShaderMaterial;
             _hpMaterial.SetShaderParameter("health_value", _curHp / MaxHp);
             HpBarMesh.SetSurfaceOverrideMaterial(0, _hpMaterial);
+            HpBarMesh.Visible = false;
             _selectionMarkMesh.Visible = false;
         }
 
@@ -29,6 +30,7 @@ namespace RtsGame.Scripts
                 PlayBounceAnimation();
                 
             }
+            HpBarMesh.Visible = isSelected;
             _selectionMarkMesh.Visible = isSelected;
         }
 

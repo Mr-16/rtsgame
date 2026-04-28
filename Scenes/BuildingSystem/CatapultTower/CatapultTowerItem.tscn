@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://v82hqowf56wy"]
+
+[ext_resource type="Script" uid="uid://bbxshtersrwtp" path="res://Scripts/BuildingSystem/BuildingItemBase.cs" id="1_1ndbp"]
+[ext_resource type="PackedScene" uid="uid://gjs86yryn2ue" path="res://Assets/Models/BuildingModels/CatapultTowerModel.tscn" id="1_xtfcf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0b7l1"]
+size = Vector3(3.0646534, 2.0688076, 2.936737)
+
+[node name="CatapultTowerItem" type="Node3D" unique_id=1532820929 node_paths=PackedStringArray("Area", "PriceLb")]
+script = ExtResource("1_1ndbp")
+Type = 6
+Area = NodePath("Area3D")
+PriceLb = NodePath("PriceLb")
+Price = 500
+
+[node name="CatapultTowerModel" parent="." unique_id=628798087 instance=ExtResource("1_xtfcf")]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1056287264]
+collision_layer = 4
+collision_mask = 0
+priority = 500
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=463591237]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005955696, 1.2275229, 0.061080933)
+shape = SubResource("BoxShape3D_0b7l1")
+
+[node name="PriceLb" type="Label3D" parent="." unique_id=1163849754]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.92813635, 0)
+modulate = Color(1, 0.8235294, 0, 1)
+text = "300Gold"
+font_size = 150
+outline_size = 38

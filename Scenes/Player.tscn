@@ -13,23 +13,21 @@
 [ext_resource type="PackedScene" uid="uid://cnjlmc4oiffnq" path="res://Scenes/BuildingSystem/MagicTower/MagicTower.tscn" id="8_1e7my"]
 [ext_resource type="PackedScene" uid="uid://cds12tm5ju5wc" path="res://Scenes/BuildingSystem/GoldMaker/GoldMakerPreview.tscn" id="8_yoq75"]
 [ext_resource type="PackedScene" uid="uid://1s2lk80xsugn" path="res://Scenes/BuildingSystem/MagicTower/MagicTowerPreview.tscn" id="9_arntx"]
+[ext_resource type="PackedScene" uid="uid://bfgmr6jn0efpq" path="res://Scenes/BuildingSystem/Wall/Wall.tscn" id="10_1iu4k"]
 [ext_resource type="PackedScene" uid="uid://jbncdcejq3jc" path="res://Scenes/BuildingSystem/GoldMaker/GoldMakerItem.tscn" id="10_miouo"]
+[ext_resource type="PackedScene" uid="uid://chdfdpp5sidq6" path="res://Scenes/BuildingSystem/Wall/WallPreview.tscn" id="11_m0x7a"]
 [ext_resource type="PackedScene" uid="uid://dftxbm3dntsoy" path="res://Scenes/BuildingSystem/MagicTower/MagicTowerItem.tscn" id="11_miouo"]
+[ext_resource type="PackedScene" uid="uid://cedlsbct1t5yu" path="res://Scenes/BuildingSystem/CatapultTower/CatapultTower.tscn" id="12_x63xi"]
+[ext_resource type="PackedScene" uid="uid://bnnp5qmlnjo5d" path="res://Scenes/BuildingSystem/CatapultTower/CatapultTowerPreview.tscn" id="13_i2e8t"]
 [ext_resource type="Shader" uid="uid://bh3rg0btvux4t" path="res://Shaders/Global.gdshader" id="14_arntx"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1e7my"]
-transparency = 1
-albedo_color = Color(0.21209751, 0.21209751, 0.21209751, 0.771)
-
-[sub_resource type="QuadMesh" id="QuadMesh_arntx"]
-material = SubResource("StandardMaterial3D_1e7my")
+[ext_resource type="PackedScene" uid="uid://dclj2mwcoo66b" path="res://Scenes/BuildingSystem/Wall/WallItem.tscn" id="15_lslt6"]
+[ext_resource type="PackedScene" uid="uid://v82hqowf56wy" path="res://Scenes/BuildingSystem/CatapultTower/CatapultTowerItem.tscn" id="19_qidb7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lslt6"]
 render_priority = -10
 shader = ExtResource("14_arntx")
-shader_parameter/line_width = 0.7
+shader_parameter/line_width = 1.41
 shader_parameter/depth_threshold = 0.05
-shader_parameter/normal_threshold = 0.5
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/use_toon_style = false
 shader_parameter/saturation = 1.725
@@ -39,11 +37,19 @@ shader_parameter/color_levels = 12
 material = SubResource("ShaderMaterial_lslt6")
 size = Vector2(10, 10)
 
-[node name="Player" type="Node3D" unique_id=1729164241 node_paths=PackedStringArray("_camera", "_selectRect", "GoldCountLb", "BuildingPanelNode")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1e7my"]
+transparency = 1
+albedo_color = Color(0.21209751, 0.21209751, 0.21209751, 0.771)
+
+[sub_resource type="QuadMesh" id="QuadMesh_arntx"]
+material = SubResource("StandardMaterial3D_1e7my")
+
+[node name="Player" type="Node3D" unique_id=1729164241 node_paths=PackedStringArray("_camera", "_selectRect", "GoldCountLb", "TimeLb", "BuildingPanelNode")]
 script = ExtResource("1_rpqav")
 _camera = NodePath("Camera3D")
 _selectRect = NodePath("SelectRect")
-GoldCountLb = NodePath("GoldLb")
+GoldCountLb = NodePath("Control/GoldLb")
+TimeLb = NodePath("Control/TimeLb")
 BuildingPanelNode = NodePath("Camera3D/BuildingPanelNode")
 MainBasePs = ExtResource("3_52ee3")
 MainBasePreviewPs = ExtResource("2_nn08x")
@@ -53,54 +59,81 @@ GoldMakerPs = ExtResource("6_glx4g")
 GoldMakerPreviewPs = ExtResource("8_yoq75")
 MagicTowerPs = ExtResource("8_1e7my")
 MagicTowerPreviewPs = ExtResource("9_arntx")
+WallPs = ExtResource("10_1iu4k")
+WallPreviewPs = ExtResource("11_m0x7a")
+CatapultTowerPs = ExtResource("12_x63xi")
+CatapultTowerPreviewPs = ExtResource("13_i2e8t")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=676799997]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
-
-[node name="BuildingPanelNode" type="Node3D" parent="Camera3D" unique_id=1460582463]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 4.7683716e-07, -0.13808358, -1.1015614)
-
-[node name="FlagItem" parent="Camera3D/BuildingPanelNode" unique_id=729729234 instance=ExtResource("5_52ee3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.052418, -1.044796, 6.248026)
-
-[node name="MainBaseItem" parent="Camera3D/BuildingPanelNode" unique_id=1560851358 instance=ExtResource("2_dewec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.812848, 9.536743e-07, 6.389059)
-
-[node name="GoldMakerItem" parent="Camera3D/BuildingPanelNode" unique_id=253741175 instance=ExtResource("10_miouo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.289971, -0.45176792, 7.9873924)
-
-[node name="MagicTowerItem" parent="Camera3D/BuildingPanelNode" unique_id=1317746433 instance=ExtResource("11_miouo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.516345, -0.6726289, 5.3255444)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D/BuildingPanelNode" unique_id=5794739]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.404785, -3.3863735, 7.5159197)
-light_color = Color(0.99470645, 0.64995646, 0, 1)
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="Camera3D/BuildingPanelNode" unique_id=1768510564]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.149902, 11.849228, 0.45616722)
-light_color = Color(0.5847179, 1, 1, 1)
-omni_range = 24.613
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D/BuildingPanelNode" unique_id=249931352]
-transform = Transform3D(101.07759, 0, 0.060031593, 0, 32.544617, 0, -5.982097, 0, 1.0143341, 7.808544, 1.5178165, -9.644119)
-mesh = SubResource("QuadMesh_arntx")
 
 [node name="GlobalShader" type="MeshInstance3D" parent="Camera3D" unique_id=129891884]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05110109)
 mesh = SubResource("QuadMesh_1e7my")
 
+[node name="BuildingPanelNode" type="Node3D" parent="Camera3D" unique_id=1460582463]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 4.7683716e-07, -0.13808358, -1.1015614)
+
+[node name="Background" type="MeshInstance3D" parent="Camera3D/BuildingPanelNode" unique_id=249931352]
+transform = Transform3D(103.78364, 0, 0.032875873, 0, 38.98572, 0, -6.1422496, 0, 0.55549276, 7.808544, 1.5178167, -7.1669674)
+mesh = SubResource("QuadMesh_arntx")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D/BuildingPanelNode/Background" unique_id=5794739]
+transform = Transform3D(0.09007099, 0, -0.9959353, 0, 1, 0, 0.9959353, 0, 0.09007099, 0.37185138, -0.12579453, 30.543858)
+light_color = Color(0.99470645, 0.64995646, 0, 1)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Camera3D/BuildingPanelNode/Background" unique_id=1768510564]
+transform = Transform3D(0.09007099, 0, -0.9959353, 0, 1, 0, 0.9959353, 0, 0.09007099, -0.44561574, 0.26500502, 8.795887)
+light_color = Color(0.5847179, 1, 1, 1)
+omni_range = 24.613
+
+[node name="FlagItem" parent="Camera3D/BuildingPanelNode" unique_id=729729234 instance=ExtResource("5_52ee3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.052418, -1, 6.248026)
+
+[node name="MainBaseItem" parent="Camera3D/BuildingPanelNode" unique_id=1560851358 instance=ExtResource("2_dewec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.812848, -1, 6.389061)
+
+[node name="GoldMakerItem" parent="Camera3D/BuildingPanelNode" unique_id=253741175 instance=ExtResource("10_miouo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.289971, -1, 7.9873924)
+
+[node name="MagicTowerItem" parent="Camera3D/BuildingPanelNode" unique_id=1317746433 instance=ExtResource("11_miouo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.516345, -1, 5.3255444)
+
+[node name="CatapultTowerItem" parent="Camera3D/BuildingPanelNode" unique_id=1532820929 instance=ExtResource("19_qidb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1918883, 7.065908, 6.2108927)
+
+[node name="WallItem" parent="Camera3D/BuildingPanelNode" unique_id=945423048 instance=ExtResource("15_lslt6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.591471, 6.7258406, 8.224163)
+
 [node name="SelectRect" parent="." unique_id=1231996882 instance=ExtResource("2_kyqiw")]
 
-[node name="DebugLb" parent="." unique_id=1192042872 instance=ExtResource("3_gntrk")]
+[node name="Control" type="Control" parent="." unique_id=1408933696]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
-[node name="GoldLb" type="Label" parent="." unique_id=1938394992]
+[node name="DebugLb" parent="Control" unique_id=1192042872 instance=ExtResource("3_gntrk")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="GoldLb" type="Label" parent="Control" unique_id=1938394992]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -153.0
-offset_top = 15.0
-offset_right = 159.0
-offset_bottom = 169.0
+offset_left = -156.0
+offset_right = 156.0
+offset_bottom = 154.0
 grow_horizontal = 2
 size_flags_vertical = 0
 mouse_filter = 0
@@ -108,5 +141,19 @@ theme_override_colors/font_color = Color(1, 0.95468724, 0.3491902, 1)
 theme_override_constants/outline_size = 40
 theme_override_font_sizes/font_size = 100
 text = "Gold"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLb" type="Label" parent="Control" unique_id=1108467107]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -172.0
+offset_bottom = 92.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 37
+theme_override_font_sizes/font_size = 67
+text = "01:12"
 horizontal_alignment = 1
 vertical_alignment = 1

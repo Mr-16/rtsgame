@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://bfgmr6jn0efpq"]
+
+[ext_resource type="PackedScene" uid="uid://xtjyqik5oeyt" path="res://Assets/Models/BuildingModels/WallModel.tscn" id="1_50yrh"]
+[ext_resource type="Script" uid="uid://c8c6oinbbqyig" path="res://Scripts/BuildingSystem/Wall/Wall.cs" id="1_rjs38"]
+[ext_resource type="Shader" uid="uid://b2qsm764nd415" path="res://Shaders/HpBar.gdshader" id="2_rjs38"]
+[ext_resource type="Shader" uid="uid://decukuu5pyf7x" path="res://Shaders/UniversalRing.gdshader" id="3_etwdi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_46dot"]
+size = Vector3(2.0621672, 0.68518066, 2.0389252)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kxksq"]
+render_priority = 0
+shader = ExtResource("2_rjs38")
+shader_parameter/health_value = 0.8
+shader_parameter/buffer_value = 0.9
+shader_parameter/color_good = Color(0.2, 1, 0.4, 1)
+shader_parameter/color_bad = Color(1, 0.1, 0.1, 1)
+shader_parameter/color_buffer = Color(1, 1, 1, 0.5)
+shader_parameter/color_bg = Color(0.05, 0.05, 0.05, 0.7)
+shader_parameter/quad_size = Vector2(4, 0.6)
+shader_parameter/color_border = Color(0, 0, 0, 1)
+shader_parameter/border_thickness = Vector2(0.16, 0.125)
+shader_parameter/corner_radius = 0.2890000137275
+shader_parameter/smoothness = Vector2(0.01, 0.01)
+shader_parameter/pulse_speed = 5.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_7j157"]
+material = SubResource("ShaderMaterial_kxksq")
+size = Vector2(2, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8are"]
+render_priority = 0
+shader = ExtResource("3_etwdi")
+shader_parameter/main_color = Color(0, 1, 0, 1)
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 0.19600000931
+shader_parameter/thickness_softness = 0.0
+shader_parameter/segment_count = 0.0
+shader_parameter/segment_spacing = 0.5
+shader_parameter/rotation_speed = 0.0
+shader_parameter/pulse_speed = 0.0
+shader_parameter/pulse_amplitude = 0.05
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xtgee"]
+material = SubResource("ShaderMaterial_g8are")
+size = Vector2(5, 5)
+
+[node name="Wall" type="Node3D" unique_id=378035423 node_paths=PackedStringArray("HpBarMesh", "_selectionMarkMesh")]
+script = ExtResource("1_rjs38")
+HpBarMesh = NodePath("HpMesh")
+_selectionMarkMesh = NodePath("SelectionMark")
+
+[node name="WallModel" parent="." unique_id=944723679 instance=ExtResource("1_50yrh")]
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1761037901]
+radius = 1.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=836370330]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=522233041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025372028, -0.15740967, 0.0059432983)
+shape = SubResource("BoxShape3D_46dot")
+
+[node name="HpMesh" type="MeshInstance3D" parent="." unique_id=2077763643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.381603, 0)
+mesh = SubResource("QuadMesh_7j157")
+
+[node name="SelectionMark" type="MeshInstance3D" parent="." unique_id=210970636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.014968395, 0)
+mesh = SubResource("PlaneMesh_xtgee")

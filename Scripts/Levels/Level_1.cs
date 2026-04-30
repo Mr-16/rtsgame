@@ -57,10 +57,10 @@ public partial class Level_1 : Node3D
         //else { targetCd = 10.0f; } // 0 到 Time1 之间
 
         // 统一赋值
-        Spawner1.CdTime = targetCd;
-        Spawner2.CdTime = targetCd;
-        Spawner3.CdTime = targetCd;
-        Spawner4.CdTime = targetCd;
+        //Spawner1.CdTime = targetCd;
+        //Spawner2.CdTime = targetCd;
+        //Spawner3.CdTime = targetCd;
+        //Spawner4.CdTime = targetCd;
     }
 
 

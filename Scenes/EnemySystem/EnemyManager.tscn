@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b7yajn46s6vyk"]
+
+[ext_resource type="Script" uid="uid://d1blenp564clv" path="res://Scripts/EnemySystem/EnemyManager.cs" id="1_08fj3"]
+[ext_resource type="ArrayMesh" uid="uid://c5qcafyg60bcm" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/obj/Bush_2_D_Color1.obj" id="2_fgkhg"]
+[ext_resource type="Material" uid="uid://b1nxad800wqxe" path="res://Assets/Materials/EnemyMaterial.tres" id="3_2uypd"]
+
+[node name="EnemyManager" type="Node3D" unique_id=1645612888]
+script = ExtResource("1_08fj3")
+EnemyMeshes = Array[Mesh]([ExtResource("2_fgkhg")])
+CountsPerType = PackedInt32Array(10000)
+EnemyShaderMaterial = ExtResource("3_2uypd")

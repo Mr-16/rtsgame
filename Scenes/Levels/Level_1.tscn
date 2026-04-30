@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cju1vr25mrm6c" path="res://Scenes/Player.tscn" id="2_tjcye"]
 [ext_resource type="PackedScene" uid="uid://djat5t43npghb" path="res://Scenes/EnemySystem/EnemySpawner.tscn" id="3_q8yj7"]
 [ext_resource type="PackedScene" uid="uid://c01qjo2efp47t" path="res://Scenes/BuildingSystem/BuildGridMesh.tscn" id="4_87l2y"]
+[ext_resource type="PackedScene" uid="uid://b7yajn46s6vyk" path="res://Scenes/EnemySystem/EnemyManager.tscn" id="5_qpfou"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i63mn"]
 sky_top_color = Color(0.8474744, 0.84747446, 0.84747446, 1)
@@ -84,3 +85,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.741455, 6.1035156e-05, 379
 
 [node name="BuildGridMesh" parent="." unique_id=259589698 instance=ExtResource("4_87l2y")]
 visible = false
+
+[node name="EnemyManager" parent="." unique_id=1645612888 instance=ExtResource("5_qpfou")]
+CountsPerType = PackedInt32Array(5000)

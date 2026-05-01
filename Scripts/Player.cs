@@ -282,8 +282,8 @@ public partial class Player : Node3D
                 showBuildingRingFlag.ShowBuildingRing(false);
             GameManager.Instance.Level1.BuildGridMesh.Visible = false;
             GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
-            curBuildingPreview.QueueFree();
-            CurState = PlayerState.Normal;
+            //curBuildingPreview.QueueFree();
+            //CurState = PlayerState.Normal;
         }
         else
         {

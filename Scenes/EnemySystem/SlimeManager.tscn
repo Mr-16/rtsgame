@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b7yajn46s6vyk"]
+
+[ext_resource type="Script" uid="uid://b3jtnqfqqymy1" path="res://Scripts/EnemySystem/SlimeManager.cs" id="1_6suwa"]
+[ext_resource type="ArrayMesh" uid="uid://c5qcafyg60bcm" path="res://Assets/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/obj/Bush_2_D_Color1.obj" id="2_fgkhg"]
+[ext_resource type="Material" uid="uid://b1nxad800wqxe" path="res://Assets/Materials/EnemyMaterial.tres" id="3_2uypd"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_2uypd"]
+transform_format = 1
+use_custom_data = true
+mesh = ExtResource("2_fgkhg")
+
+[node name="EnemyManager" type="Node3D" unique_id=1645612888 node_paths=PackedStringArray("MultiMeshInstance")]
+script = ExtResource("1_6suwa")
+Count = 10000
+MultiMeshInstance = NodePath("MultiMeshInstance3D")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1549836558]
+material_override = ExtResource("3_2uypd")
+multimesh = SubResource("MultiMesh_2uypd")

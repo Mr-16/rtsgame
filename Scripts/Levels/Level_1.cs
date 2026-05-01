@@ -6,21 +6,21 @@ using System.Collections.Generic;
 public partial class Level_1 : Node3D
 {
     //第一关的出兵逻辑 : 
-    [Export] private EnemySpawner Spawner1;
-    [Export] private EnemySpawner Spawner2;
-    [Export] private EnemySpawner Spawner3;
-    [Export] private EnemySpawner Spawner4;
+    //[Export] private EnemySpawner Spawner1;
+    //[Export] private EnemySpawner Spawner2;
+    //[Export] private EnemySpawner Spawner3;
+    //[Export] private EnemySpawner Spawner4;
 
-    [Export] public double Time1 = 60;
-    [Export] public double Time2 = 120;
-    [Export] public double Time3 = 180;
-    [Export] public double Time4 = 240;
-    [Export] public double Time5 = 300;
-    [Export] public double Time6 = 360;
-    [Export] public double Time7 = 420;
-    [Export] public double Time8 = 480;
-    [Export] public double Time9 = 540;
-    [Export] public double Time10 = 600;
+    //[Export] public double Time1 = 60;
+    //[Export] public double Time2 = 120;
+    //[Export] public double Time3 = 180;
+    //[Export] public double Time4 = 240;
+    //[Export] public double Time5 = 300;
+    //[Export] public double Time6 = 360;
+    //[Export] public double Time7 = 420;
+    //[Export] public double Time8 = 480;
+    //[Export] public double Time9 = 540;
+    //[Export] public double Time10 = 600;
     [Export] public Node3D BuildGridMesh;
 
     private double _curTimer = 0;

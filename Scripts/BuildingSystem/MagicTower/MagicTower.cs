@@ -8,7 +8,6 @@ public enum MagicTowerState
     Building,
     Idle,
     Atk,
-    CD,
     Death,
 }
 
@@ -18,8 +17,9 @@ public partial class MagicTower : BuildingBase
     [Export] public float AtkRange = 25;
     [Export] public int Damage = 38;
     [Export] public float CdTime = 0.3f;
+    private float idleRestTime = 0;
     private float _atkRangeSq;
-    private int _curTargetIndex;
+    private EnemyBase _curTarget;
     private MagicTowerState _curState;
     [Export] public MeshInstance3D AtkRingMesh;
 
@@ -50,9 +50,6 @@ public partial class MagicTower : BuildingBase
             case MagicTowerState.Atk:
                 UpdateAtk((float)delta);
                 break;
-            case MagicTowerState.CD:
-                UpdateCD((float)delta);
-                break;
             case MagicTowerState.Death:
                 UpdateDeath((float)delta);
                 break;
@@ -68,59 +65,69 @@ public partial class MagicTower : BuildingBase
     }
     private void UpdateIdle(float delta)
     {
-        //if (Engine.GetFramesDrawn() % _searchInterval == _frameOffset)
-        //{
-        //    _curTargetIndex = GameManager.Instance.EnemyManager.GetNearestTargetIndex(GlobalPosition, _atkRangeSq);
-        //}
+        idleRestTime -= delta;
+        if (idleRestTime > 0)
+            return;
 
-        //if (_curTargetIndex == -1)
-        //    return;
-        //_curState = MagicTowerState.Atk;
+        if (Engine.GetFramesDrawn() % _searchInterval == _frameOffset)
+        {
+            _curTarget = FindTargetEnemy();
+        }
+        if (_curTarget != null && IsInstanceValid(_curTarget))
+        {
+            _curState = MagicTowerState.Atk;
+            return;
+        }
+        
     }
     private void UpdateAtk(float delta)
     {
-        ////GD.Print("Atk!!!");
-        //PlayBounceAnimation();
-       
-        //MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();
-        //GetTree().CurrentScene.AddChild(ball);
-        //Vector3 newPos = GlobalPosition;
-        //newPos.Y += 2.0f;
-        //ball.GlobalPosition = newPos;
-        //ball.Init(_curTargetIndex, Damage);
-        //_curState = MagicTowerState.CD;
+        if (_curTarget == null || IsInstanceValid(_curTarget) == false)
+        {
+            _curState = MagicTowerState.Idle;
+            return;
+        }
+
+        //GD.Print("Atk!!!");
+        if( _curTarget.LogicCurHp <= 0)
+        {
+            _curState = MagicTowerState.Idle;
+            return;
+        }
+        _curTarget.LogicCurHp -= Damage;
+        PlayBounceAnimation();
+
+        MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();
+        GetTree().CurrentScene.AddChild(ball);
+        Vector3 newPos = GlobalPosition;
+        newPos.Y += 2.0f;
+        ball.GlobalPosition = newPos;
+        ball.Init(_curTarget, Damage);
+
+        idleRestTime = CdTime;
+        _curState = MagicTowerState.Idle;
     }
 
-    
-    private float CdTimer = 0;
-    private void UpdateCD(float delta)
-    {
-        CdTimer += delta;
-        if(CdTimer > CdTime)
-        {
-            CdTimer = 0;
-            _curState = MagicTowerState.Idle;
-        }
-    }
     private void UpdateDeath(float delta)
     {
         
     }
 
-    private EnemyBase FindNearestEnemy()
+    private EnemyBase FindTargetEnemy()
     {
         var enemys = GameManager.Instance.EnemyList;
         if (enemys == null || enemys.Count == 0) return null;
 
         EnemyBase nearest = null;
-        float minDistance = float.MaxValue;
+        float minDistance = _atkRangeSq; // 初始值设为攻击距离平方，这样只有小于它的才会被选中
 
         foreach (var enemy in enemys)
         {
             if (!IsInstanceValid(enemy)) continue;
-            if(enemy.LogicCurHp <= 0) continue;
+            if (enemy.LogicCurHp <= 0) continue;
+
             float dist = GlobalPosition.DistanceSquaredTo(enemy.GlobalPosition);
-            if (dist < minDistance)
+            if (dist < minDistance) // 只有进入射程的才会被考虑
             {
                 minDistance = dist;
                 nearest = enemy;

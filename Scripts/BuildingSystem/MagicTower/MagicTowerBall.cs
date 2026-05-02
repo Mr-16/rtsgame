@@ -1,40 +1,69 @@
 using Godot;
-using RtsGame.Scripts;
 using RtsGame.Scripts.EnemySystem;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 
 public partial class MagicTowerBall : Node3D
 {
     [Export] private float _moveSpeed = 20f;
-    private int _targetEnemyIndex;
+
+    private EnemyBase _target;
+    private Vector3 _lastTargetPosition;
     private int _damage;
+    private bool _targetLost = false;
 
     public override void _PhysicsProcess(double delta)
     {
-        //if (GameManager.Instance.EnemyManager.DataList[_targetEnemyIndex].State == EnemyState.Death)
-        //{
-        //    QueueFree();
-        //    return;
-        //}
-        //Vector3 targetPos = GameManager.Instance.EnemyManager.DataList[_targetEnemyIndex].Position;
-        //Vector3 currentPos = GlobalPosition;
-        //Vector3 direction = targetPos - currentPos;
-        //float distanceSquared = direction.LengthSquared();
-        //if (distanceSquared < 1.0f)
-        //{
-        //    GameManager.Instance.EnemyManager.TakeDmg(_targetEnemyIndex, _damage);
-        //    QueueFree();
-        //    return;
-        //}
+        // 1. 更新目标位置或处理目标丢失
+        if (IsInstanceValid(_target))
+        {
+            _lastTargetPosition = _target.GlobalPosition;
+        }
+        else
+        {
+            _targetLost = true;
+        }
 
-        //GlobalPosition += direction.Normalized() * _moveSpeed * (float)delta;
+        // 2. 计算位移
+        Vector3 currentPos = GlobalPosition;
+        Vector3 direction = _lastTargetPosition - currentPos;
+        float distanceSquared = direction.LengthSquared();
+
+        // 3. 到达判定 (使用较小的阈值避免抖动)
+        if (distanceSquared < 0.5f)
+        {
+            OnReachDestination();
+            return;
+        }
+
+        // 4. 移动
+        GlobalPosition += direction.Normalized() * _moveSpeed * (float)delta;
+
+        // 可选：让球始终朝向飞行方向
+        if (direction != Vector3.Zero)
+        {
+            LookAt(GlobalPosition + direction, Vector3.Up);
+        }
     }
 
-    public void Init(int targetEnemyIndex, int damage)
+    private void OnReachDestination()
     {
-        _targetEnemyIndex = targetEnemyIndex;
-        _damage = damage;
+        // 如果目标还在，且是因为到达而触发，则造成伤害
+        if (!_targetLost && IsInstanceValid(_target))
+        {
+            _target.TakeDmg(_damage);
+        }
+
+        // 无论是否击中，到达最后位置后都销毁
+        QueueFree();
     }
 
+    public void Init(EnemyBase target, int damage)
+    {
+        _target = target;
+        _damage = damage;
+        if (IsInstanceValid(_target))
+        {
+            _lastTargetPosition = _target.GlobalPosition;
+        }
+    }
 }

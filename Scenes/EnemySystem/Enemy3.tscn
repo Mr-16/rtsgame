@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bhy4f7ct1o3eo"]
+
+[ext_resource type="Script" uid="uid://6sx6j4txd4m7" path="res://Scripts/EnemySystem/MeleeEnemy.cs" id="1_ac07w"]
+[ext_resource type="PackedScene" uid="uid://b46lcojayqrow" path="res://Assets/Models/CharacterModels/EnemyModel3.tscn" id="3_ac07w"]
+[ext_resource type="Material" uid="uid://chyi23ytbb5rg" path="res://Assets/Materials/HpBarMaterial.tres" id="3_l4xso"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_82aaj"]
+material = ExtResource("3_l4xso")
+size = Vector2(1, 0.23)
+
+[node name="Enemy3" type="Node3D" unique_id=808644019 node_paths=PackedStringArray("ModelNode", "HpBarMesh")]
+script = ExtResource("1_ac07w")
+MaxHp = 30
+MoveSpeed = 10.0
+ModelNode = NodePath("EnemyModel3")
+AtkCdTime = 0.5
+Damage = 1
+HpBarMesh = NodePath("HpBar")
+
+[node name="HpBar" type="MeshInstance3D" parent="." unique_id=1196094185]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0116305, 0)
+mesh = SubResource("QuadMesh_82aaj")
+
+[node name="EnemyModel3" parent="." unique_id=1345712945 instance=ExtResource("3_ac07w")]

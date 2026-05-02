@@ -9,8 +9,8 @@ namespace RtsGame.Scripts
         [Export] public float ModelRadius = 2;
         [Export] public float MaxHp = 100;
         protected float _curHp;
-        [Export] private MeshInstance3D HpBarMesh;
         [Export] private MeshInstance3D _selectionMarkMesh;
+        [Export] private MeshInstance3D HpBarMesh;
         private ShaderMaterial _hpMaterial;
         private Tween _bounceTween; // 保存当前的 Tween，防止多次点击导致动画冲突
         public override void _Ready()
@@ -51,7 +51,7 @@ namespace RtsGame.Scripts
             //GameManager.Instance.Player.PlayShakeAnimation();
         }
 
-        private Tween _bufferTween;
+        
 
         public override void _ExitTree()
         {
@@ -69,6 +69,7 @@ namespace RtsGame.Scripts
             return GlobalPosition;
         }
 
+        private Tween _bufferTween;
         public void TakeDmg(int damage)
         {
             _curHp -= damage;

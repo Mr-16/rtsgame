@@ -20,5 +20,9 @@ namespace RtsGame.Scripts.Global
     public enum EnemeyType
     {
         Zombie,
+        Enemy1,
+        Enemy2,
+        Enemy3,
+        Enemy4,
     }
 }

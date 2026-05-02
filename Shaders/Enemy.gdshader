@@ -1,54 +1,101 @@
 shader_type spatial;
 
-// 定义 bridge 变量，用于将数据从 vertex 传到 fragment
-varying vec4 v_custom_data;
+// 基础材质属性
+uniform vec4 albedo : source_color = vec4(0.1, 0.2, 0.1, 1.0);
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float idle_speed = 2.5;
+uniform float move_speed = 8.0;
+uniform float atk_speed = 5.0; // 稍微加快攻击频率
+
+// 定义 varying 变量用于跨函数传递数据
+varying float v_is_hurt;
 
 void vertex() {
-    v_custom_data = INSTANCE_CUSTOM;
+    // 1. 获取数据
+    float state = INSTANCE_CUSTOM.g;
+    float is_hurt = INSTANCE_CUSTOM.b; 
+    float instance_offset = INSTANCE_CUSTOM.r * 0.15;
     
-    float individual_offset = v_custom_data.r * 100.0;
-    // 假设我们在 C# 传入了有效方向，计算速度
-    float move_speed = length(v_custom_data.gb); 
+    v_is_hurt = is_hurt;
     
-    // 只有在有速度时才表现动感
+    float t = TIME + instance_offset;
+    vec3 v = VERTEX;
     
-        // 1. 史莱姆拉伸动画 (上下跳动 + 左右缩放)
-        // 使用 sin 的绝对值让它看起来是在地上“弹”
-        float bounce = abs(sin(TIME * 10.0 + individual_offset));
-        
-        // 当向上跳(bounce高)时，Y轴拉长，XZ轴缩小（保体积挤压感）
-        float stretch = 1.0 + bounce * 0.3;
-        float squash = 1.0 - bounce * 0.15;
-        
-        VERTEX.y *= stretch;
-        VERTEX.xz *= squash;
+    // 基于高度的缩放因子 (确保模型 Y>=0)
+    float h_factor = clamp(v.y, 0.0, 1.0); 
 
-        // 2. 呼吸感倾斜 (朝向运动方向的前后晃动)
-        // 因为我们在 C# 已经旋转了 Basis 使得模型正面朝向前进方向
-        // 所以在局部坐标系下，我们只需要让它在局部 Z 轴上晃动即可
-        if (VERTEX.y > 0.1) {
-            float lean = sin(TIME * 10.0 + individual_offset) * 0.2;
-            VERTEX.z += lean * VERTEX.y; 
+    if (state == 0.0) { 
+        // --- Idle: 夸张的呼吸 ---
+        float breath = (sin(t * idle_speed) * 0.5 + 0.5) * 0.25;
+        v.y += breath * h_factor;
+        v.xz *= (1.0 - breath * 0.5 * h_factor);
         
+    } else if (state == 1.0) {
+        // --- Move: 极具弹性的跳跃 ---
+        float jump_sine = sin(t * move_speed);
+        float jump_f = max(0.0, jump_sine); 
+        
+        v.y += jump_f * 0.6 * h_factor;
+        float stretch = jump_sine * 0.35;
+        v.y *= (1.0 + stretch * h_factor);
+        v.xz *= (1.0 - stretch * 0.5 * h_factor);
+        v.x += jump_sine * 0.2 * h_factor;
+        
+    } else if (state == 2.0) {
+        // --- Atk: 优化后的重击 (爆发式形变) ---
+        float cycle = fract(t * atk_speed / 6.28); 
+        
+        float punch = 0.0;
+        float forward_lean = 0.0;
+        
+        if (cycle < 0.6) {
+            // 1. 蓄力阶段 (0.0 - 0.6): 慢慢压扁，身体后倾
+            float prep_t = cycle / 0.6;
+            punch = -0.5 * pow(prep_t, 2.0); // 使用平方曲线，积压感更强
+            forward_lean = -0.2 * prep_t;   // 轻微后仰蓄力
+        } else if (cycle < 0.75) {
+            // 2. 爆发阶段 (0.6 - 0.75): 瞬间拉长并前冲
+            float burst_t = (cycle - 0.6) / 0.15;
+            punch = mix(-0.5, 1.2, burst_t); // 从压扁瞬间变为极度拉伸
+            forward_lean = mix(-0.2, 1.0, burst_t); // 猛烈前冲
+        } else {
+            // 3. 回弹阶段 (0.75 - 1.0): 缓慢恢复
+            float recover_t = (cycle - 0.75) / 0.25;
+            punch = mix(1.2, 0.0, 1.0 - pow(1.0 - recover_t, 3.0));
+            forward_lean = mix(1.0, 0.0, recover_t);
+        }
+
+        // 应用形变
+        v.y *= (1.0 + punch * h_factor);
+        v.xz *= (1.0 - punch * 0.4 * h_factor); // 保持体积守恒
+        v.z += forward_lean * 0.8 * h_factor;   // 核心：Z轴的前冲力度
+        
+    } else if (state == 3.0) {
+        // --- Death: 融化 ---
+        v.y *= 0.1;
+        v.xz *= 1.8;
     }
+
+    // --- Hurt: 强力抖动 ---
+    if (is_hurt > 0.5) {
+        float shake = sin(TIME * 60.0) * 0.15;
+        v.x += shake * h_factor;
+    }
+
+    VERTEX = v;
 }
 
 void fragment() {
-    // 基础颜色（深蓝色）
-    vec3 base_color = vec3(0.3,0.2, 0.1);
+    vec3 final_color = albedo.rgb;
     
-    // 使用 R 通道做一点色相偏移，数值不要太大
-    float hue_shift = sin(v_custom_data.r * 20.0) * 0.1;
-    
-    // 加上 clamp 保证颜色分量不会超过 1.0 (变白) 或小于 0.0
-    ALBEDO = clamp(base_color + hue_shift, 0.0, 1.0);
-    
-    // 增加粗糙度，防止环境光反射过强导致的发白
-    ROUGHNESS = 0.7;
-    METALLIC = 0.0;
-
-    // 受击变红逻辑
-    if (v_custom_data.a > 0.5) {
-        ALBEDO = vec3(1.0, 0.0, 0.0);
+   if (v_is_hurt > 0.0) {
+        // 使用 sin 或简单的 step 创造闪烁感
+        // 注意：0.1秒非常短，可能只够闪 1-2 下
+        float flash = step(0.0, sin(TIME * 40.0)); 
+        final_color = mix(final_color, flash_color.rgb, flash);
     }
+    
+    ALBEDO = final_color;
+    ROUGHNESS = 0.2;
+    SPECULAR = 0.5;
 }

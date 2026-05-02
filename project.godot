@@ -24,6 +24,10 @@ GameManager="*uid://dc0fl3l7j771w"
 
 project/assembly_name="RtsGame"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 MoveLeft={

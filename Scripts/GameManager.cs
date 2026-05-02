@@ -1,5 +1,6 @@
 using Godot;
 using RtsGame.Scripts.EnemySystem;
+using RtsGame.Scripts.Global;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,6 +24,7 @@ namespace RtsGame.Scripts
         public Player Player;
         public List<EnemyBase> EnemyList = new List<EnemyBase>();
         public Level_1 Level1;
+        public List<IEnemyTarget> EnemyTargetList = new List<IEnemyTarget>();
 
         public override void _Ready()
         {

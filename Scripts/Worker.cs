@@ -27,13 +27,13 @@ public class WorkerTarget()
 
 public partial class Worker : UnitBase
 {
-    private ResourceBase _curRes;
+    //private ResourceBase _curRes;
     private WorkerTarget _curTarget = new WorkerTarget();
     private float _captureRange = 4;
     private float _captureRangeSq;
 
     [Export] Node3D _headNode;
-    private ResItemBase _curResItem;
+    //private ResItemBase _curResItem;
     [Export] private PackedScene _resItemPackedScene;
 
     [Export] public Node3D ModelRootNode;
@@ -83,15 +83,6 @@ public partial class Worker : UnitBase
             case WorkerState.Move:
                 EnterMove();
                 break;
-            case WorkerState.ToRes:
-                EnterToRes();
-                break;
-            case WorkerState.Capture:
-                EnterCapture();
-                break;
-            case WorkerState.ReturnRes:
-                EnterReturnRes();
-                break;
             default:
                 break;
         }
@@ -106,15 +97,6 @@ public partial class Worker : UnitBase
             case WorkerState.Move:
                 UpdateMove(delta);
                 break;
-            case WorkerState.ToRes:
-                UpdateToRes(delta);
-                break;
-            case WorkerState.Capture:
-                UpdateCapture(delta);
-                break;
-            case WorkerState.ReturnRes:
-                UpdateReturnRes(delta);
-                break;
             default:
                 break;
         }
@@ -128,15 +110,6 @@ public partial class Worker : UnitBase
                 break;
             case WorkerState.Move:
                 ExitMove();
-                break;
-            case WorkerState.ToRes:
-                ExitToRes();
-                break;
-            case WorkerState.Capture:
-                ExitCapture();
-                break;
-            case WorkerState.ReturnRes:
-                ExitReturnRes();
                 break;
             default:
                 break;
@@ -203,164 +176,164 @@ public partial class Worker : UnitBase
         _curTarget.Type = TargetType.None;
     }
 
-    //ToRes
-    private void EnterToRes()
-    {
-        AnimPlayer.Play("Move", 0.2f);
-    }
-    private void UpdateToRes(float delta)
-    {
-        if (IsInstanceValid(_curRes) == false)
-        {
-            ChangeState(WorkerState.Idle);
-            return;
-        }
-        if (_curTarget.Type == TargetType.Normal)
-        {
-            ChangeState(WorkerState.Move);
-            return;
-        }
-        if (_curTarget.Type == TargetType.MainBase)
-        {
-            ChangeState(WorkerState.Move);
-            return;
-        }
-        if (_curTarget.Position.DistanceSquaredTo(GlobalPosition) <= _captureRangeSq)
-        {
-            ChangeState(WorkerState.Capture);
-            return;
-        }
-        Vector3 nextPathPos = NaviAgent.GetNextPathPosition();
-        Vector3 direction = (nextPathPos - GlobalPosition);
-        direction.Y = 0; // 锁定 Y 轴，防止单位仰头
-        NaviAgent.Velocity = direction.Normalized() * MoveSpeed;// 告诉导航代理我们想往哪走
-    }
-    private void ExitToRes()
-    {
-        NaviAgent.Velocity = Vector3.Zero;
-        _curTarget.Type = TargetType.None;
-    }
+    ////ToRes
+    //private void EnterToRes()
+    //{
+    //    AnimPlayer.Play("Move", 0.2f);
+    //}
+    //private void UpdateToRes(float delta)
+    //{
+    //    if (IsInstanceValid(_curRes) == false)
+    //    {
+    //        ChangeState(WorkerState.Idle);
+    //        return;
+    //    }
+    //    if (_curTarget.Type == TargetType.Normal)
+    //    {
+    //        ChangeState(WorkerState.Move);
+    //        return;
+    //    }
+    //    if (_curTarget.Type == TargetType.MainBase)
+    //    {
+    //        ChangeState(WorkerState.Move);
+    //        return;
+    //    }
+    //    if (_curTarget.Position.DistanceSquaredTo(GlobalPosition) <= _captureRangeSq)
+    //    {
+    //        ChangeState(WorkerState.Capture);
+    //        return;
+    //    }
+    //    Vector3 nextPathPos = NaviAgent.GetNextPathPosition();
+    //    Vector3 direction = (nextPathPos - GlobalPosition);
+    //    direction.Y = 0; // 锁定 Y 轴，防止单位仰头
+    //    NaviAgent.Velocity = direction.Normalized() * MoveSpeed;// 告诉导航代理我们想往哪走
+    //}
+    //private void ExitToRes()
+    //{
+    //    NaviAgent.Velocity = Vector3.Zero;
+    //    _curTarget.Type = TargetType.None;
+    //}
 
-    //Capture
-    private float CaptureDuration = 3f;
-    private float CaptureTimer = 0;
-    private void EnterCapture()
-    {
-        AnimPlayer.Play("Capture", 0.2f);
-        NaviAgent.Velocity = Vector3.Zero;
-        Vector3 lookDirection = (_curTarget.Position - GlobalPosition);
-        lookDirection.Y = 0; // 保持水平，防止弯腰或仰头
-        ModelRootNode.LookAt(GlobalPosition + lookDirection.Normalized(), Vector3.Up);
-    }
-    private void UpdateCapture(float delta)
-    {
-        if (_curTarget.Type == TargetType.Normal)
-        {
-            ChangeState(WorkerState.Move);
-            return;
-        }
-        if (_curTarget.Type == TargetType.MainBase)
-        {
-            ChangeState(WorkerState.Move);
-            return;
-        }
-        if (IsInstanceValid(_curRes) == false)
-        {
-            ChangeState(WorkerState.Idle);
-            return;
-        }
-        if(_curResItem != null)
-        {
-            float minDistanceSq = float.MaxValue;
-            MainBase nearestBase = null;
-            foreach (MainBase mainBase in GameManager.Instance.MainBaseList)
-            {
-                float distSq = GlobalPosition.DistanceSquaredTo(mainBase.GlobalPosition);
-                if (distSq < minDistanceSq)
-                {
-                    minDistanceSq = distSq;
-                    nearestBase = mainBase;
-                }
-            }
-            SetTarget(TargetType.MainBase, nearestBase.GlobalPosition);
-            ChangeState(WorkerState.ReturnRes);
-            return;
-        }
-        if (CaptureTimer > CaptureDuration)
-        {
-            //todo switch case resType
-            _curResItem = _resItemPackedScene.Instantiate<ResItemBase>();
-            _curResItem.CurCount = _curRes.GetRes();
-            _headNode.AddChild(_curResItem);
-            float minDistanceSq = float.MaxValue;
-            MainBase nearestBase = null;
-            foreach (MainBase mainBase in GameManager.Instance.MainBaseList)
-            {
-                float distSq = GlobalPosition.DistanceSquaredTo(mainBase.GlobalPosition);
-                if (distSq < minDistanceSq)
-                {
-                    minDistanceSq = distSq;
-                    nearestBase = mainBase;
-                }
-            }
-            SetTarget(TargetType.MainBase, nearestBase.GlobalPosition);
-            ChangeState(WorkerState.ReturnRes);
-            return;
-        }
-        CaptureTimer += delta;
-    }
-    private void ExitCapture()
-    {
-        CaptureTimer = 0;
+    ////Capture
+    //private float CaptureDuration = 3f;
+    //private float CaptureTimer = 0;
+    //private void EnterCapture()
+    //{
+    //    AnimPlayer.Play("Capture", 0.2f);
+    //    NaviAgent.Velocity = Vector3.Zero;
+    //    Vector3 lookDirection = (_curTarget.Position - GlobalPosition);
+    //    lookDirection.Y = 0; // 保持水平，防止弯腰或仰头
+    //    ModelRootNode.LookAt(GlobalPosition + lookDirection.Normalized(), Vector3.Up);
+    //}
+    //private void UpdateCapture(float delta)
+    //{
+    //    if (_curTarget.Type == TargetType.Normal)
+    //    {
+    //        ChangeState(WorkerState.Move);
+    //        return;
+    //    }
+    //    if (_curTarget.Type == TargetType.MainBase)
+    //    {
+    //        ChangeState(WorkerState.Move);
+    //        return;
+    //    }
+    //    if (IsInstanceValid(_curRes) == false)
+    //    {
+    //        ChangeState(WorkerState.Idle);
+    //        return;
+    //    }
+    //    if(_curResItem != null)
+    //    {
+    //        float minDistanceSq = float.MaxValue;
+    //        MainBase nearestBase = null;
+    //        foreach (MainBase mainBase in GameManager.Instance.MainBaseList)
+    //        {
+    //            float distSq = GlobalPosition.DistanceSquaredTo(mainBase.GlobalPosition);
+    //            if (distSq < minDistanceSq)
+    //            {
+    //                minDistanceSq = distSq;
+    //                nearestBase = mainBase;
+    //            }
+    //        }
+    //        SetTarget(TargetType.MainBase, nearestBase.GlobalPosition);
+    //        ChangeState(WorkerState.ReturnRes);
+    //        return;
+    //    }
+    //    if (CaptureTimer > CaptureDuration)
+    //    {
+    //        //todo switch case resType
+    //        _curResItem = _resItemPackedScene.Instantiate<ResItemBase>();
+    //        _curResItem.CurCount = _curRes.GetRes();
+    //        _headNode.AddChild(_curResItem);
+    //        float minDistanceSq = float.MaxValue;
+    //        MainBase nearestBase = null;
+    //        foreach (MainBase mainBase in GameManager.Instance.MainBaseList)
+    //        {
+    //            float distSq = GlobalPosition.DistanceSquaredTo(mainBase.GlobalPosition);
+    //            if (distSq < minDistanceSq)
+    //            {
+    //                minDistanceSq = distSq;
+    //                nearestBase = mainBase;
+    //            }
+    //        }
+    //        SetTarget(TargetType.MainBase, nearestBase.GlobalPosition);
+    //        ChangeState(WorkerState.ReturnRes);
+    //        return;
+    //    }
+    //    CaptureTimer += delta;
+    //}
+    //private void ExitCapture()
+    //{
+    //    CaptureTimer = 0;
         
-    }
+    //}
 
-    //ReturnRes
-    private void EnterReturnRes()
-    {
-        AnimPlayer.Play("Move", 0.2f);
-    }
-    private void UpdateReturnRes(float delta)
-    {
-        if (_curTarget.Type == TargetType.Normal)
-        {
-            ChangeState(WorkerState.Move);
-            return;
-        }
-        if (_curTarget.Type == TargetType.Resource)
-        {
-            ChangeState(WorkerState.ToRes);
-            return;
-        }
-        if (_curTarget.Position.DistanceSquaredTo(GlobalPosition) <= _returnResRangeSq)
-        {
+    ////ReturnRes
+    //private void EnterReturnRes()
+    //{
+    //    AnimPlayer.Play("Move", 0.2f);
+    //}
+    //private void UpdateReturnRes(float delta)
+    //{
+    //    if (_curTarget.Type == TargetType.Normal)
+    //    {
+    //        ChangeState(WorkerState.Move);
+    //        return;
+    //    }
+    //    if (_curTarget.Type == TargetType.Resource)
+    //    {
+    //        ChangeState(WorkerState.ToRes);
+    //        return;
+    //    }
+    //    if (_curTarget.Position.DistanceSquaredTo(GlobalPosition) <= _returnResRangeSq)
+    //    {
             
-            if (_curResItem != null)
-            {
-                OwnerPlayer.ChangeGoldCount(_curResItem.CurCount);
-                _curResItem.QueueFree();
-                _curResItem = null;
-                if (IsInstanceValid(_curRes))
-                {
-                    SetTarget(TargetType.Resource, _curRes.GlobalPosition);
-                    ChangeState(WorkerState.ToRes);
-                    return;
-                }
-                else
-                {
-                    ChangeState(WorkerState.Idle);
-                    return;
-                }
-            }
-        }
-        Vector3 nextPathPos = NaviAgent.GetNextPathPosition();
-        Vector3 direction = (nextPathPos - GlobalPosition);
-        direction.Y = 0; // 锁定 Y 轴，防止单位仰头
-        NaviAgent.Velocity = direction.Normalized() * MoveSpeed;// 告诉导航代理我们想往哪走
-    }
-    private void ExitReturnRes()
-    {
-    }
+    //        if (_curResItem != null)
+    //        {
+    //            OwnerPlayer.ChangeGoldCount(_curResItem.CurCount);
+    //            _curResItem.QueueFree();
+    //            _curResItem = null;
+    //            if (IsInstanceValid(_curRes))
+    //            {
+    //                SetTarget(TargetType.Resource, _curRes.GlobalPosition);
+    //                ChangeState(WorkerState.ToRes);
+    //                return;
+    //            }
+    //            else
+    //            {
+    //                ChangeState(WorkerState.Idle);
+    //                return;
+    //            }
+    //        }
+    //    }
+    //    Vector3 nextPathPos = NaviAgent.GetNextPathPosition();
+    //    Vector3 direction = (nextPathPos - GlobalPosition);
+    //    direction.Y = 0; // 锁定 Y 轴，防止单位仰头
+    //    NaviAgent.Velocity = direction.Normalized() * MoveSpeed;// 告诉导航代理我们想往哪走
+    //}
+    //private void ExitReturnRes()
+    //{
+    //}
 
     private void OnVelocityComputed(Vector3 safeVelocity)
     {
@@ -391,9 +364,9 @@ public partial class Worker : UnitBase
         _curTarget.Position = pos;
         NaviAgent.TargetPosition = pos;
     }
-    public void SetResource(ResourceBase res)
-    {
-        _curRes = res;
-    }
+    //public void SetResource(ResourceBase res)
+    //{
+    //    _curRes = res;
+    //}
 
 }

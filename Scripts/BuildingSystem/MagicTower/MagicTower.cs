@@ -16,10 +16,10 @@ public partial class MagicTower : BuildingBase
 {
     [Export] public PackedScene BallPs;
     [Export] public float AtkRange = 25;
-    [Export] public float Damage = 38;
-    [Export] public float CdTime = 1f;
+    [Export] public int Damage = 38;
+    [Export] public float CdTime = 0.3f;
     private float _atkRangeSq;
-    private EnemyBase _curTargetEnemy;
+    private int _curTargetIndex;
     private MagicTowerState _curState;
     [Export] public MeshInstance3D AtkRingMesh;
 
@@ -68,31 +68,27 @@ public partial class MagicTower : BuildingBase
     }
     private void UpdateIdle(float delta)
     {
-        if (Engine.GetFramesDrawn() % _searchInterval == _frameOffset)
-        {
-            _curTargetEnemy = FindNearestEnemy();
-        }
+        //if (Engine.GetFramesDrawn() % _searchInterval == _frameOffset)
+        //{
+        //    _curTargetIndex = GameManager.Instance.EnemyManager.GetNearestTargetIndex(GlobalPosition, _atkRangeSq);
+        //}
 
-        if (_curTargetEnemy == null || !IsInstanceValid(_curTargetEnemy))
-            return;
-
-        if (GlobalPosition.DistanceSquaredTo(_curTargetEnemy.GlobalPosition) <= _atkRangeSq)
-        {
-            _curState = MagicTowerState.Atk;
-        }
+        //if (_curTargetIndex == -1)
+        //    return;
+        //_curState = MagicTowerState.Atk;
     }
     private void UpdateAtk(float delta)
     {
-        //GD.Print("Atk!!!");
-        PlayBounceAnimation();
-        _curTargetEnemy.LogicCurHp -= Damage;
-        MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();
-        GetTree().CurrentScene.AddChild(ball);
-        Vector3 newPos = GlobalPosition;
-        newPos.Y += 2.0f;
-        ball.GlobalPosition = newPos;
-        ball.Init(_curTargetEnemy, Damage);
-        _curState = MagicTowerState.CD;
+        ////GD.Print("Atk!!!");
+        //PlayBounceAnimation();
+       
+        //MagicTowerBall ball = BallPs.Instantiate<MagicTowerBall>();
+        //GetTree().CurrentScene.AddChild(ball);
+        //Vector3 newPos = GlobalPosition;
+        //newPos.Y += 2.0f;
+        //ball.GlobalPosition = newPos;
+        //ball.Init(_curTargetIndex, Damage);
+        //_curState = MagicTowerState.CD;
     }
 
     

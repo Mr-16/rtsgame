@@ -282,8 +282,8 @@ public partial class Player : Node3D
                 showBuildingRingFlag.ShowBuildingRing(false);
             GameManager.Instance.Level1.BuildGridMesh.Visible = false;
             GameManager.Instance.BuildingGridMap.Place(snapPos, curBuildingPreview.Width, curBuildingPreview.Height);
-            //curBuildingPreview.QueueFree();
-            //CurState = PlayerState.Normal;
+            curBuildingPreview.QueueFree();
+            CurState = PlayerState.Normal;
         }
         else
         {
@@ -346,26 +346,7 @@ public partial class Player : Node3D
                 Node3D hitObject = (Node3D)result["collider"];
                 if (hitObject is Area3D area)
                 {
-                    if (area.Owner is ResourceBase targetRes)
-                    {
-                        GD.Print("右键了一个资源点");
-                        Vector3 targetResPos = (Vector3)result["position"];
-                        int unitCount = _curSelectedUnitList.Count;
-                        if (unitCount == 0) return;
-                        for (int i = 0; i < unitCount; i++)
-                        {
-                            if (_curSelectedUnitList[i] is Worker worker)
-                            {
-                                worker.SetTarget(TargetType.Resource, targetRes.GlobalPosition);
-                                worker.SetResource(targetRes);
-                            }
-                            _curSelectedUnitList[i].SetTarget(TargetType.Resource, targetRes.GlobalPosition);
-                            _curSelectedUnitList[i].SetSelected(false);
-                            _curSelectedUnitList.RemoveAt(i);
-                            return;
-                        }
-                    }
-                    else if (area.Owner is MainBase targetBuilding)
+                    if (area.Owner is MainBase targetBuilding)
                     {
                         GD.Print("右键了一个基地");
                         Vector3 targetBuildingPos = (Vector3)result["position"];
@@ -495,7 +476,7 @@ public partial class Player : Node3D
     
     private void ClearSelect()
     {
-        if(_curSelectedBuilding != null)
+        if(_curSelectedBuilding != null && IsInstanceValid(_curSelectedBuilding))
             _curSelectedBuilding.SetSelected(false);
         foreach (var unit in _curSelectedUnitList)
             unit.SetSelected(false);

@@ -42,7 +42,7 @@ public partial class Level_1 : Node3D
         TimeSpan time = TimeSpan.FromSeconds(_curTimer);
         GameManager.Instance.Player.SetTimeLb(time.ToString(@"mm\:ss"));
 
-        float targetCd = 100;
+        //float targetCd = 100;
 
         // 倒序判断：从最晚的时间点开始
         //if (_curTimer > Time9) { targetCd = 0.1f; }

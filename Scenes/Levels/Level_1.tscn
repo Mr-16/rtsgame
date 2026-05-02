@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://ckkoqrewmyjy5" path="res://Scripts/Levels/Level_1.cs" id="1_trw0a"]
 [ext_resource type="PackedScene" uid="uid://cju1vr25mrm6c" path="res://Scenes/Player.tscn" id="2_tjcye"]
 [ext_resource type="PackedScene" uid="uid://c01qjo2efp47t" path="res://Scenes/BuildingSystem/BuildGridMesh.tscn" id="4_87l2y"]
-[ext_resource type="PackedScene" uid="uid://b7yajn46s6vyk" path="res://Scenes/EnemySystem/SlimeManager.tscn" id="4_qpfou"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i63mn"]
 sky_top_color = Color(0.8474744, 0.84747446, 0.84747446, 1)
@@ -66,6 +65,3 @@ shape = SubResource("ConcavePolygonShape3D_i63mn")
 
 [node name="BuildGridMesh" parent="." unique_id=259589698 instance=ExtResource("4_87l2y")]
 visible = false
-
-[node name="EnemyManager" parent="." unique_id=1645612888 instance=ExtResource("4_qpfou")]
-Count = 10000

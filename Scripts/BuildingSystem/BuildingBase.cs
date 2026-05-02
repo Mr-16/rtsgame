@@ -1,9 +1,10 @@
 ﻿using Godot;
+using RtsGame.Scripts.Global;
 using System;
 
 namespace RtsGame.Scripts
 {
-    public partial class BuildingBase : Node3D
+    public partial class BuildingBase : Node3D, IEnemyTarget
     {
         [Export] public float ModelRadius = 2;
         [Export] public float MaxHp = 100;
@@ -15,6 +16,7 @@ namespace RtsGame.Scripts
         public override void _Ready()
         {
             GameManager.Instance.BuildingList.Add(this);
+            GameManager.Instance.EnemyTargetList.Add(this);
             _curHp = MaxHp;
             _hpMaterial = HpBarMesh.GetActiveMaterial(0).Duplicate() as ShaderMaterial;
             _hpMaterial.SetShaderParameter("health_value", _curHp / MaxHp);
@@ -50,12 +52,32 @@ namespace RtsGame.Scripts
         }
 
         private Tween _bufferTween;
-        public virtual void TakeDmg(float damage)
+
+        public override void _ExitTree()
+        {
+            base._ExitTree();
+            
+        }
+
+        public float GetModelRadius()
+        {
+            return ModelRadius;
+        }
+
+        public Vector3 GetPos()
+        {
+            return GlobalPosition;
+        }
+
+        public void TakeDmg(int damage)
         {
             _curHp -= damage;
             if (_curHp < 0)
             {
                 _curHp = 0;
+                GameManager.Instance.BuildingList.Remove(this);
+                GameManager.Instance.BuildingGridMap.Remove(GlobalPosition);
+                GameManager.Instance.EnemyTargetList.Remove(this);
                 QueueFree();
             }
             float healthRatio = _curHp / MaxHp;
@@ -72,11 +94,9 @@ namespace RtsGame.Scripts
                         .SetEase(Tween.EaseType.Out);
         }
 
-        public override void _ExitTree()
+        public bool IsValid()
         {
-            base._ExitTree();
-            GameManager.Instance.BuildingList.Remove(this);
-            GameManager.Instance.BuildingGridMap.Remove(GlobalPosition);
+            return IsInstanceValid(this);
         }
     }
 }
